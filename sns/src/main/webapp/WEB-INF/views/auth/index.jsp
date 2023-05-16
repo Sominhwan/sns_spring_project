@@ -97,7 +97,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <img src="/images/loginLogo.png" />
         <span id="logo_text">PhoTalk</span>
         <form
-          action="loginChange"
+          action="/login-process"
           method="POST"
           name="login_frm"
           id="login_frm"
@@ -130,7 +130,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             <label for="password">비밀번호를 입력해 주세요</label>
             <span id="keyShow">
               <img
-                src="https://velog.velcdn.com/images/thalsghks/post/7910658e-94d5-4e16-b24a-a19ad98f6e70/image.svg"
+                src="/images/pwdEyeBtnFalse.svg"
                 alt="eye"
               />
             </span>

@@ -82,7 +82,7 @@ document.querySelector("#show").addEventListener('click', show);
 document.querySelector("#close").addEventListener('click', close);
 document.querySelector("#check").addEventListener('click', check);
 
-/* 개인정 동의 팝업 이벤트 */
+/* 개인정보 동의 팝업 이벤트 */
 function show2 () {
   document.querySelector(".background2").className = "background2 show2";
 }

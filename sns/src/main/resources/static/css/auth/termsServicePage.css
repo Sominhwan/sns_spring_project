@@ -92,12 +92,12 @@ input#checkAll + label {
   position: absolute;
   width: 36px;
   height: 36px;
-  background: url("../images/joinCheckBoxAllFalse.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxAllFalse.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
 input#checkAll:checked + label {
-  background: url("../images/joinCheckBoxAllTrue.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxAllTrue.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
@@ -129,12 +129,12 @@ input#termsOfService + label {
   top: 30%;
   width: 32px;
   height: 24px;
-  background: url("../images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
 input#termsOfService:checked + label {
-  background: url("../images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
@@ -156,12 +156,12 @@ input#privacyPolicy + label {
   top: 50%;
   width: 32px;
   height: 24px;
-  background: url("../images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
 input#privacyPolicy:checked + label {
-  background: url("../images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
@@ -183,12 +183,12 @@ input#allowPromotions + label {
   top: 70%;
   width: 32px;
   height: 24px;
-  background: url("../images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyFalse.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
 input#allowPromotions:checked + label {
-  background: url("../images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
+  background: url("/images/joinCheckBoxOnlyTrue.svg") no-repeat 0 0px / contain;
   cursor: pointer;
 }
 
