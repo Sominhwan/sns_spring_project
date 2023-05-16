@@ -1,0 +1,25 @@
+server:
+  port: 8082
+
+# JSP 경로 설정
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://localhost:3306/sns?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+
+mybatis:
+  mapper-locations: classpath:mapper/*_mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    operations-sorter: method
