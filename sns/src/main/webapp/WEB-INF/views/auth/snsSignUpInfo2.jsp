@@ -1,41 +1,5 @@
-<%@page import="java.io.PrintWriter"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String userSocialId = null;
-	String userEmail = null;
-	String userNickName = null;
-	String userGender = null;
-	String userInfoType = null;
-	String [] value = request.getParameterValues("agreement");	
-	int agreement = 0;
-	if(value.length==3){
-		agreement = 1;	
-	}	
-	
-	if(request.getParameter("userSocialId")!=null){
-		userSocialId = request.getParameter("userSocialId");
-		System.out.println(userSocialId);
-	} else{
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('세션 오류.');");
-		script.println("history.back();");
-		script.println("</script>");
-	}
-	if(request.getParameter("userEmail")!=null){
-		userEmail = request.getParameter("userEmail");
-	}
-	if(request.getParameter("userNickName")!=null){
-		userNickName = request.getParameter("userNickName");
-	}
-	if(request.getParameter("userGender")!=null){
-		userGender = request.getParameter("userGender");
-	}
-	if(request.getParameter("userInfoType")!=null){
-		userInfoType = request.getParameter("userInfoType");
-	}
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>

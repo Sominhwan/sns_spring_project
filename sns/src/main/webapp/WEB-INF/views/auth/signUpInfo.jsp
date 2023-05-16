@@ -1,11 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-	String [] value = request.getParameterValues("agreement");	
-	int agreement = 0;
-	if(value.length==3){
-		agreement = 1;	
-	}		
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -9,7 +9,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthPageController {
     @GetMapping("/index")
-    public String login() {
+    public String index() {
         return "/auth/index";
     }
+
+    @GetMapping("/signUp")
+    public String signUp() {
+        return "/auth/signUp";
+    }
+
+    @GetMapping("/termsService")
+    public String termsService() {
+        return "/auth/termsService";
+    }    
 }

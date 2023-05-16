@@ -200,7 +200,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!-- TODO -->
 
         <span id="signUp">아직도 회원이 아닌가요?</span>
-        <span id="signUpTag"><a href="signUp.jsp">회원가입</a></span>
+        <span id="signUpTag"><a href="/signUp">회원가입</a></span>
       </div>
       <!-- 로그인 완료 컨테이너  -->
       <!-- TODO -->

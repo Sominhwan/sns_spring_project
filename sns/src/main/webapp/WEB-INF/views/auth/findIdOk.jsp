@@ -1,15 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-	String userEmail = null;
-	String userRegDate = null;
-	if(session.getAttribute("userEmail")!=null){
-		userEmail = (String)session.getAttribute("userEmail");
-	}
-	if(session.getAttribute("userRegDate")!=null){
-		userRegDate = (String)session.getAttribute("userRegDate");
-	}
-	session.invalidate();
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>

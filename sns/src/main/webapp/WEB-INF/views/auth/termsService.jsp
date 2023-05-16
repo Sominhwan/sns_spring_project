@@ -1,93 +1,13 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page import="sns.UserMgr"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-	request.setCharacterEncoding("UTF-8"); 
-    /* 네이버 개인정보 저장 */
-	String userSocialId = null;
-	String userName = null;
-	String userGender = null;
-	String userEmail = null;
-	String userPN = null;
-	String userInfoType = "naver";
-	if(request.getAttribute("id")!=null){
-		userSocialId = (String)request.getAttribute("id");
-	}
-	if(request.getAttribute("name")!=null){
-		userName = (String)request.getAttribute("name");
-	}
-	if(request.getAttribute("gender")!=null){
-		userGender = (String)request.getAttribute("gender");
-		if(userGender.equals("M")){
-			userGender = userGender.replaceAll("M", "남성");
-		}else if(userGender.equals("F")){
-			userGender = userGender.replaceAll("F", "여성");
-		}
-	}
-	if(request.getAttribute("email")!=null){
-		userEmail = (String)request.getAttribute("email");
-	}
-	if(request.getAttribute("mobile")!=null){
-		userPN = (String)request.getAttribute("mobile");
-		userPN = userPN.replaceAll("-", "");
-	}
-	
-	/* 카카오 개인정보 저장 */
-	String kakaoid = null;
-	String email = null;
-	String nickname = null;
-	String gender = null;
-	String userInfoType2 = "kakao";
-		
-	if(request.getAttribute("kakaoid")!=null){
-		kakaoid = (String)request.getAttribute("kakaoid");
-	}
-	if(request.getAttribute("email")!=null){
-		email = (String)request.getAttribute("email");
-	}
-	if(request.getAttribute("nickname")!=null){
-		nickname = (String)request.getAttribute("nickname");
-	}
-	if(request.getAttribute("gender")!=null){
-		gender = (String)request.getAttribute("gender");
-	}
-	
-	if(request.getParameter("kakaoid")!=null){
-		kakaoid = request.getParameter("kakaoid");
-	}
-	if(request.getParameter("email")!=null){
-		email = request.getParameter("email");
-		UserMgr userMgr = new UserMgr();
-		if(userMgr.getUserSnsEmail(kakaoid).equals(email)){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('이미 존재하는 계정입니다.');");
-			script.println("history.back();");
-			script.println("</script>");
-			script.close();
-			return;
-		}
-		
-	}
-	if(request.getParameter("nickname")!=null){
-		nickname = request.getParameter("nickname");
-	}
-	if(request.getParameter("gender")!=null){
-		gender = request.getParameter("gender");
-		if(gender.equals("male")){
-			gender = gender.replaceAll("male", "남성");
-		}else if(gender.equals("female")){
-			gender = gender.replaceAll("female", "여성");
-		}
-	}
-%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/termsServicePage.css" />
+    <link rel="stylesheet" href="/css/auth/termsServicePage.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
     <title>가입하기 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -105,8 +25,8 @@
       };
       /* 페이지 이동 */
       function change(){
-    	  var type = "<%=userSocialId%>"; /* 네이버 타입 */
-    	  var type2 = "<%=kakaoid%>"; /* 카카오 타입 */
+    	  var type = ""; /* 네이버 타입 */
+    	  var type2 = ""; /* 카카오 타입 */
     	  if(type=="null" && type2=="null"){
     		  document.form_wrap.action = "signUpInfo.jsp"; 		 
     	  } else if(type!="null") {
@@ -120,12 +40,12 @@
   </head>
   <body>
     <nav id="navbar">
-      <img src="images/joinLogo.png" id="joinLogo" />
-      <a href="login.jsp" id="logo">PhoTalk</a>
+      <img src="/images/joinLogo.png" id="joinLogo" />
+      <a href="/index" id="logo">PhoTalk</a>
       <ul>
-        <li><a href="signUp.jsp" class="signUp">회원가입</a></li>
+        <li><a href="/signUp" class="signUp">회원가입</a></li>
         <li>|</li>
-        <li><a href="login.jsp" class="signUp">로그인</a></li>
+        <li><a href="/index" class="signUp">로그인</a></li>
       </ul>
     </nav>
     <!-- 이용약관 컨텐츠 -->
@@ -184,22 +104,22 @@
           <span id="allAgree_text4">(선택) 서비스 유용한 소식 받기</span>
         </div>
         <!-- 네이버 개인정보 폼 -->
-        <%if(userSocialId!=null){ %>
-        <input id="userSocialId" type="hidden" name="userSocialId" value="<%=userSocialId%>"/>
-        <input id="userName" type="hidden" name="userName" value="<%=userName%>"/>
-        <input id="userGender" type="hidden" name="userGender" value="<%=userGender%>"/>
-        <input id="userEmail" type="hidden" name="userEmail" value="<%=userEmail%>"/>
-        <input id="userPN" type="hidden" name="userPN" value="<%=userPN%>"/>
-        <input id="userInfoType" type="hidden" name="userInfoType" value="<%=userInfoType%>"/>
-        <%} %>
+        <c:if test="">
+          <input id="userSocialId" type="hidden" name="userSocialId" value=""/>
+          <input id="userName" type="hidden" name="userName" value=""/>
+          <input id="userGender" type="hidden" name="userGender" value=""/>
+          <input id="userEmail" type="hidden" name="userEmail" value=""/>
+          <input id="userPN" type="hidden" name="userPN" value=""/>
+          <input id="userInfoType" type="hidden" name="userInfoType" value=""/>
+        </c:if> 
         <!-- 카카오 개인정보 폼 -->
-        <%if(kakaoid!=null){ %>
-        <input id="userSocialId" type="hidden" name="userSocialId" value="<%=kakaoid%>"/>
-        <input id="userEmail" type="hidden" name="userEmail" value="<%=email%>"/>
-        <input id="userNickName" type="hidden" name="userNickName" value="<%=nickname%>"/>
-        <input id="userGender" type="hidden" name="userGender" value="<%=gender%>"/>
-        <input id="userInfoType" type="hidden" name="userInfoType" value="<%=userInfoType2%>"/>
-        <%} %>
+        <c:if test="">
+          <input id="userSocialId" type="hidden" name="userSocialId" value=""/>
+          <input id="userEmail" type="hidden" name="userEmail" value=""/>
+          <input id="userNickName" type="hidden" name="userNickName" value=""/>
+          <input id="userGender" type="hidden" name="userGender" value=""/>
+          <input id="userInfoType" type="hidden" name="userInfoType" value=""/>
+      </c:if>
       	<button
           	type="submit"
          	class="next-button"
@@ -211,8 +131,8 @@
         </button>
       </form>
       <!-- 팝업창 -->
-      <div id="termsBtn"><img src="images/termsBtn.svg" id="show" /></div>
-      <div id="termsBtn2"><img src="images/termsBtn.svg" id="show2" /></div>
+      <div id="termsBtn"><img src="/images/termsBtn.svg" id="show" /></div>
+      <div id="termsBtn2"><img src="/images/termsBtn.svg" id="show2" /></div>
     </div>
     <div class="background">
       <div class="window">
@@ -765,6 +685,6 @@
       </div>
     </footer>
   </body>
-  <script src="js/signUp.js"></script>
-  <script src="js/spin.js"></script>
+  <script src="/js/auth/signUp.js"></script>
+  <script src="/js/auth/spin.js"></script>
 </html>

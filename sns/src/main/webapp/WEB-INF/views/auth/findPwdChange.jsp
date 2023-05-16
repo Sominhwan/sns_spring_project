@@ -1,18 +1,5 @@
-<%@page import="java.io.PrintWriter"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-	if((String)session.getAttribute("userEmail")==null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('세션이 만료되었습니다.');");
-		script.println("location.replace('login.jsp');");
-		script.println("</script>");
-		script.close();
-	}
-    String pwdAlert = null;	
-	String userEmail = (String)session.getAttribute("userEmail");
-	session.invalidate();
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
