@@ -1,36 +1,14 @@
-<%@page import="sns.CommentBean"%>
-<%@page import="sns.PostBean"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Vector"%>
-<%@page import="sns.UserinfoBean"%>
-<%@page import="sns.GuestBookBean" %>
-<%@page import="sns.FollowBean" %>
-<%@page import="sns.FriendmanagerBean" %>
-<%@page contentType="text/html; charset=UTF-8"%>
+
 <jsp:useBean id = "umgr" class = "sns.UserMgr"/>
 <jsp:useBean id = "pmgr" class = "sns.ProfileMgr"/>
 <jsp:useBean id="mgr" class="sns.UserinfoMgr"/>
 
 
-<%-- <jsp:useBean id="umgr" class="sns.UserinfoMgr"/> --%>
+<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
 <jsp:useBean id="cmgr" class="sns.CommentMgr"/>
 <jsp:useBean id="fmgr" class="sns.FriemdmanagerMgr"/>
 <jsp:useBean id="plmgr" class="sns.PostlikeMgr"/>
 <jsp:useBean id="pomgr" class="sns.PostMgr"/>
-
-<%
-		String id= request.getParameter("id");
-		if (id == null || id.trim().equals("")){
-			id= (String)session.getAttribute("userEmail");
-		}
-		String id2 = (String)session.getAttribute("userEmail");
-		UserinfoBean mbean = mgr.getPMember(id2);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
-		
-		Vector<UserinfoBean> uilist = mgr.listPMember(id2);//본인을 제외한 5명리스트 불러오기(유저이메일 별명,유저이미지저장)
-		Vector<PostBean> uplist=pomgr.pPrivatelist(id2);//postId 내림차순으로 전체글 다가져오기		
-		
-		
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,12 +16,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로필 - PhoTalk</title>
-    <link rel="stylesheet" href="css/navbar.css"/>   
-    <link rel="stylesheet" href="css/sidebar.css"/>    
-    <link rel="stylesheet" href="css/profile2.css?after"/>
-    <link rel="stylesheet" href="css/message.css?after"/>   
+    <link rel="stylesheet" href="/css/userPage/navbar.css"/>   
+    <link rel="stylesheet" href="/css/userPage/sidebar.css"/>    
+    <link rel="stylesheet" href="/css/userPage/profile2.css?after"/>
+    <link rel="stylesheet" href="/css/userPage/message.css?after"/>   
     <!-- <link type="text/css" rel="stylesheet" href="style.css"></link> -->     
-    <link rel="shortcut icon" type="image/x-icon" href="images/mainLogo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/mainLogo.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
@@ -55,7 +33,7 @@
     />    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 네브바 추가할것 !!!! -->
-    <script src="js/navbar.js"></script>
+    <script src="/js/navbar.js"></script>
     <script type="text/javascript">
 		function saveguest(){
 			frm = document.ProfilepostFrm;
@@ -87,16 +65,16 @@
 <!-------------------- 상단바 --------------------->
 <nav>
     <div class = "navbar">
-         <img src="images/mainLogo.png" alt="Image Button"/>
+         <img src="/images/mainLogo.png" alt="Image Button"/>
 	     <a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
-	     <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
+	     <img src="/images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
 	    <form method="post" id="navSearch" >
         	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
         	<input type="text" style="display:none;"/>
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=id2%>')" alt="Image Button" style="cursor: pointer"/>
+        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="/images/mainMessageFalse.png" onclick="clickChatBtn('<%=id2%>')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
@@ -137,13 +115,6 @@
                 <span class = "sidebar" style="font-weight: bold; color: #747474;">프로필</span>
             </a>
         </li>
-        <%
-        	for(int i=0; i<27; i++){
-        		%>
-        		<br>
-        		<%
-        	}
-        %>
         <dt>
         	&nbsp;
         	<a href="#소개"><span class="leftintroduce">소개</span></a>
@@ -173,7 +144,7 @@
 				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
 				<td class="profile-td2">도움말</td>		
     		</tr> 	
-			<tr onclick="showLogout()">			    
+			<tr onclick="">			    
 				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
 				<td class="profile-td2">로그아웃</td>		
     		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
@@ -188,41 +159,33 @@
 	</tbody>
 </table>
 <!------------- 상단부분 ----------------->
-<%
-	UserinfoBean ubean = pmgr.getInfo(id);
-	GuestBookBean gbean = pmgr.getGuest(id);
-%>
 <div class = mainProfile>
     <div class = mainBanner style="background-image: url('<%= gbean.getGbBackGroundImage()%>'); background-size: cover; background-position: center;	">
     	<div class = mainBanner2>
     		<div class = area_up1>
             <!-- 프로필 사진 -->
             <div class = area_up2>
-                <img src="<%= ubean.getUserImage() %>" style = " width: 140px; height:140px; border-radius : 70%; object-fit: cover; border: solid 2px #dedede;"  onerror="this.src ='images/profileProfileLogo.png'">
+                <img src="" style = " width: 140px; height:140px; border-radius : 70%; object-fit: cover; border: solid 2px #dedede;"  onerror="this.src ='images/profileProfileLogo.png'">
 				</div>
             <div class = area_up3>
                 <!-- 이름 -->
                 <div class = area_up4>
-					<span class = up_text><%=ubean.getUserName()%></span>
+					<span class = up_text></span>
                 </div>
                 <!-- 이메일 -->
                 <div class = area_up5>
-                	<span class = up_text2><%=ubean.getUserEmail() %></span>
+                	<span class = up_text2></span>
                 </div>
                 <!-- 방명록 -->
                 	<div class = area_up6>
                 	<span class = up_text3>
-                	<%if(gbean.getGbComment()==null) { %>
                 	<span></span>
-                	<% } else { %>
-                	<span><%=gbean.getGbComment() %></span>
-                	<% } %>
                 	</div>
                 </div>
             </div>
-        <div class = area_up7 <% if (!id.equals((String)session.getAttribute("userEmail"))) { %>style="display:none"<% } %>>
+        <div class = area_up7>
             <div>
-                <button onclick="show()" type="button" class = "profileBtn3" id="show" style="cursor: pointer;">
+                <button onclick="" type="button" class = "profileBtn3" id="show" style="cursor: pointer;">
                 <img src="images/profileBtn3.png" class = "profilepng">
                 </button>
   				<button type="button" class="profileBtn2" id="show2" style="cursor: pointer;"><img src="images/profileBtn2.png" class="profilepng"></button>
@@ -251,7 +214,7 @@
 			</div>
 			</form>
 			<div class = "popup-bottom">
-				<button id = "popupclose" type = "submit" onclick = "javascript:saveguest()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
+				<button id = "popupclose" type = "submit" onclick = ""><img src = "images/profileCoverImageSelectBtn.svg"></button>
 			</div>
 		</div>
 	</div>
@@ -278,7 +241,7 @@
 			</div>
 			<div class = "popup-bottom">
 				<div>
-					<button id="popupclose2" type="submit" onclick = "photo()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
+					<button id="popupclose2" type="submit" onclick = ""><img src = "images/profileCoverImageSelectBtn.svg"></button>
 				</div>
 			</div>
 		</div>
@@ -300,13 +263,13 @@
 					</div>
 					<div class = "inputPhoto">
 						<input type="file" name="backimage" id="img__preview2"/>
-						<input type="hidden" name="backId" value="<%=id %>"/>
+						<input type="hidden" name="backId" value=""/>
 					</div>
 				</form>
 			</div>
 			<div class = "popup-bottom">
 				<div>
-					<button id="popupclose5" type="submit" onclick = "bgimage()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
+					<button id="popupclose5" type="submit" onclick = ""><img src = "images/profileCoverImageSelectBtn.svg"></button>
 				</div>
 			</div>
 		</div>
@@ -325,13 +288,9 @@
                 	<div class = "area4_0">
                 		<div class = "profile_img">
                             <img class = "profile_icon" src="images/profileNameIcon.svg" alt="img">
-                            <% if (ubean.getUserGender().equals("남성")) { %>
-                            	<img class = "profile_icon" src="images/profileGenderMan.svg" alt="img" style = "width:15.5px; height:26.9px;">
-                            <% } else if (ubean.getUserGender().equals("")) { %>
-                            	<img class = "profile_icon" src="images/profileGenderNull.png" alt="img" style = "width:15.5px; height: 26.9px;">
-                            <% } else if (ubean.getUserGender().equals("여성")) { %>
-                            	<img class = "profile_icon" src="images/profileGenderFemale.png" alt="img" style = "width:15.5px; height:26.9px;">
-                            <% } %>
+                            <img class = "profile_icon" src="images/profileGenderMan.svg" alt="img" style = "width:15.5px; height:26.9px;">
+                            <img class = "profile_icon" src="images/profileGenderNull.png" alt="img" style = "width:15.5px; height: 26.9px;">
+                            <img class = "profile_icon" src="images/profileGenderFemale.png" alt="img" style = "width:15.5px; height:26.9px;">
                             <img class = "profile_icon" src="images/profileNickName.svg" alt="img">
                             <img class = "profile_icon" src="images/profileEmailIcon.svg" alt="img" style = "margin-top: 3px;">
                             <img class = "profile_icon" src="images/profilePhoneIcon.svg" alt="img">
@@ -343,45 +302,45 @@
                     <div class = "area4_1">
                         <div class = "profile_name">
                         	<form name = "updateProf" method="post">
-                        	<input type="hidden" name="userEmail2" value="<%=id %>">
+                        	<input type="hidden" name="userEmail2" value="">
                             <ul class = "profile_ul">
                                 <li style="margin-bottom: 33px;">
                                 	<span class = "profile_text" >성명</span>
-                                	<span class = "profile_info" style = "margin-left: 130px;"><%=ubean.getUserName() %></span>
+                                	<span class = "profile_info" style = "margin-left: 130px;"></span>
                                 </li >
                                 <li style="padding-top: 2px; margin-bottom: 33px;">
                                 	<span class = "profile_text">성별</span>
-                                	<input class = "profile_info" name = "prof_gender" style = "margin-left: 130px;" value = "<%=ubean.getUserGender() %>">
+                                	<input class = "profile_info" name = "prof_gender" style = "margin-left: 130px;" value = "">
                                 </li>
                                 <li style="padding-top: 5px; margin-bottom: 33px;">
                                 	<span class = "profile_text" >닉네임</span>
-                                	<input class = "profile_info" name = "prof_nikname" style = "margin-left: 113px;" value = "<%=ubean.getUserNickName() %>">
+                                	<input class = "profile_info" name = "prof_nikname" style = "margin-left: 113px;" value = "">
                                 </li>
                                 <li style="padding-top: 3px;">
                                 	<span class = "profile_text">이메일 주소</span>
-                                	<span class = "profile_info" style = "margin-left: 75px;"><%=ubean.getUserEmail() %></span>
+                                	<span class = "profile_info" style = "margin-left: 75px;"></span>
                                 </li>
                                 <li style="margin-bottom: 33px;">
                                 	<span class = "profile_text">휴대폰 번호</span>
-                                	<input class = "profile_info" name = "prof_pn" style = "margin-left: 75px;" value = "<%=ubean.getUserPN() %>">
+                                	<input class = "profile_info" name = "prof_pn" style = "margin-left: 75px;" value = "">
                                 </li>
                                 <li style="margin-bottom: 33px;">
                                 	<span class = "profile_text">학교</span>
-                                	<input class = "profile_info" name = "prof_school" style = "margin-left: 125px;" value = "<%=ubean.getUserSchool() %>">
+                                	<input class = "profile_info" name = "prof_school" style = "margin-left: 125px;" value = "">
                                 </li>
                                 <li style="margin-bottom: 33px;">
                                 	<span class = "profile_text">거주지역</span>
-                                	<input class = "profile_info" name = "prof_adress" style = "margin-left: 93px;" value = "<%=ubean.getUserAddress() %>">
+                                	<input class = "profile_info" name = "prof_adress" style = "margin-left: 93px;" value = "">
                                 </li>
                                 <li style="margin-bottom: 33px;">
                                 	<span class = "profile_text">소셜정보</span>
-                                	<input class = "profile_info" name = "prof_social" style = "margin-left: 93px;" value = "<% if(ubean.getUserSocial() == null){%>""<%} else {%>"<%= ubean.getUserSocial()%>"<%}%>">
+                                	<input class = "profile_info" name = "prof_social" style = "margin-left: 93px;" value = "">
                                 </li>
                             </ul>
                             </form>
                         </div>
                         <div>
-							<button id="popupclose5" type="submit" onclick = "update()"><img src = "images/profileCoverImageSelectBtn.svg"></button>
+							<button id="popupclose5" type="submit" onclick = ""><img src = "images/profileCoverImageSelectBtn.svg"></button>
 						</div>
                     </div>
                 </div>
