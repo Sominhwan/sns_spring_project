@@ -21,14 +21,45 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <script type="text/javascript">
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
-        document.login_frm.submit();
+        //document.login_frm.submit(); 
+        const userEmail = document.getElementById('userEmail').value;
+        const password = document.getElementById('password').value;
+        $.ajax({
+          url : "/login-process",
+          type : "post",
+          data: {
+            userEmail: userEmail,
+            password: password
+          },
+          success : function(obj){
+             alert("전송실패");
+          },
+          error : function(){
+          }
+        })
       }
+
+      // function loginOk(){
+      //   $.ajax({
+      //     url : "/loginOk.action",
+      //     type : "post",
+      //     data: {
+      //     },
+      //     success : function(obj){
+      //        alert(obj.userProfile);
+      //     },
+      //     error : function(){
+      //   alert("통신 실패");
+      //     }
+      //   })
+
+      // }
       /* 로그인 폼 엔터키로 이벤트 발생 */
       function onEnterLogin() {
         var keyCode = window.event.keyCode;
         if (keyCode == 13) {
           //엔테키 이면
-          document.login_frm.submit();
+          //document.login_frm.submit();
         }
       }
       /* 메인화면 이동 검증 */
@@ -97,10 +128,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <img src="/images/loginLogo.png" />
         <span id="logo_text">PhoTalk</span>
         <form
-          action="/login-process"
           method="POST"
           name="login_frm"
           id="login_frm"
+          action="/login-process"
         >
           <div class="input-box">
             <input

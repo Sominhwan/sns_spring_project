@@ -88,6 +88,20 @@ function popClose() {
  $(modalBg).hide();
 }
 
+
+/* 로그인 성공시 Controller 에서 값 받아오기 */
+// $.ajax({
+//   url : "loginOk.action",
+//   type : "post",
+//   data: {},
+//   success : function(obj){
+//     alert(obj.userProfile);
+//   },
+//   error : function(){
+// alert("통신 실패");
+//   }
+// })
+
 /* 로그인 성공시 */
 function loginOK() {
   if(document.getElementById('login_container').style.display !== 'none') {

@@ -25,16 +25,16 @@
       };
       /* 페이지 이동 */
       function change(){
-    	  var type = ""; /* 네이버 타입 */
-    	  var type2 = ""; /* 카카오 타입 */
-    	  if(type=="null" && type2=="null"){
-    		  document.form_wrap.action = "signUpInfo.jsp"; 		 
-    	  } else if(type!="null") {
-    		  document.form_wrap.action = "snsSignUpInfo.jsp";
-    	  } else if(type2!="null") {
-    		  document.form_wrap.action = "snsSignUpInfo2.jsp";
-    	  }	  
-    	  	document.form_wrap.submit();       	
+    	  //var type = ""; /* 네이버 타입 */
+    	  //var type2 = ""; /* 카카오 타입 */
+    	  //if(type=="null" && type2=="null"){
+    		document.form_wrap.action = "/signUpInfo"; 		 
+    	  // } else if(type!="null") {
+    		//   document.form_wrap.action = "snsSignUpInfo.jsp";
+    	  // } else if(type2!="null") {
+    		//   document.form_wrap.action = "snsSignUpInfo2.jsp";
+    	  // }	  
+    	  document.form_wrap.submit();       	
       }
     </script>
   </head>
@@ -53,7 +53,7 @@
       <span id="terms-text">서비스 이용약관에 동의해주세요.</span>
     </div>
     <div class="termsService-content">
-      <form method="POST" id="form_wrap" name="form_wrap">
+      <form method="get" id="form_wrap" name="form_wrap">
         <div class="terms_check_all">
           <input
             type="checkbox"

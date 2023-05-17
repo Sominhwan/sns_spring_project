@@ -18,24 +18,26 @@ public class SpringSecurityConfig {
         return new SimplePasswordEncoder();
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests(request -> request
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(login -> login
-                        .loginPage("/index")	// [A] 커스텀 로그인 페이지 지정
-                        .loginProcessingUrl("/login-process")	// [B] submit 받을 url
-                        .usernameParameter("userEmail")	// [C] submit할 아이디
-                        .passwordParameter("password")	// [D] submit할 비밀번호
-                        .defaultSuccessUrl("/view/dashboard", true)
-                        .permitAll()
-                )
-                .logout();
+        http.csrf().disable().cors().disable();
+
+        http.authorizeHttpRequests(request -> request
+                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+        );
+        http.formLogin(login -> login
+                .loginPage("/index")	// [A] 커스텀 로그인 페이지 지정
+                .loginProcessingUrl("/login-process")	// [B] submit 받을 url
+                .usernameParameter("userEmail")	// [C] submit할 아이디
+                .passwordParameter("password")	// [D] submit할 비밀번호
+                .failureHandler(new CustomAuthFailureHandler())
+                .defaultSuccessUrl("/loginOk.action", true)
+                .permitAll()
+        );
 
         return http.build();
     }

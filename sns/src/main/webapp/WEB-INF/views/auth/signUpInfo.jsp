@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/signUpInfoPage.css" />
+    <link rel="stylesheet" href="/css/auth/signUpInfoPage.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
     <title>가입하기 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -29,23 +29,58 @@
       /* 페이지 전환 */
       
       function change(){
-    	  if(signUp.gender.value == null){ 
-    		  alert("성별을 선택하세요.."); 
-    		  signUp.gender.focus(); 
-    		  return false; 
-    	  } 
+        // const userEmail = $('input[name=userEmail]').val();
+        // const userName = $('input[name=userName]').val();
+        // const gender = $('input[name=gender]').val();
+        // const userNickName = $('input[name=userNickName]').val();
+        // const userPhoneNum = $('input[name=userPhoneNum]').val();
+        // const password = $('input[name=password]').val();
+        // const agreement = $('input[name=agreement]').val();
+        // $.ajax({
+        //   url : "/login-process",
+        //   type : "post",
+        //   data: {
+        //     userEmail: userEmail,
+        //     userName: userName,
+        //     gender: gender,
+        //     userNickName: userNickName,
+        //     userPhoneNum: userPhoneNum,
+        //     password: password,
+        //     agreement: agreement,
+        //   },
+        //   success : function(obj){
+        //      alert("전송실패");
+        //   },
+        //   error : function(){
+        //   }
+        // })  
+
     	  document.signUp.submit(); 
       }
+
+      $(document).ready(function() { // 광고 동의 체크 여부 확인
+        var i = 0;
+        <c:forEach items="${arr}" var="arr" varStatus="status">
+           i++;
+        </c:forEach>
+        if(i==3){
+          alert("광고 수신여부 확인 함");
+          const agreement = $('input[name=agreement]').val('agreementOk');
+        }else{
+          alert("광고 수신여부 확인 안함");
+          const agreement = $('input[name=agreement]').val('agreementCancel');
+        }
+      });
     </script>
   </head>
   <body>
     <nav id="navbar">
-      <img src="images/joinLogo.png" id="joinLogo" />
-      <a href="login.jsp" id="logo">PhoTalk</a>
+      <img src="/images/joinLogo.png" id="joinLogo" />
+      <a href="/index" id="logo">PhoTalk</a>
       <ul>
-        <li><a href="signUp.jsp" class="signUp">회원가입</a></li>
+        <li><a href="/signUp" class="signUp">회원가입</a></li>
         <li>|</li>
-        <li><a href="login.jsp" class="signUp">로그인</a></li>
+        <li><a href="/index" class="signUp">로그인</a></li>
       </ul>
     </nav>
     <!-- 가입정보 입력 컨텐츠 -->
@@ -54,7 +89,7 @@
     </div>
     <!-- 가입정보 입력 폼 -->
     <div class="signUpInfo-content">
-      <form action="signUpInfoProc.jsp" method="POST" name="signUp">
+      <form action="/signUpInfoCheck" method="POST" name="signUp">
         <div class="input-box">
           <input -webkit-autofill
             id="userEmail"
@@ -127,7 +162,7 @@
           </span>
         </div>
         <input type="hidden" id="userGender" name="userGender">
-        <input type="hidden" name="agreement" value="<%=agreement%>">
+        <input type="hidden" name="agreement" value="">
         <input
           class="next-button"
           id="next-button"
@@ -146,7 +181,7 @@
       </div>
     </footer>
   </body>
-  <script src="js/signUpInfo.js"></script>
-  <script src="js/spin.js"></script>
+  <script src="/js/auth/signUpInfo.js"></script>
+  <script src="/js/auth/spin.js"></script>
 </html>
 

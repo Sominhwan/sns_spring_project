@@ -1,5 +1,6 @@
 package com.project.my.module.userRole.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +28,11 @@ public class UserInfoEntity {
     private int userAd;
     private String userRegTime;
     private String userInfoType;
+    private String role;
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public void setUserInfoType(String userInfoType) {
         this.userInfoType = userInfoType;

@@ -10,5 +10,6 @@ import com.project.my.module.userRole.entity.UserInfoEntity;
 @Mapper
 @Repository
 public interface UserLoginRepository {
-    Optional<UserInfoEntity> findByUserid(String userEmail);
+    UserInfoEntity findByUserId(String userEmail);
+    //Optional<UserInfoEntity> findByUserid(String userEmail);
 }

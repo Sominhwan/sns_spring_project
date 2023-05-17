@@ -17,7 +17,12 @@ public class UserLoginService {
         this.userLoginRepository = userLoginRepository;
     }
 
-    public Optional<UserInfoEntity> findOne(String userEmail) {
-        return userLoginRepository.findByUserid(userEmail);
-    }   
+
+    public UserInfoEntity findById(String userEmail){
+        return userLoginRepository.findByUserId(userEmail);
+    }
+
+    // public Optional<UserInfoEntity> findOne(String userEmail) {
+    //     return userLoginRepository.findByUserid(userEmail);
+    // }   
 }
