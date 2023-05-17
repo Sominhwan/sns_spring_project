@@ -28,6 +28,17 @@ public class AuthController {
     }
     
 
-
-   
+    @PostMapping("/signUpInfoCheck")
+    @ResponseBody 
+    public String initRequest(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName, @RequestParam("gender") String gender,
+    @RequestParam("userNickName") String userNickName, @RequestParam("userPhoneNum") String userPhoneNum, @RequestParam("password") String password, @RequestParam("agreement") String agreement) {       
+        System.out.println(userEmail);
+        System.out.println(userName);
+        System.out.println(gender);
+        System.out.println(userNickName);
+        System.out.println(userPhoneNum);
+        System.out.println(password);
+        System.out.println(agreement);
+        return "하이";
+    }     
 }

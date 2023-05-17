@@ -35,27 +35,4 @@ public class AuthPageController {
         model.addAttribute("arr", arr);
         return "auth/signUpInfo";
     }
-
-    @RequestMapping(value = "/signUpInfoCheck", method= RequestMethod.POST)
-    public String initRequest(HttpServletRequest request, ModelMap model) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-        String userEmail = request.getParameter("userEmail");
-        String userName = request.getParameter("userName");
-        String gender = request.getParameter("gender");
-        String userNickName = request.getParameter("userNickName");
-        String userPhoneNum = request.getParameter("userPhoneNum");
-        String password = request.getParameter("password");
-        String agreement = request.getParameter("agreement");
-        
-        System.out.println(userEmail);
-        System.out.println(userName);
-        System.out.println(gender);
-        System.out.println(userNickName);
-        System.out.println(userPhoneNum);
-        System.out.println(password);
-        System.out.println(agreement);
-        //model.addAttribute("arr", arr);
-        return "";
-    }    
-
 }

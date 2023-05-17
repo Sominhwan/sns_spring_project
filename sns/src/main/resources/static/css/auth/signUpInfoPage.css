@@ -10,6 +10,98 @@ ol {
   list-style: none;
 }
 
+
+/* 회원가입 확인 모달 */
+/* 로그아웃 모달 */
+.signUp-modal {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUp-modal .bg {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  }
+
+.signUp-Box {
+  position: fixed;
+  background-color: #fff;
+  width: 500px;
+  height: 220px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition : all 1s;
+  border-radius: 5px;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.16);
+}
+
+.signUp-Box button {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}
+
+.errorMsg{
+  position: absolute;
+  height: 60px;
+  width: 500px; 
+  background-color: #58aaff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#errorText{
+  position: absolute;
+  font-size: 20px;
+  color: #fff;
+  font-family: MalgunGothic;
+  font-weight: bold;
+  left: 15px;
+  top: 17px;
+}
+
+.errorAlarm{
+  position: absolute;
+  top: 100px;
+  left: 15px;
+  height: 30px;
+  width: 450px; 
+}
+
+#errorAlarmText{
+  position: absolute;
+  font-size: 18px;
+}
+
+.errorCheck{
+  position: absolute; 
+  background-color: #eee;
+  height: 40px;
+  width: 80px;
+  top:160px;
+  left: 400px;
+  border-radius: 5px;;
+}
+
+#errorCheckText{
+  position: absolute;
+  font-size: 18px;
+  color: #303030;
+  font-family: MalgunGothic;
+  left: 22px;
+  top: 7px;	
+}
+
+/* 네브바 */
 nav {
   width: 100%;
   /* overflow: hidden; */

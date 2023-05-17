@@ -29,33 +29,68 @@
       /* 페이지 전환 */
       
       function change(){
-        // const userEmail = $('input[name=userEmail]').val();
-        // const userName = $('input[name=userName]').val();
-        // const gender = $('input[name=gender]').val();
-        // const userNickName = $('input[name=userNickName]').val();
-        // const userPhoneNum = $('input[name=userPhoneNum]').val();
-        // const password = $('input[name=password]').val();
-        // const agreement = $('input[name=agreement]').val();
-        // $.ajax({
-        //   url : "/login-process",
-        //   type : "post",
-        //   data: {
-        //     userEmail: userEmail,
-        //     userName: userName,
-        //     gender: gender,
-        //     userNickName: userNickName,
-        //     userPhoneNum: userPhoneNum,
-        //     password: password,
-        //     agreement: agreement,
-        //   },
-        //   success : function(obj){
-        //      alert("전송실패");
-        //   },
-        //   error : function(){
-        //   }
-        // })  
+        const userEmail = $('input[name=userEmail]').val();
+        const userName = $('input[name=userName]').val();
+        const gender = $('input[name=userGender]').val();
+        const userNickName = $('input[name=userNickName]').val();
+        const userPhoneNum = $('input[name=userPhoneNum]').val();
+        const password = $('input[name=password]').val();
+        const agreement = $('input[name=agreement]').val();
 
-    	  document.signUp.submit(); 
+        var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        var regName = /^[가-힣a-zA-Z]{2,15}$/;
+        var regPhoneNum = /^[0-9]+/g;
+        var regPassword = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
+
+        if(!regEmail.test(userEmail)){
+          $('#userEmail').focus();
+          document.getElementById("errorAlarmText").innerHTML = "올바른 이메일 형식을 입력하세요.";
+          $('.signUp-modal').css('display', 'block');
+          return false;
+        }
+        if(!regName.test(userName)){
+           $('#userName').focus();
+           document.getElementById("errorAlarmText").innerHTML = "올바른 성명을 입력하세요.";
+           $('.signUp-modal').css('display', 'block');
+           return false;
+        }
+        // if(gender == ""){
+        //    document.getElementById("errorAlarmText").innerHTML = "성별을 선택해주세요.";
+        //    closeSignUpModal();
+        // }
+        if(!regPhoneNum.test(userPhoneNum) ){
+           $('#userPhoneNum').focus();
+           document.getElementById("errorAlarmText").innerHTML = "올바른 휴대폰 번호를 입력하세요.";
+           $('.signUp-modal').css('display', 'block');
+           return false;
+        }  
+        if(!regPassword.test(password)){
+          $('#password').focus();
+          document.getElementById("errorAlarmText").innerHTML = "올바른 비밀번호 형식을 입력하세요.";
+          $('.signUp-modal').css('display', 'block');
+          return false;
+        }
+
+        $.ajax({
+          url : "/signUpInfoCheck",
+          type : "post",
+          data: {
+            userEmail: userEmail,
+            userName: userName,
+            gender: gender,
+            userNickName: userNickName,
+            userPhoneNum: userPhoneNum,
+            password: password,
+            agreement: agreement,
+          },
+          success : function(obj){
+             alert(obj);
+          },
+          error : function(){
+          }
+        })  
+
+    	  //document.signUp.submit(); 
       }
 
       $(document).ready(function() { // 광고 동의 체크 여부 확인
@@ -64,16 +99,24 @@
            i++;
         </c:forEach>
         if(i==3){
-          alert("광고 수신여부 확인 함");
           const agreement = $('input[name=agreement]').val('agreementOk');
         }else{
-          alert("광고 수신여부 확인 안함");
           const agreement = $('input[name=agreement]').val('agreementCancel');
         }
       });
     </script>
   </head>
   <body>
+    <!-- 회원가입 모달 -->	   
+    <div class="signUp-modal" style="display:none;" >
+      <div class="bg" >
+        <div class="signUp-Box">
+          <div class="errorMsg"><span id="errorText">오류 메시지</span></div>
+          <div class="errorAlarm"><span id="errorAlarmText"></span></div>
+          <div class="errorCheck" style="cursor: pointer" onclick="closeSignUpModal()"><span id="errorCheckText">확인</span></div>
+        </div>
+      </div>    
+    </div>
     <nav id="navbar">
       <img src="/images/joinLogo.png" id="joinLogo" />
       <a href="/index" id="logo">PhoTalk</a>
@@ -89,7 +132,7 @@
     </div>
     <!-- 가입정보 입력 폼 -->
     <div class="signUpInfo-content">
-      <form action="/signUpInfoCheck" method="POST" name="signUp">
+      <form action="" method="POST" name="signUp">
         <div class="input-box">
           <input -webkit-autofill
             id="userEmail"
@@ -161,7 +204,7 @@
             <img src="https://velog.velcdn.com/images/thalsghks/post/7910658e-94d5-4e16-b24a-a19ad98f6e70/image.svg" alt="eye" />
           </span>
         </div>
-        <input type="hidden" id="userGender" name="userGender">
+        <input type="hidden" id="userGender" name="userGender" value="없음">
         <input type="hidden" name="agreement" value="">
         <input
           class="next-button"

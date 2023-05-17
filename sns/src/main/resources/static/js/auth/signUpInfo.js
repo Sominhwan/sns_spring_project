@@ -1,3 +1,9 @@
+/*  회원가입 모달 이벤트 */
+function closeSignUpModal(){
+		$('.signUp-modal').css('display', 'none');
+}
+
+
 /*  비밀번호 숨기기 보이기 기능 */
 $("#password").on("keyup", function(event) {
     if (event.keyCode === 13) {
