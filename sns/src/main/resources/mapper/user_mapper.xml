@@ -23,7 +23,14 @@
         SELECT COUNT(*) 
         FROM userinfo
         WHERE userPN = #{userPhoneNum}
-    </select>      
+    </select> 
+    <!-- TODO -->
+    <!-- 회원가입 이후에 등록하기 -->
+    <select id="getUserEmail" resultType="String">
+        SELECT userEmail
+        FROM userinfo
+        WHERE emailHash = #{code}
+    </select>         
 </mapper>
 
 

@@ -34,11 +34,6 @@ public class MemberValidateService {
     private String password;
     private String agreement;
 
-    // @Autowired
-    // public MemberValidateService(UserRepository userRepository) {
-    //     this.userRepository = userRepository;
-    // }
-
     public Map memberValidation(HashMap<String, String> map){
         Map result = new HashMap<String, Object>();
         userEmail = (String)map.get("userEmail");
@@ -61,8 +56,9 @@ public class MemberValidateService {
             result.put("error", "이미 존재하는 휴대폰번호 입니다.");
             return result;
         }
-        String message = gmailService.sendEmail(userEmail);
-        result.put("error", message);
+
+        boolean checkMessage = gmailService.sendEmail(userEmail, userName);
+        result.put("error", checkMessage);
         return result;
     }
 }

@@ -13,9 +13,10 @@ public class GmailService {
     @Autowired
     private JavaMailSender sender;
 
-    public String sendEmail(String userEmail){
-        String host = "http://localhost:8082/index";
-        String title = "Photalk 회원가입을 위한 이메일 확인 메일입니다.";		
+    public boolean sendEmail(String userEmail, String userName){
+        String host = "http://localhost:8082/emailCheck";
+        String title = "Photalk 회원가입을 위한 이메일 확인 메일입니다.";
+        String sha256 = new SHA256().getSHA256(userEmail);		
         String content = "<html>\r\n"
         + "  <head></head>\r\n"
         + "  <body>\r\n"
@@ -68,10 +69,10 @@ public class GmailService {
         + "            <div>\r\n"
         + "              <ul style=\"list-style: none\">\r\n"
         + "                <li style=\"line-height: 40px; float: left\">\r\n"
-        + "                  <b>"+userEmail+"</b> 님 안녕하세요. PhoTalk 입니다.<br />항상 PhoTalk 서비스를\r\n"
+        + "                  <b>"+userName+"</b> 님 안녕하세요. PhoTalk 입니다.<br />항상 PhoTalk 서비스를\r\n"
         + "                  이용해주셔서 감사합니다.<br /><br />\r\n"
         + "                  다음 링크에 접속하여 이메일 확인을 진행하세요.\r\n"
-        + "                  <a href='"+host+"emailCheckProc.jsp?code=" + "해쉬주소" + "'>이메일 인증하기</a>\r\n"						
+        + "                  <a href='"+host+"?code=" + sha256 + "'>이메일 인증하기</a>\r\n"						
         + "                </li>\r\n"
         + "              </ul>\r\n"
         + "            </div>\r\n"
@@ -106,9 +107,9 @@ public class GmailService {
             helper.setSubject(title);
             helper.setText(content, true);
             sender.send(message);
-            return "전송완료";
+            return true;
         } catch (Exception e) {
-            return "전송실패";
+            return false;
         }
         
     }

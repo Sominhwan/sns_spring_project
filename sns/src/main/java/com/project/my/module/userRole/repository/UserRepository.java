@@ -15,4 +15,6 @@ public interface UserRepository {
     int userEmailChk(String userEmail);
     // 휴대폰 중복 체크
     int userPhoneNumChk(String userPhoneNum);
+    // 이메일 해쉬값으로 이메일 값 받아오기
+    String getUserEmail(String code);
 }
