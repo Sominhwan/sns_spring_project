@@ -84,7 +84,10 @@
             agreement: agreement,
           },
           success : function(obj){
-             alert(obj);
+            if(obj.error !=null){
+              document.getElementById("errorAlarmText").innerHTML = obj.error;
+              $('.signUp-modal').css('display', 'block');
+            }
           },
           error : function(){
           }

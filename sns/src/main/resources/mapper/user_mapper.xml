@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.my.module.userRole.repository.UserLoginRepository">
+<mapper namespace="com.project.my.module.userRole.repository.UserRepository">
     <sql id="fullColumn">
         userEmail,
         userPwd,
         role
     </sql>
-    <select id="findByUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
-            SELECT <include refid="fullColumn"/>
-            FROM userinfo
-            WHERE userEmail = #{userEmail}
+    <!-- 유저 아이디 찾기 -->
+    <select id="findByUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
+        SELECT <include refid="fullColumn"/>
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
     </select>
+    <!-- 유저 이메일 중복 검사 -->
+    <select id="userEmailChk" resultType="int">
+        SELECT COUNT(*) 
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select> 
+      <!-- 유저 휴대폰 중복 검사 -->
+    <select id="userPhoneNumChk" resultType="int">
+        SELECT COUNT(*) 
+        FROM userinfo
+        WHERE userPN = #{userPhoneNum}
+    </select>      
 </mapper>
 
 

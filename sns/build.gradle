@@ -60,5 +60,10 @@ dependencies {
 	// JSP 이외의 템플릿은 resources/templates에 작성한다
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl'
+
+	// 자바 메일 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-mail' // Email
+
+
 }
 
