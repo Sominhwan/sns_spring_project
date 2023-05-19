@@ -39,11 +39,35 @@
         FROM userinfo
         WHERE userPN = #{userPhoneNum}
     </select> 
+    <!-- 일반 회원가입 정보 INSERT -->
+    <insert id="insertMember" parameterType="map">
+        INSERT INTO userinfo(<include refid="fullColumn"/>)
+        VALUES(
+                #{userInfoEntity.userName},
+                #{userInfoEntity.userGender},
+                #{userInfoEntity.userNickName},
+                #{userInfoEntity.userEmail},
+                #{userInfoEntity.userPwd},
+                #{userInfoEntity.userPN},
+                '-',
+                '-',
+                '-',
+                '-',
+                #{userInfoEntity.emailHash},
+                0,
+                'images/profile.svg',
+                NOW(),
+                #{userInfoEntity.userAd},
+                NOW(),
+                '일반',
+                'USER'
+              )
+    </insert>
     <!-- 이메일 해쉬값으로 이메일 찾기 -->
     <select id="getUserEmail" resultType="String">
         SELECT userEmail
         FROM userinfo
-        WHERE emailHash = "5993B9F1BFA7F9339B823E94BBD6AA0425F6B10A1B3581FFBBC67FEF4A0FCAB7"
+        WHERE emailHash = #{code}
     </select>   
     <!-- 이메일 검증하기 -->
     <update id="setEmailcertification">

@@ -29,30 +29,17 @@ public class UserInfoEntity {
     private String userRegTime;
     private String userInfoType;
     private String role;
-
-    public UserInfoEntity(String userName, String userGender, String userNickName, String userEmail, String userPwd, String userPN, String userSchool, String userAddress,
-        String userSocial, String userSocialId, String emailHash, int emailcertification, String userImage, int userAd, String userInfoType, String role) {      
+    // 일반 회원가입 생성자
+    public UserInfoEntity(String userName, String userGender, String userNickName, String userEmail, String userPwd, String userPN, String emailHash, int userAd) {      
         this.userName = userName;
         this.userGender = userGender;
         this.userNickName = userNickName;
         this.userEmail = userEmail;
         this.userPwd = userPwd;
         this.userPN = userPN;
-        this.userSchool = userSchool;
-        this.userAddress = userAddress;
-        this.userSocial = userSocial;
-        this.userSocialId = userSocialId;
         this.emailHash = emailHash;
-        this.emailcertification = emailcertification;
-        this.userImage = userImage;
         this.userAd = userAd;
-        this.userInfoType = userInfoType;
-        this.role = role;
     }
-
-    // public UserInfoEntity createUser(String userName, String userGender, String userNickName, String userEmail, String userPwd, String userPN, String emailHash, int userAd) // 일반회원 가입
-    //     return new UserInfoEntity(userName, userGender, userNickName, userEmail, userPwd, userPN, "-", "-", "-", "-", emailHash, 0, "images/profile.svg", userAd , "일반", "USER" );
-    // }
 
     public void setRole(String role) {
         this.role = role;

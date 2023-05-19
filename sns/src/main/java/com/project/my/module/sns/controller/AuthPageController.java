@@ -59,4 +59,9 @@ public class AuthPageController {
         mav.setViewName("/auth/emailCheckProc");  
         return mav;
     }    
+    // 일반 회원가입 완료 페이지 이동
+    @GetMapping("/signUpOk")
+    public String signUpInfo(@RequestParam("userEmail") String userEmail) {
+        return "/auth/signUpOk";
+    }
 }

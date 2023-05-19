@@ -54,10 +54,6 @@
            $('.signUp-modal').css('display', 'block');
            return false;
         }
-        // if(gender == ""){
-        //    document.getElementById("errorAlarmText").innerHTML = "성별을 선택해주세요.";
-        //    closeSignUpModal();
-        // }
         if(!regPhoneNum.test(userPhoneNum) ){
            $('#userPhoneNum').focus();
            document.getElementById("errorAlarmText").innerHTML = "올바른 휴대폰 번호를 입력하세요.";
@@ -84,12 +80,16 @@
             agreement: agreement,
           },
           success : function(obj){
-            if(obj.error !=null){
+            if(obj.error !=null){ // 유효성, 메일 보내기 실패
               document.getElementById("errorAlarmText").innerHTML = obj.error;
               $('.signUp-modal').css('display', 'block');
             }
+            if(obj.success !=null){ // 회원가입, 메일 전송 성공
+              location.replace("/signUpOk?userEmail="+obj.success); // 회원가입 완료 페이지 이동
+            }
           },
           error : function(){
+            alert("올바르지 않은 접근입니다.");
           }
         })  
 

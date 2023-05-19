@@ -17,7 +17,7 @@ import com.project.my.module.userRole.entity.UserInfoEntity;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@RestController // 비돋기 데이터 처리후 데이터 반환
 @RequiredArgsConstructor
 public class AuthController {
     private final MemberValidateService memberValidateService;
@@ -50,9 +50,6 @@ public class AuthController {
         
         //MemberValidateService memberValidateService = new MemberValidateService();
         result = memberValidateService.memberValidation(map);
-
         return result;
     }     
-
-
 }

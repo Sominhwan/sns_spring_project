@@ -6,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/signUpOkPage.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/auth/signUpOkPage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
     <title>가입완료 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
@@ -26,24 +26,22 @@
   </head>
   <body>
     <nav id="navbar">
-      <img src="images/joinLogo.png" id="signUpOkLogo" />
+      <img src="/images/joinLogo.png" id="signUpOkLogo" />
       <a href="login.jsp" id="logo">PhoTalk</a>
       <ul>
-        <li><a href="signUp.jsp" class="signUp">회원가입</a></li>
+        <li><a href="/signUp" class="signUp">회원가입</a></li>
         <li>|</li>
-        <li><a href="login.jsp" class="signUp">로그인</a></li>
+        <li><a href="/index" class="signUp">로그인</a></li>
       </ul>
     </nav>
     <!-- 가입완료 텍스트 -->
     <div class="signUpOkInfo-text">
-      <img src="images/joinCompleteLogo.svg" id="joinCompleteLogo" />
+      <img src="/images/joinCompleteLogo.svg" id="joinCompleteLogo" />
       <span id="signUp-text">회원가입이 완료 되었습니다.</span>
     </div>
     <!-- 가입완료 버튼 -->
-    <div class="signUpOk-content">
+    <div class="signUpOk-content" id="signUpOk-content">
       <div id="emailComment">
-        <%=userEmail%> 로 보낸 메일을 확인하여 이메일 인증을 완료해주세요.
-        인증이 완료될 경우에만 서비스를 이용하실 수 있습니다.
       </div>
       <div id="emailAlert">
         * 일주일이내에 인증이 완료되지 않을경우 자동 회원탈퇴 처리가 됩니다.
@@ -66,5 +64,12 @@
       </div>
     </footer>
   </body>
-  <script src="js/spin.js"></script>
+  <script>
+      let url = window.location.search;
+      let param = new URLSearchParams(url);
+      let userEmail = param.get('userEmail');
+      document.getElementById("emailComment").innerHTML = `<b>`+userEmail+`</b>`+` 로 보낸 메일을 확인하여 이메일 인증을 완료해주세요.
+         인증이 완료될 경우에만 서비스를 이용하실 수 있습니다.`;
+  </script>
+  <script src="/js/auth/spin.js"></script>
 </html>
