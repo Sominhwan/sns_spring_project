@@ -14,7 +14,7 @@ public class SHA256CheckService {
     public String getUserEmail(String code){
         String userEmail = userRepository.getUserEmail(code);
         if(userEmail != null){
-            // emailcertification 1로 변경하기 
+            userRepository.setEmailcertification(userEmail);
         }
         return userEmail;
     }

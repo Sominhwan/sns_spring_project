@@ -17,4 +17,6 @@ public interface UserRepository {
     int userPhoneNumChk(String userPhoneNum);
     // 이메일 해쉬값으로 이메일 값 받아오기
     String getUserEmail(String code);
+    // 이메일 검증하기
+    void setEmailcertification(String userEmail);
 }

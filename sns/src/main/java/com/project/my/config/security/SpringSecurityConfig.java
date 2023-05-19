@@ -19,6 +19,11 @@ public class SpringSecurityConfig {
     }
 
     @Bean
+    public BCryptPasswordEncoder encodePWD(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable();
 

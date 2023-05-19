@@ -18,7 +18,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       src="https://developers.kakao.com/sdk/js/kakao.js"
     ></script>
     <title>PhoTalk</title>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
         //document.login_frm.submit(); 

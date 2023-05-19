@@ -13,22 +13,6 @@
     <c:redirect url="/emailHashCheck">
         <c:param name="code" value="${param.code}"/>
     </c:redirect>
-    // $.ajax({
-    //   url : "/emailHashCheck",
-    //   type : "post",
-    //   data: {
-    //     code: <c:out value="${param.code}"/>
-    //   },
-    //   success : function(obj){
-    //      alert(obj);
-    //   },
-    //   error : function(){
-    //     alert("오류");
-    //   }
-    // })
-
-
-
 </script>
 </head>
 <body>
