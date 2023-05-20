@@ -7,18 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 
 @Configuration
 @EnableMethodSecurity
 public class SpringSecurityConfig {
-    // @Bean
-    // PasswordEncoder passwordEncoder() {
-    //     return new SimplePasswordEncoder();
-    // }
-
     @Bean
     public BCryptPasswordEncoder encodePWD(){
         return new BCryptPasswordEncoder();
@@ -30,8 +23,8 @@ public class SpringSecurityConfig {
 
         http.authorizeHttpRequests(request -> request
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk")
-                .permitAll()
+                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk").permitAll()
+                .antMatchers("/main").hasRole("USER")
                 .anyRequest()
                 .authenticated()
         );
@@ -43,8 +36,8 @@ public class SpringSecurityConfig {
                 .defaultSuccessUrl("/loginOk.action", false)
                 .permitAll()
         );
-
+        // 소셜 로그인 oauth2Login() 추가 
+        // TODO
         return http.build();
-    }
-    
+    }  
 }

@@ -19,6 +19,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     ></script>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
+      var emailCheck;
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
         //document.login_frm.submit(); 
@@ -35,12 +36,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             if(obj.userEmail == null){ // 로그인 실패시
               document.getElementById('loginErrorMsg').style.display = 'block';
               return false;
-             }
-             alert(obj.userEmail);
-             alert(obj.userRole);
-          },
-          error : function(){
-            alert("로그인실패");
+             }     
+             document.getElementById('loginErrorMsg').style.display = 'none';
+             emailCheck = obj.emailcertification;
+             document.getElementById('login_container').style.display = 'none';
+             document.getElementById('loginOK_container').style.display = 'block';
+             document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
+             document.getElementById("profile").src = obj.userImage ;
+             document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
           }
         })
       }
@@ -54,7 +57,21 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         }
       }
       /* 메인화면 이동 검증 */
-      function checkEmail() {}
+      function checkEmail() {
+        if(emailCheck == 1){
+          document.getElementById("loginOk_frm").submit();
+          //alert(loginOk_frm);
+        } else{
+          alert("이메일 인증을 하지 않은 계정입니다.");
+        }
+
+      }
+      /* 로그아웃 시 로그인 컨테이너 변경 */
+      function loginContainerChange() {
+        document.getElementById('loginOK_container').style.display = 'none';
+        document.getElementById('login_container').style.display = 'block';
+
+      }
 
       /* 카카오 로그인 */
       Kakao.init("7b282dfd5c5c643acd7323bd051ec42b");
@@ -226,7 +243,26 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span id="signUpTag"><a href="/signUp">회원가입</a></span>
       </div>
       <!-- 로그인 완료 컨테이너  -->
-      <!-- TODO -->
+      <div class="loginOK_container" id="loginOK_container" style="display: none;">
+        <img src="/images/loginLogo.png" />
+        <span id="logo2_text">PhoTalk</span>
+        <img class="profile" id="profile" src="" />
+        <!-- form action 에 메인 페이지 주소 넣기 -->
+        <form action="/main" method="POST" name="loginOk_frm" id = "loginOk_frm">
+          <input
+            class="loginOKBtn"
+            id="loginOKBtn"
+            name="loginOKBtn"
+            type="button"
+            value=""
+            onclick="checkEmail()"
+            style="cursor: pointer;"
+          />
+           <span id="login" style="position: absolute;height: 18px;width: 519.5px;font-size: 18px;
+           color: #868e96;top: 450px;left:25%;transform: translate(0%, 0%);">
+           </span>
+        </form>      
+      </div>
     </div>
     <!-- 푸터 -->
     <footer class="login_footer">

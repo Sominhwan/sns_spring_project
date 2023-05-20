@@ -20,13 +20,15 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
     private final MemberValidateService memberValidateService;
 
-    // 로그인 성공여부 
+    // 로그인 성공후 해당 유저 정보
     @GetMapping("/loginOk.action")
     @ResponseBody 
     public HashMap<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
         HashMap<String, String> map = new HashMap<String,String>();
         map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
-        map.put("userRole", principalDetails.getAuthorities().toString());
+        map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
+        map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
+        map.put("emailcertification", principalDetails.getEmailcertification()); // 이메일 인증 반환
         return map;
     }
     // 회원가입 성공 여부

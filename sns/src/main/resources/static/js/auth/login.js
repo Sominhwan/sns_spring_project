@@ -94,9 +94,6 @@ function loginOK() {
     document.getElementById('login_container').style.display = 'none';
     document.getElementById('loginOK_container').style.display = 'block';
   } else{
-    /* document.getElementById('userEmail').value="";
-    document.getElementById('password').value="";
-    validate(); */
     document.getElementById('loginOK_container').style.display = 'none';
     document.getElementById('login_container').style.display = 'block';
   }  

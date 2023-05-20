@@ -40,7 +40,10 @@ public class UserInfoEntity {
         this.emailHash = emailHash;
         this.userAd = userAd;
     }
-
+    // 네이버 회원가입 생성자
+    // TODO
+    // 카카오 회원가입 생성자
+    // TODO
     public void setRole(String role) {
         this.role = role;
     }

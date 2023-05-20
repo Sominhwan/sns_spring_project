@@ -21,7 +21,7 @@
         userInfoType,
         role
     </sql>
-    <!-- 유저 아이디 찾기 -->
+    <!-- 유저 아이디(이메일)를 통해 모든 회원정보 가져오기 -->
     <select id="findByUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
         SELECT <include refid="fullColumn"/>
         FROM userinfo
