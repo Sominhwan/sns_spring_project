@@ -68,17 +68,11 @@ public class MemberValidateService {
             agree = 0;
         }
         String encPassword = encoder.encode(password); // 해쉬값으로 인코딩된 비밀번호
-        if(encoder.matches(password, encPassword)){ // 비밀번호 일치 여부 확인
-            System.out.println("비밀번호가 같습니다.");
-        } else{
-            System.out.println("비밀번호가 틀립니다.");
-        }
-
         String userEmailHash = new SHA256().getSHA256(userEmail); // 이메일 SHA256 해쉬값 변경
+
         UserInfoEntity userInfoEntity = new UserInfoEntity(userName, gender, userNickName, userEmail, encPassword, userPhoneNum, userEmailHash, agree);
         userRepository.insertMember(userInfoEntity); // 일반 회원가입 DB 접근
             
-       // System.out.println(userInfoEntity.getUserName() + " " + userInfoEntity.getUserGender() + " " + userInfoEntity.getUserNickName() + " " + userInfoEntity.getUserEmail() + " " + userInfoEntity.getUserPwd() + " " + userInfoEntity.getUserPN() + " " + userInfoEntity.getEmailHash() + " " + userInfoEntity.getUserAd());
         boolean checkMessage = gmailService.sendEmail(userEmail, userName);
         if(checkMessage){
             result.put("success", userEmail);

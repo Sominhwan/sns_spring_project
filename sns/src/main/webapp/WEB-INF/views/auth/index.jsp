@@ -32,34 +32,25 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             password: password
           },
           success : function(obj){
-             alert("전송실패");
+            if(obj.userEmail == null){ // 로그인 실패시
+              document.getElementById('loginErrorMsg').style.display = 'block';
+              return false;
+             }
+             alert(obj.userEmail);
+             alert(obj.userRole);
           },
           error : function(){
+            alert("로그인실패");
           }
         })
       }
 
-      // function loginOk(){
-      //   $.ajax({
-      //     url : "/loginOk.action",
-      //     type : "post",
-      //     data: {
-      //     },
-      //     success : function(obj){
-      //        alert(obj.userProfile);
-      //     },
-      //     error : function(){
-      //   alert("통신 실패");
-      //     }
-      //   })
-
-      // }
       /* 로그인 폼 엔터키로 이벤트 발생 */
       function onEnterLogin() {
         var keyCode = window.event.keyCode;
         if (keyCode == 13) {
           //엔테키 이면
-          //document.login_frm.submit();
+          loginFrm();
         }
       }
       /* 메인화면 이동 검증 */
@@ -228,8 +219,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           <input type="hidden" name="gender" />
         </form>
         <!-- 로그인 실패시 뜨는 문구 -->
-        <!-- TODO -->
-
+        <span id="loginErrorMsg" style="position: absolute; left: 71px; top: 530px; color:#ed4956; font-size:14px; display: none;">
+          * 로그인에 실패하였습니다.
+        </span>
         <span id="signUp">아직도 회원이 아닌가요?</span>
         <span id="signUpTag"><a href="/signUp">회원가입</a></span>
       </div>

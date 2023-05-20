@@ -7,22 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/auth/signUpInfoPage.css" />
+    <link rel="stylesheet" href="/css/auth/loading.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
     <title>가입하기 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-      var spinner;
-      jQuery(function () {
-        spinner = new Spinner().spin().el;
-        jQuery(document.body).append(spinner);
-        jQuery(spinner).css("display", "none");
-      });
-      window.onbeforeunload = function (e) {
-        if (e != null && e != undefined) {
-          jQuery(spinner).css("display", "");
-        }
-      };
-      
+    <script>      
       var selectBox = function(value){
     	  document.getElementById('userGender').value = value;
     	}
@@ -109,6 +98,13 @@
       });
     </script>
   </head>
+  <!-- 로딩바 -->
+  <div id="loading" style="display: none">
+    <div id="loading_bar">
+      <!-- 로딩바의 경로를 img 태그안에 지정해준다. -->
+      <img src="/images/Spin-loading.gif" style="width: 100px;"/>
+    </div>
+  </div>
   <body>
     <!-- 회원가입 모달 -->	   
     <div class="signUp-modal" style="display:none;" >
@@ -228,6 +224,6 @@
     </footer>
   </body>
   <script src="/js/auth/signUpInfo.js"></script>
-  <script src="/js/auth/spin.js"></script>
+  <script src="/js/auth/loading.js"></script>
 </html>
 

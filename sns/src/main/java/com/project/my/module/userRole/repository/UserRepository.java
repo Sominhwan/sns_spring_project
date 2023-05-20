@@ -26,4 +26,6 @@ public interface UserRepository {
     String getUserEmail(String code);
     // 이메일 검증하기
     void setEmailcertification(String userEmail);
+    // 로그인하기
+    UserInfoEntity findByUserId(String userEmail);
 }

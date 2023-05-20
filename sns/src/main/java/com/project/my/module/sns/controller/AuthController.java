@@ -4,16 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.sns.service.MemberValidateService;
-import com.project.my.module.sns.service.SHA256CheckService;
-import com.project.my.module.userRole.entity.UserInfoEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,19 +19,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
     private final MemberValidateService memberValidateService;
-    private final SHA256CheckService sha256CheckService;
 
-    @PostMapping("/loginOk.action")
+    // 로그인 성공여부 
+    @GetMapping("/loginOk.action")
     @ResponseBody 
-    public HashMap<String, String> loginOkPage(@AuthenticationPrincipal User user){
-        System.out.println("로그인 테스트중");
+    public HashMap<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
         HashMap<String, String> map = new HashMap<String,String>();
-        map.put("userEmail", user.getUsername());
-        map.put("userProfile", "이미지넣기");
+        map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
+        map.put("userRole", principalDetails.getAuthorities().toString());
         return map;
     }
-    
-
+    // 회원가입 성공 여부
     @PostMapping("/signUpInfoCheck")
     @ResponseBody 
     public Map memberJoin(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName, @RequestParam("gender") String gender,
@@ -48,7 +44,6 @@ public class AuthController {
         map.put("password", password);
         map.put("agreement", agreement);
         
-        //MemberValidateService memberValidateService = new MemberValidateService();
         result = memberValidateService.memberValidation(map);
         return result;
     }     

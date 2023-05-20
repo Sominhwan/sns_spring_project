@@ -12,11 +12,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
+@EnableMethodSecurity
 public class SpringSecurityConfig {
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new SimplePasswordEncoder();
-    }
+    // @Bean
+    // PasswordEncoder passwordEncoder() {
+    //     return new SimplePasswordEncoder();
+    // }
 
     @Bean
     public BCryptPasswordEncoder encodePWD(){
@@ -39,8 +40,7 @@ public class SpringSecurityConfig {
                 .loginProcessingUrl("/login-process")	// [B] submit 받을 url
                 .usernameParameter("userEmail")	// [C] submit할 아이디
                 .passwordParameter("password")	// [D] submit할 비밀번호
-                .failureHandler(new CustomAuthFailureHandler())
-                .defaultSuccessUrl("/loginOk.action", true)
+                .defaultSuccessUrl("/loginOk.action", false)
                 .permitAll()
         );
 

@@ -10,19 +10,6 @@
     <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
     <title>가입완료 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-      var spinner;
-      jQuery(function () {
-        spinner = new Spinner().spin().el;
-        jQuery(document.body).append(spinner);
-        jQuery(spinner).css("display", "none");
-      });
-      window.onbeforeunload = function (e) {
-        if (e != null && e != undefined) {
-          jQuery(spinner).css("display", "");
-        }
-      };
-    </script>
   </head>
   <body>
     <nav id="navbar">
@@ -53,7 +40,7 @@
           name="serviceBtn"
           type="button"
           value="서비스 이용하기"
-          onclick="location.replace('login.jsp')"
+          onclick="location.replace('/index')"
         />
       </form>
     </div>
@@ -71,5 +58,5 @@
       document.getElementById("emailComment").innerHTML = `<b>`+userEmail+`</b>`+` 로 보낸 메일을 확인하여 이메일 인증을 완료해주세요.
          인증이 완료될 경우에만 서비스를 이용하실 수 있습니다.`;
   </script>
-  <script src="/js/auth/spin.js"></script>
+  <script src="/js/auth/loading.js"></script>
 </html>
