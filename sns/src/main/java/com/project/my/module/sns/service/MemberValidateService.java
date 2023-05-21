@@ -3,26 +3,14 @@ package com.project.my.module.sns.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +50,7 @@ public class MemberValidateService {
             result.put("error", "이미 존재하는 휴대폰번호 입니다.");
             return result;
         }
-        if(agreement.equals("agreementOk")){
+        if(agreement.equals("agreementOk")){ // 광고 수신여부 확인
             agree = 1;
         } else{
             agree = 0;
@@ -81,6 +69,5 @@ public class MemberValidateService {
             result.put("error", "메일전송 실패");
             return result;
         }
-
     }
 }

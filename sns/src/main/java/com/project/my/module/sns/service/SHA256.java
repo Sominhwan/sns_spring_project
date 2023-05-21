@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 
 import org.springframework.stereotype.Service;
 
+// 이메일 값 SHA256 해쉬값으로 변경
 @Service
 public class SHA256 {
 	public static String getSHA256(String input) {
