@@ -21,8 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
         UserInfoEntity userInfoEntity = userLoginService.findById(insertedUserEmail);
         if (userInfoEntity == null) {
             throw new UsernameNotFoundException("잘못된 접근입니다.");
-        }
-        
+        }      
         return new PrincipalDetails(userInfoEntity);     
     }
 }

@@ -30,7 +30,6 @@ public class PrincipalDetails implements UserDetails{
 		});
 		return role;
     }
-
     // 해당 유저의 패스워드 리턴
     @Override
     public String getPassword() {
@@ -41,6 +40,10 @@ public class PrincipalDetails implements UserDetails{
     public String getUsername() {
         return userInfoEntity.getUserEmail();
     }
+    // 해당 유저의 아이디(이메일) 해쉬값 리턴
+    public String getUserEmailHash() {
+        return userInfoEntity.getEmailHash();
+    }   
     // 해당 유저 이름 리턴
     public String getName(){
         return userInfoEntity.getUserName();

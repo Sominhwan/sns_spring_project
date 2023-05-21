@@ -29,6 +29,16 @@ public class AuthController {
         map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
         map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
         map.put("emailcertification", principalDetails.getEmailcertification()); // 이메일 인증 반환
+        map.put("userEmailHash", principalDetails.getUserEmailHash());
+        return map;
+    }
+    // 로그아웃 
+    @GetMapping("/logOut.action")
+    @ResponseBody 
+    public HashMap<String, String> logOutPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        HashMap<String, String> map = new HashMap<String,String>();
+        //map.put("userEmail",  principalDetails.getUsername()); 
+        map.put("logOutMsg", "true"); 
         return map;
     }
     // 회원가입 성공 여부

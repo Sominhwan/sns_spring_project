@@ -20,23 +20,27 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
       var emailCheck;
+
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
-        //document.login_frm.submit(); 
         const userEmail = document.getElementById('userEmail').value;
         const password = document.getElementById('password').value;
+        const rememberCheck = document.getElementById("remember");
+        const remember = rememberCheck.checked;
         $.ajax({
           url : "/login-process",
           type : "post",
           data: {
             userEmail: userEmail,
-            password: password
+            password: password,
+            remember: remember,
           },
           success : function(obj){
             if(obj.userEmail == null){ // 로그인 실패시
               document.getElementById('loginErrorMsg').style.display = 'block';
               return false;
              }     
+             sessionStorage.setItem('userEmailHash', obj.userEmailHash);
              document.getElementById('loginErrorMsg').style.display = 'none';
              emailCheck = obj.emailcertification;
              document.getElementById('login_container').style.display = 'none';
@@ -47,7 +51,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           }
         })
       }
-
       /* 로그인 폼 엔터키로 이벤트 발생 */
       function onEnterLogin() {
         var keyCode = window.event.keyCode;
@@ -60,17 +63,25 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       function checkEmail() {
         if(emailCheck == 1){
           document.getElementById("loginOk_frm").submit();
-          //alert(loginOk_frm);
         } else{
           alert("이메일 인증을 하지 않은 계정입니다.");
         }
-
       }
       /* 로그아웃 시 로그인 컨테이너 변경 */
-      function loginContainerChange() {
-        document.getElementById('loginOK_container').style.display = 'none';
-        document.getElementById('login_container').style.display = 'block';
-
+      function loginContainerChange() {       
+        $.ajax({
+          url : "/logout",
+          type : "post",
+          data: {},
+          success : function(obj){             
+            document.getElementById('loginOK_container').style.display = 'none';
+            document.getElementById('login_container').style.display = 'block';
+            sessionStorage.removeItem('userEmailHash');        
+          },
+          error : function(obj){
+            alert("실패");
+          }
+        })
       }
 
       /* 카카오 로그인 */
@@ -174,18 +185,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               />
             </span>
           </div>
-          <input type="checkbox" id="myCheck" name="myCheck" />
-          <label for="myCheck"></label>
-          <span id="auto_login_text">자동 로그인</span>
-
-          <input type="checkbox" id="popup" name="myCheck" />
-          <label for="popup"></label>
-          <div>
-            <div>
-              <label for="popup"></label>
-            </div>
-            <label for="popup"></label>
-          </div>
+          <input type="checkbox" id="remember" name="remember" />
+          <label for="remember"></label>
+          <span id="auto_login_text">자동 로그인</span> 
           <div id="popup">
             <a href="#" class="btn-open" onClick="javascript:popOpen();">
               <img
@@ -205,7 +207,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             onclick="loginFrm()"
           />
         </form>
-
         <!-- modal 영역 -->
         <div class="modal-bg" onClick="javascript:popClose();"></div>
         <div class="modal-wrap">
@@ -242,6 +243,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span id="signUp">아직도 회원이 아닌가요?</span>
         <span id="signUpTag"><a href="/signUp">회원가입</a></span>
       </div>
+      
       <!-- 로그인 완료 컨테이너  -->
       <div class="loginOK_container" id="loginOK_container" style="display: none;">
         <img src="/images/loginLogo.png" />
@@ -296,5 +298,29 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </div>
     </footer>
   </body>
+  <script>
+    // 페이지 새로고침시 로그인 유지
+      if(sessionStorage.getItem('userEmailHash')!=null){
+        $.ajax({
+          url : "/loginOk.action",
+          type : "get",
+          data: {
+          },
+          success : function(obj){   
+            if(obj.userNickName == undefined){ // 다른 url에서 로그인 후 로그아웃 할시
+              sessionStorage.removeItem('userEmailHash');        
+              location.href("/index");        
+             }
+             document.getElementById('loginErrorMsg').style.display = 'none';
+             emailCheck = obj.emailcertification;
+             document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
+             document.getElementById("profile").src = obj.userImage ;
+             document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
+             document.getElementById('login_container').style.display = 'none';
+             document.getElementById('loginOK_container').style.display = 'block';
+          }
+        })
+      }
+  </script>
   <script src="/js/auth/login.js"></script>
 </html>
