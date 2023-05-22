@@ -1,3 +1,8 @@
+/*  아이디 찾기 모달 이벤트 */
+function closeSignUpModal(){
+  $('.signUp-modal').css('display', 'none');
+}
+
 /* 아이디 찾기 버튼 활성화 */
 const button = document.getElementById("findIdBtn");
 const inputName = document.getElementById("userName");

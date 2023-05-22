@@ -51,23 +51,17 @@ public class AuthServiceApiV1 {
         String userNickName = reqDto.getUserNickName();
         UserInfoEntity userInfoEntity = userRepository.findUserId(userName, userNickName);
 
-        if(userInfoEntity.getUserEmail() == null || userInfoEntity.getUserRegDate()  == null || userInfoEntity.getUserInfoType() == null){
-            result.put("message", "존재하는 아이다가 없습니다.");
-            return result;
-        } else if(userInfoEntity.getUserInfoType().equals("네이버")){
+        if(userInfoEntity.getUserInfoType().equals("naver")){
             result.put("message", "네이버를 통해 아이디를 찾으세요"); 
             return result;
-        } else if(userInfoEntity.getUserInfoType().equals("카카오")){
+        } else if(userInfoEntity.getUserInfoType().equals("kakao")){
             result.put("message", "카카오를 통해 아이디를 찾으세요"); 
             return result;            
         } else{
-            //String tempDate = UserRegDateDTO\
-            //String date = userInfoEntity.getUserRegDate();
-            //String date = userInfoEntity.getUserRegDate().formatted(String);
-            //tring tempDate = SDF_DATE.format(userInfoEntity.getUserRegDate());
-            //System.out.println(tempDate);
+            String tempDate = userInfoEntity.getUserRegDate();
+            tempDate = tempDate.replace("-", ".");
             result.put("userEmail", userInfoEntity.getUserEmail()); 
-            result.put("userRegDate", userInfoEntity.getUserRegDate()); 
+            result.put("userRegDate", tempDate); 
             return result;             
         }
     } 

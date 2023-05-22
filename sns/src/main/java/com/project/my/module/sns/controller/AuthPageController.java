@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,5 +66,15 @@ public class AuthPageController {
     @GetMapping("/findId")
     public String findId() {
         return "/auth/findId";
+    }    
+    // 아이디 찾기 완료 페이지 이동
+    @PostMapping("/findIdOk")
+    public ModelAndView findIdOk(HttpServletRequest request, ModelAndView mav) {
+        //String userEmail = request.getParameter("userEmail");
+        //String userRegDate = request.getParameter("userRegDate");
+        mav.addObject("userEmail", request.getParameter("userEmail"));
+        mav.addObject("userRegDate", request.getParameter("userRegDate"));
+        mav.setViewName("/auth/findIdOk");     
+        return mav;
     }    
 }

@@ -4,18 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.sns.dto.AuthDTO;
 import com.project.my.module.sns.service.AuthServiceApiV1;
-import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -74,8 +71,6 @@ public class AuthControllerApiV1 {
     @ResponseBody 
     public Map findUserId(@Validated @RequestBody AuthDTO.ReqFindId reqDTO) {       
         Map result = new HashMap<String, Object>();  // 회원가입 성공 여부 메시지
-        System.out.println(reqDTO.getUserName());
-        System.out.println(reqDTO.getUserNickName());
         result = authServiceApiV1.getUserId(reqDTO);
         return result;
     }         

@@ -28,7 +28,6 @@
       function findIdProcess(){
         const userName = document.getElementById('userName').value;
         const userNickName = document.getElementById('userNickName').value;
-        alert(userName);
         $.ajax({
           url : "/findUserId",
           type : "post",
@@ -38,20 +37,49 @@
           },
           success : function(obj){
             if(obj.message != null){ // 로그인 실패시
-              alert(obj.message);
-              return false;
+              document.getElementById("errorAlarmText").innerHTML = obj.message;
+              $('.signUp-modal').css('display', 'block');
             }
             if(obj.userEmail != null){
-              alert(obj.userEmail);
-              alert(obj.userRegDate);
-              return false;
+              var form = document.createElement("form");
+              form.setAttribute("charset", "UTF-8");
+              form.setAttribute("method", "Post");  //Post 방식
+              form.setAttribute("action", "/findIdOk"); //요청 보낼 주소
+              var hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", "userEmail");
+              hiddenField.setAttribute("value", obj.userEmail);
+              form.appendChild(hiddenField);  
+
+              hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", "userRegDate");
+              hiddenField.setAttribute("value", obj.userRegDate);
+              form.appendChild(hiddenField);   
+              
+              document.body.appendChild(form);
+              form.submit();
             }     
+          },
+          error : function(obj){
+            document.getElementById("errorAlarmText").innerHTML = "존재하지 않은 아이디입니다.";
+            $('.signUp-modal').css('display', 'block');
           }
         })
       }
     </script>
   </head>
   <body>
+    <!-- 아이디 찾기 모달 -->	   
+    <div class="signUp-modal" style="display:none;" >
+      <div class="bg" >
+        <div class="signUp-Box">
+          <div class="errorMsg"><span id="errorText">오류 메시지</span></div>
+          <div class="errorAlarm"><span id="errorAlarmText"></span></div>
+          <div class="errorCheck" style="cursor: pointer" onclick="closeSignUpModal()"><span id="errorCheckText">확인</span></div>
+        </div>
+      </div>    
+    </div>
     <nav id="navbar">
       <img src="/images/joinLogo.png" id="signUpOkLogo" />
       <a href="/index" id="logo">PhoTalk</a>
