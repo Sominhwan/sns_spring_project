@@ -28,7 +28,7 @@ public class SpringSecurityConfig {
 
         http.authorizeHttpRequests(request -> request
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk").permitAll()
+                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
                 //.antMatchers("").hasRole("ADMIN") // ADMIN 권한이 있는 경우만 해당 url 이용가능
                 .anyRequest()
@@ -49,7 +49,7 @@ public class SpringSecurityConfig {
                 .alwaysRemember(false)
                 .userDetailsService(myUserDetailsService);
         http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED ) // 시큐리티가 세션 필요시 생성
                 .maximumSessions(1) // 세션 개수 제한
                 .expiredUrl("/logOut.action"); // 세션 만료시 이동 url
         http.logout()

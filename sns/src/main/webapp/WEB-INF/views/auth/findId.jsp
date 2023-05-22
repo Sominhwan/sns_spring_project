@@ -6,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/loading.css" />
-    <link rel="stylesheet" href="css/findIdPage.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/auth/loading.css" />
+    <link rel="stylesheet" href="/css/auth/findIdPage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
     <title>아이디 찾기 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
@@ -27,12 +27,12 @@
   </head>
   <body>
     <nav id="navbar">
-      <img src="images/joinLogo.png" id="signUpOkLogo" />
-      <a href="login.jsp" id="logo">PhoTalk</a>
+      <img src="/images/joinLogo.png" id="signUpOkLogo" />
+      <a href="/index" id="logo">PhoTalk</a>
       <ul>
-        <li><a href="signUp.jsp" class="signUp">회원가입</a></li>
+        <li><a href="/signUp" class="signUp">회원가입</a></li>
         <li>|</li>
-        <li><a href="login.jsp" class="signUp">로그인</a></li>
+        <li><a href="/index" class="signUp">로그인</a></li>
       </ul>
     </nav>
     <!-- 아이디 찾기 텍스트 -->
@@ -77,6 +77,7 @@
           class="findIdBtn"
           id="findIdBtn"
           disabled
+          onclick=""
         >
           아이디 찾기
         </button>
@@ -89,6 +90,6 @@
       </div>
     </footer>
   </body>
-  <script src="js/findId.js"></script>
-  <script src="js/spin.js"></script>
+  <script src="/js/auth/findId.js"></script>
+  <script src="/js/auth/spin.js"></script>
 </html>

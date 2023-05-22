@@ -1,4 +1,4 @@
-package com.project.my.module.sns.service;
+package com.project.my.util;
 
 import java.security.MessageDigest;
 

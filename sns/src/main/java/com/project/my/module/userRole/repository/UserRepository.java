@@ -16,7 +16,7 @@ public interface UserRepository {
     // 휴대폰 중복 체크
     int userPhoneNumChk(String userPhoneNum);
     // 일반 회원가입 INSERT
-    void insertMember(@Param("userInfoEntity") UserInfoEntity userInfoEntity);
+    void insertMember(UserInfoEntity userInfoEntity);
     // 네이버 회원가입 INSERT
     // TODO
     // 카카오 회원가입 INSERT

@@ -25,7 +25,6 @@
         const userPhoneNum = $('input[name=userPhoneNum]').val();
         const password = $('input[name=password]').val();
         const agreement = $('input[name=agreement]').val();
-
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         var regName = /^[가-힣a-zA-Z]{2,15}$/;
         var regPhoneNum = /^[0-9]+/g;
@@ -55,7 +54,6 @@
           $('.signUp-modal').css('display', 'block');
           return false;
         }
-
         $.ajax({
           url : "/signUpInfoCheck",
           type : "post",
@@ -66,7 +64,7 @@
             userNickName: userNickName,
             userPhoneNum: userPhoneNum,
             password: password,
-            agreement: agreement,
+            agreement: agreement,            
           },
           success : function(obj){
             if(obj.error !=null){ // 유효성, 메일 보내기 실패
@@ -91,9 +89,9 @@
            i++;
         </c:forEach>
         if(i==3){
-          const agreement = $('input[name=agreement]').val('agreementOk');
+          const agreement = $('input[name=agreement]').val('1');
         }else{
-          const agreement = $('input[name=agreement]').val('agreementCancel');
+          const agreement = $('input[name=agreement]').val('0');
         }
       });
     </script>

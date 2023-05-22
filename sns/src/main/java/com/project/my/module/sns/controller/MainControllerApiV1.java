@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 /* 메인(탐색, 프로필 등) 비동기 처리 컨트롤러 */
 @RestController // 비돋기 데이터 처리후 데이터 반환
 @RequiredArgsConstructor
-public class MainController {
+public class MainControllerApiV1 {
     
 }

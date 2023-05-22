@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,15 +12,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.my.config.security.PrincipalDetails;
-import com.project.my.module.sns.service.MemberValidateService;
+import com.project.my.module.sns.dto.AuthDTO;
+import com.project.my.module.sns.service.AuthServiceApiV1;
+import com.project.my.module.userRole.repository.UserRepository;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 @RestController // 비돋기 데이터 처리후 데이터 반환
 @RequiredArgsConstructor
-public class AuthController {
-    private final MemberValidateService memberValidateService;
-
+public class AuthControllerApiV1 {
+    private final AuthServiceApiV1 authServiceApiV1;
+    private final UserRepository userRepository;
     // 로그인 성공후 해당 유저 정보
     @GetMapping("/loginOk.action")
     @ResponseBody 
@@ -44,19 +48,23 @@ public class AuthController {
     // 회원가입 성공 여부
     @PostMapping("/signUpInfoCheck")
     @ResponseBody 
-    public Map memberJoin(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName, @RequestParam("gender") String gender,
-    @RequestParam("userNickName") String userNickName, @RequestParam("userPhoneNum") String userPhoneNum, @RequestParam("password") String password, @RequestParam("agreement") String agreement) {       
-        HashMap<String, String> map = new HashMap<String,String>();
-        Map result = new HashMap<String, Object>();
-        map.put("userEmail", userEmail);
-        map.put("userName", userName);
-        map.put("gender", gender);
-        map.put("userNickName", userNickName);
-        map.put("userPhoneNum", userPhoneNum);
-        map.put("password", password);
-        map.put("agreement", agreement);
-        
-        result = memberValidateService.memberValidation(map);
+    public Map memberJoin(@Validated @RequestBody AuthDTO.ReqJoin reqDTO) {       
+        Map result = new HashMap<String, Object>();  // 회원가입 성공 여부 메시지
+        System.out.println(reqDTO.getUserEmail());
+        if(userRepository.userEmailChk(reqDTO.getUserEmail()) == 1){ // 이메일 중복 검사
+            result.put("error", "이미 존재하는 이메일 입니다.");
+            return result;
+        }
+        if(reqDTO.getGender().equals("없음")){ // 성별 선택 유무 검사
+            result.put("error", "성별을 선택해주세요.");
+            return result;
+        }
+        if(userRepository.userPhoneNumChk(reqDTO.getUserPhoneNum()) == 1){ // 휴대폰 중복 검사
+            result.put("error", "이미 존재하는 휴대폰번호 입니다.");
+            return result;
+        }
+
+        result = authServiceApiV1.memberValidation(reqDTO);
         return result;
     }     
 }

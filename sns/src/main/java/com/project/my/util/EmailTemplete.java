@@ -1,22 +1,9 @@
-package com.project.my.module.sns.service;
+package com.project.my.util;
 
 
-import javax.mail.internet.MimeMessage;
+public class EmailTemplete {
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-
-@Service
-public class GmailService {
-    @Autowired
-    private JavaMailSender sender;
-
-    public boolean sendEmail(String userEmail, String userName){
-        String host = "http://localhost:8082/emailCheck";
-        String title = "Photalk 회원가입을 위한 이메일 확인 메일입니다.";
-        String sha256 = new SHA256().getSHA256(userEmail);		
+    public static String template(String userName, String host, String sha256){
         String content = "<html>\r\n"
         + "  <head></head>\r\n"
         + "  <body>\r\n"
@@ -100,18 +87,6 @@ public class GmailService {
         + "  </body>\r\n"
         + "</html>";
 
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-        try {
-            helper.setTo(userEmail);
-            helper.setSubject(title);
-            helper.setText(content, true);
-            sender.send(message);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-        
+        return content;
     }
-
 }

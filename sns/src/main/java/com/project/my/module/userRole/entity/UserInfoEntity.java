@@ -25,12 +25,12 @@ public class UserInfoEntity {
     private int emailcertification;
     private String userImage;
     private String userRegDate;
-    private int userAd;
+    private String userAd;
     private String userRegTime;
     private String userInfoType;
     private String role;
     // 일반 회원가입 생성자
-    public UserInfoEntity(String userName, String userGender, String userNickName, String userEmail, String userPwd, String userPN, String emailHash, int userAd) {      
+    public UserInfoEntity(String userName, String userGender, String userNickName, String userEmail, String userPwd, String userPN, String emailHash, String userAd) {      
         this.userName = userName;
         this.userGender = userGender;
         this.userNickName = userNickName;
@@ -108,7 +108,7 @@ public class UserInfoEntity {
         this.userRegDate = userRegDate;
     }
 
-    public void setUserAd(int userAd) {
+    public void setUserAd(String userAd) {
         this.userAd = userAd;
     }
 

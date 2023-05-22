@@ -61,4 +61,9 @@ public class AuthPageController {
     public String signUpInfo(@RequestParam("userEmail") String userEmail) {
         return "/auth/signUpOk";
     }
+    // 아이디 찾기 페이지 이동
+    @GetMapping("/findId")
+    public String findId() {
+        return "/auth/findId";
+    }    
 }
