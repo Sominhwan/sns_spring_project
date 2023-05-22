@@ -23,6 +23,32 @@
           jQuery(spinner).css("display", "");
         }
       };
+
+      // 아이디 찾기 
+      function findIdProcess(){
+        const userName = document.getElementById('userName').value;
+        const userNickName = document.getElementById('userNickName').value;
+        alert(userName);
+        $.ajax({
+          url : "/findUserId",
+          type : "post",
+          data: {
+            userName: userName,
+            userNickName: userNickName
+          },
+          success : function(obj){
+            if(obj.message != null){ // 로그인 실패시
+              alert(obj.message);
+              return false;
+            }
+            if(obj.userEmail != null){
+              alert(obj.userEmail);
+              alert(obj.userRegDate);
+              return false;
+            }     
+          }
+        })
+      }
     </script>
   </head>
   <body>
@@ -46,7 +72,7 @@
         있습니다.
       </div>
       <!-- 아이디 폼 -->
-      <form action="findIdProc.jsp" method="POST">
+      <form action="" method="POST">
         <div class="input-box">
           <input -webkit-autofill
             id="userName"
@@ -73,11 +99,11 @@
         </div>
 
         <button
-          type="submit"
+          type="button"
           class="findIdBtn"
           id="findIdBtn"
           disabled
-          onclick=""
+          onclick="findIdProcess()"
         >
           아이디 찾기
         </button>

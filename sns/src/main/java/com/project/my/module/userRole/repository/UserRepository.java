@@ -27,4 +27,6 @@ public interface UserRepository {
     void setEmailcertification(String userEmail);
     // 폼에 입력받은 아이디(이메일)를 통해 해당 유저 정보 받아오기
     UserInfoEntity findByUserId(String userEmail);
+    // 회원 아이디 찾기(아이디, 가입일자) 받아오기
+    UserInfoEntity findUserId(@Param("userName") String userName, @Param("userNickName") String userNickName);
 }

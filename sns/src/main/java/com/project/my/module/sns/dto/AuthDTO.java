@@ -41,5 +41,18 @@ public class AuthDTO {
                 .emailHash(userEmailHash)
                 .build();
         }
-    }    
+    }  
+    @Data
+    @Builder
+    public static class ReqFindId{
+        private String userName;
+        private String userNickName;
+
+        public UserInfoEntity toEntity() {
+            return UserInfoEntity.builder()
+                    .userName(userName)
+                    .userNickName(userNickName)
+                    .build();         
+        }
+    }     
 }
