@@ -11,8 +11,6 @@ ol {
 }
 
 /* 아이디 찾기 모달 */
-/* 회원가입 확인 모달 */
-/* 로그아웃 모달 */
 .signUp-modal {
   position: fixed;
   z-index: 1000;

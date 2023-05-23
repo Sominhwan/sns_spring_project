@@ -70,11 +70,27 @@ public class AuthPageController {
     // 아이디 찾기 완료 페이지 이동
     @PostMapping("/findIdOk")
     public ModelAndView findIdOk(HttpServletRequest request, ModelAndView mav) {
-        //String userEmail = request.getParameter("userEmail");
-        //String userRegDate = request.getParameter("userRegDate");
         mav.addObject("userEmail", request.getParameter("userEmail"));
         mav.addObject("userRegDate", request.getParameter("userRegDate"));
         mav.setViewName("/auth/findIdOk");     
         return mav;
-    }    
+    }  
+    // 비밀번호 찾기 페이지 이동
+    @GetMapping("/findPwd")
+    public String findPwd() {
+        return "/auth/findPwd";
+    }  
+    // 비밀번호 변경 페이지 이동
+    @PostMapping("/findPwdChange")
+    public ModelAndView findPwdChange(HttpServletRequest request, ModelAndView mav) {
+        mav.addObject("userEmail", request.getParameter("userEmail"));
+        mav.setViewName("/auth/findPwdChange"); 
+        return mav;
+    } 
+    // 비밀번호 변경 완료 페이지 이동
+    @GetMapping("/findPwdOk")
+    public String findPwdOk() {
+        return "/auth/findPwdOk";
+    }      
+    
 }

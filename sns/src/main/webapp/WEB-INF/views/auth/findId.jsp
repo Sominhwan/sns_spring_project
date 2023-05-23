@@ -67,6 +67,19 @@
           }
         })
       }
+
+      /* 아이디 찾기 폼 엔터키로 이벤트 발생 */
+      function onEnterFindId() {
+        const userName = document.getElementById('userName').value;
+        const userNickName = document.getElementById('userNickName').value;
+        var keyCode = window.event.keyCode;
+        if (keyCode == 13) {
+          //엔테키 이면
+          if(userName != "" && userNickName!= ""){
+            findIdProcess();
+          }
+        }
+      }      
     </script>
   </head>
   <body>
@@ -110,6 +123,7 @@
             maxlength="60"
             autocomplete="false"
             style="-webkit-box-shadow: 0 0 0 1000px #fff inset"
+            onkeydown="javascript:onEnterFindId();"
           />
           <label for="userName">성명</label>
         </div>
@@ -122,6 +136,7 @@
             maxlength="60"
             autocomplete="false"
             style="-webkit-box-shadow: 0 0 0 1000px #fff inset"
+            onkeydown="javascript:onEnterFindId();"
           />
           <label for="userNickName">닉네임</label>
         </div>
