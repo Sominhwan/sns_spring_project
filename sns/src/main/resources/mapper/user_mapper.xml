@@ -31,7 +31,7 @@
     <select id="findByLoginId" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
         SELECT <include refid="fullColumn"/>
         FROM userinfo
-        WHERE userEmail = #{userEmail}
+        WHERE userSocialId = #{provideId}
     </select>
     <!-- 유저 이메일 중복 검사 -->
     <select id="userEmailChk" resultType="int">

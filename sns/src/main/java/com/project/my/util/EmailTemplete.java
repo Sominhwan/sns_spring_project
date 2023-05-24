@@ -2,7 +2,7 @@ package com.project.my.util;
 
 
 public class EmailTemplete {
-
+    // 로그인 이메일 인증 템플릿
     public static String template(String userName, String host, String sha256){
         String content = "<html>\r\n"
         + "  <head></head>\r\n"

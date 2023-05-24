@@ -1,6 +1,5 @@
 package com.project.my.module.userRole.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -28,7 +27,7 @@ public interface UserRepository {
     // 폼에 입력받은 아이디(이메일)를 통해 해당 유저 정보 받아오기
     UserInfoEntity findByUserId(String userEmail);
     // 폼에 입력받은 아이디(소셜 아이디)를 통해 해당 유저 정보 받아오기
-    Optional<UserInfoEntity> findByLoginId(String userEmail);
+    Optional<UserInfoEntity> findByLoginId(String provideId);
     // 회원 아이디 찾기(아이디, 가입일자) 받아오기
     UserInfoEntity findUserId(@Param("userName") String userName, @Param("userNickName") String userNickName);
     // 회원 비밀번호 찾기(비밀번호, 유저타입) 받아고기

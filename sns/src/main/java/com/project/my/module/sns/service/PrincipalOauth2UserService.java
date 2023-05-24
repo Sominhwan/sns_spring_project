@@ -3,7 +3,7 @@ package com.project.my.module.sns.service;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -47,7 +47,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String gender = oAuth2UserInfo.getGender(); // 소셜 성별
         String mobile = oAuth2UserInfo.getMobile(); // 소셜 휴대폰 번호
 
-        Optional<UserInfoEntity> optionalUser = userRepository.findByLoginId(email);
+        Optional<UserInfoEntity> optionalUser = userRepository.findByLoginId(providerId);
         UserInfoEntity user;
 
         if(!optionalUser.isPresent()){
@@ -62,7 +62,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .userInfoType(provider)
                     .role("USER")
                     .build();
-            userRepository.insertSocialMember(user);       
+            try {
+                userRepository.insertSocialMember(user);                
+            } catch (DuplicateKeyException e) { // 중복 유저 데이터가 존재할 경우 
+                user = UserInfoEntity.builder()
+                .userEmail("false")
+                .build();
+                return new PrincipalDetails(user, oAuth2User.getAttributes());
+            }
         } else{
             user = optionalUser.get();
         }
