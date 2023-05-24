@@ -10,13 +10,25 @@ public class QuestController {
     public String index(Model model) {
         // 필요한 데이터를 모델에 담아 뷰 템플릿으로 전달
         model.addAttribute("imageUrls", new String[] {
-                "images/20230311_210102.jpg",
-                "images/20230311_210726.jpg",
-                "images/20230311_211207.jpg",
-                "images/20230311_211718.jpg",
-                "images/20230311_212519.jpg",
-                "images/20230311_212734.jpg",
-                "images/20230426_203407.jpg"
+                "images/image1.jpg",
+                "images/image2.jpg",
+                "images/image3.jpg",
+                "images/image4.jpg",
+                "images/image5.jpg",
+                "images/image6.jpg",
+                "images/image7.jpg",
+                "images/image8.jpg",
+                "images/image9.jpg",
+                "images/image10.jpg",
+                "images/image11.jpg",
+                "images/image12.jpg",
+                "images/image13.jpg",
+                "images/image14.jpg",
+                "images/image15.jpg",
+                "images/image16.jpg",
+                "images/image17.jpg",
+                "images/image18.jpg",
+                
         });
 
         return "index";
