@@ -6,8 +6,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/findPwdChangePage.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/auth/findPwdChangePage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
     <title>비밀번호 찾기 - PhoTalk</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
@@ -22,12 +22,13 @@
           jQuery(spinner).css("display", "");
         }
       }; 
-      /* 비밀번호 유효성 검사 */
+      /* 비밀번호 유효성 검사 및 비밀번호 변경 */
       function pwdForm_check(){
-    	  var pwd = document.getElementById("userNewPwd");
-    	  var repwd = document.getElementById("userNewPwdCheck");
+    	  const pwd = document.getElementById("userNewPwd");
+    	  const repwd = document.getElementById("userNewPwdCheck");
     	  if(pwd.value!=repwd.value){
     		  document.getElementById("pwdCheck2").style.display='none';
+          document.getElementById("pwdCheck3").style.display='none';
     		  document.getElementById("pwdCheck1").style.display='block';
     		  pwd.value=null;
     		  repwd.value=null;
@@ -38,25 +39,65 @@
     	  var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
     	  if(!pwdCheck.test(pwd.value) || !pwdCheck.test(repwd.value)){
     		  document.getElementById("pwdCheck1").style.display='none';
+          document.getElementById("pwdCheck3").style.display='none';
     		  document.getElementById("pwdCheck2").style.display='block';
     		  pwd.value=null;
     		  repwd.value=null;
     		  pwd.focus();	  
     		  return false;
     	  } 
-    	  document.findPwd_frm.action = "findPwdChangeProc.jsp"
-          document.findPwd_frm.submit();  
+
+        const userEmail = document.getElementById('idText2').innerHTML;
+        const userPassword = document.getElementById("userNewPwd").value;
+        $.ajax({
+          url : "/changeUserPwd",
+          type : "post",
+          data: {
+            userEmail: userEmail,
+            userPassword : userPassword
+          },
+          success : function(obj){
+            if(obj.fail != null){ // 소설로그인 시
+              document.getElementById("pwdCheck1").style.display='none';
+    		      document.getElementById("pwdCheck2").style.display='none';
+    		      document.getElementById("pwdCheck3").style.display='block';
+              pwd.value=null;
+    		      repwd.value=null;
+    		      pwd.focus();	
+            }
+            if(obj.success != null){
+              location.replace('/findPwdOk');
+            }  
+          },
+          error : function(obj){
+            document.getElementById("errorAlarmText").innerHTML = "존재하는 비밀번호가 없습니다.";
+            $('.signUp-modal').css('display', 'block');
+          }
+        }) 
       }
+
+      // 비밀번호 찾기 input 값 엔터키 이벤트
+      function onEnterChangePwd() {
+        const userNewPwd = document.getElementById('userNewPwd').value;
+        const userNewPwdCheck = document.getElementById('userNewPwdCheck').value;
+        var keyCode = window.event.keyCode;
+        if (keyCode == 13) {
+          //엔테키 이면
+          if(userNewPwd != "" && userNewPwdCheck != "" ){
+            pwdForm_check();
+          }
+        }
+      }      
     </script>
   </head>
   <body>
     <nav id="navbar">
-      <img src="images/joinLogo.png" id="signUpOkLogo" />
-      <a href="login.jsp" id="logo">PhoTalk</a>
+      <img src="/images/joinLogo.png" id="signUpOkLogo" />
+      <a href="/index" id="logo">PhoTalk</a>
       <ul>
-        <li><a href="signUp.jsp" class="signUp">회원가입</a></li>
+        <li><a href="/signUp" class="signUp">회원가입</a></li>
         <li>|</li>
-        <li><a href="login.jsp" class="signUp">로그인</a></li>
+        <li><a href="/index" class="signUp">로그인</a></li>
       </ul>
     </nav>
     <!-- 비밀번호 재설정 텍스트 -->
@@ -68,9 +109,9 @@
       <div id="findPwdComment">새로운 비밀번호를 재설정해주세요.</div>
       <!-- 새 비밀번호 입력 폼 -->
       <div class="findPwdInput-container">
-        <form method="POST" name="findPwd_frm" id = "findPwd_frm">
+        <form method="POST" name="findPwd_frm" id = "findPwd_frm" onsubmit="return false;">
           <span class="idText">아이디</span>
-          <span class="idText2"><%=userEmail%></span>
+          <span class="idText2" id="idText2">${param.userEmail}</span>
           <span class="pwdText">새 비밀번호</span>
           <input -webkit-autofill
             id="userNewPwd"
@@ -79,6 +120,7 @@
             placeholder="영문 숫자 포함 8자 이상"
             maxlength="60"
             autocomplete="false"
+            onkeydown="javascript:onEnterChangePwd();"
             style="-webkit-box-shadow: 0 0 0 1000px #f9f9f9 inset"
           />
           <span class="pwdTextCheck">새 비밀번호 확인</span>
@@ -89,16 +131,18 @@
             placeholder="새 비밀번호 확인"
             maxlength="60"
             autocomplete="false"
+            onkeydown="javascript:onEnterChangePwd();"
           />
-          <input name="userEmail" type="hidden" value="<%=userEmail%>">
+          <input name="userEmail" type="hidden" value="간다">
           	<span id="pwdCheck1"style="display:none; position:absolute;left: 200px;top: 173px;color:#ed4956;font-size: 12px">
           		* 비밀번호가 일치하지 않습니다.
-          	</span>
-        
+          	</span>      
           	<span id="pwdCheck2" style="display:none; position:absolute;left: 200px;top: 173px;color:#ed4956;font-size: 12px">
           		* 비밀번호 양식이 틀립니다.
           	</span> 
-        
+           	<span id="pwdCheck3" style="display:none; position:absolute;left: 200px;top: 173px;color:#ed4956;font-size: 12px">
+          		* 이전과 같은 비밀번호입니다.
+          	</span>        
           <button
             type="button"
             class="findPwdCheckBtn"
@@ -118,6 +162,6 @@
       </div>
     </footer>
   </body>
-  <script src="js/findPwdChange.js"></script>
-  <script src="js/spin.js"></script>
+  <script src="/js/auth/findPwdChange.js"></script>
+  <script src="/js/auth/spin.js"></script>
 </html>

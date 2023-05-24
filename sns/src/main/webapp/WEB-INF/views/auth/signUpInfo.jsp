@@ -54,6 +54,7 @@
           $('.signUp-modal').css('display', 'block');
           return false;
         }
+        
         $.ajax({
           url : "/signUpInfoCheck",
           type : "post",

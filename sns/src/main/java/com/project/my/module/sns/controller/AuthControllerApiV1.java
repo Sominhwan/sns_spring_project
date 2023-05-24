@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,7 @@ import com.project.my.module.userRole.repository.UserRepository;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
-@RestController // 비돋기 데이터 처리후 데이터 반환
+@RestController // 비동기기 데이터 처리후 데이터 반환
 @RequiredArgsConstructor
 public class AuthControllerApiV1 {
     private final AuthServiceApiV1 authServiceApiV1;
@@ -64,7 +63,32 @@ public class AuthControllerApiV1 {
             return result;
         }
 
-        result = authServiceApiV1.memberValidation(reqDTO);
+        result = authServiceApiV1.memberValidation(reqDTO); 
         return result;
-    }     
+    } 
+    // 회원 아이디 찾기
+    @PostMapping("/findUserId")
+    @ResponseBody 
+    public Map findUserId(@Validated @RequestBody AuthDTO.ReqFindId reqDTO) {       
+        Map result = new HashMap<String, Object>();  // 아이디 찾기 성공 여부 메시지
+        result = authServiceApiV1.getUserId(reqDTO);
+        return result;
+    } 
+    // 회원 비밀번호 찾기
+    @PostMapping("/findUserPwd")
+    @ResponseBody 
+    public Map findUserId(@Validated @RequestBody AuthDTO.ReqFindPwd reqDTO) {       
+        Map result = new HashMap<String, Object>();  // 비밀번호 찾기 성공 여부 메시지
+        result = authServiceApiV1.getUserPwd(reqDTO);
+        return result;
+    }  
+    // 회원 비밀번호 변경하기
+    @PostMapping("/changeUserPwd")
+    @ResponseBody 
+    public Map changeUserPwd(@Validated @RequestBody AuthDTO.ReqChangePwd reqDTO) {       
+        Map result = new HashMap<String, Object>();  // 비밀번호 변경 성공 여부 메시지
+        result = authServiceApiV1.changeUserPwd(reqDTO);
+        return result;
+    }        
+    
 }

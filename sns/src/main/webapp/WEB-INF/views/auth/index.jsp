@@ -53,10 +53,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       }
       /* 로그인 폼 엔터키로 이벤트 발생 */
       function onEnterLogin() {
+        const userEmail = document.getElementById('userEmail').value;
+        const password = document.getElementById('password').value;
         var keyCode = window.event.keyCode;
         if (keyCode == 13) {
           //엔테키 이면
-          loginFrm();
+          if(userEmail != "" && password != ""){
+            loginFrm();
+          }
         }
       }
       /* 메인화면 이동 검증 */
@@ -123,7 +127,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       }
     </script>
   </head>
-  <body onkeydown="javascript:onEnterLogin();">
+  <body>
     <div class="content">
       <div class="left-content">
         <div id="mockUp">
@@ -151,6 +155,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           name="login_frm"
           id="login_frm"
           action="/login-process"
+          onsubmit="return false;"
         >
           <div class="input-box">
             <input
@@ -161,6 +166,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               placeholder="이메일을 입력해 주세요"
               maxlength="60"
               style="-webkit-box-shadow: 0 0 0 1000px #fff inset"
+              onkeydown="javascript:onEnterLogin();"
             />
             <label for="userEmail">이메일을 입력해 주세요</label>
             <span id="userEmailClear">
@@ -176,6 +182,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               placeholder="비밀번호를 입력해 주세요"
               maxlength="50"
               autocomplete="false"
+              onkeydown="javascript:onEnterLogin();"
             />
             <label for="password">비밀번호를 입력해 주세요</label>
             <span id="keyShow">
@@ -220,7 +227,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span class="id_pwd" id="id_find"><a href="/findId">ID</a></span>
         <span class="id_pwd" id="idPwd">/</span>
         <span class="id_pwd" id="pass_find"
-          ><a href="findPwd.jsp">PASS 찾기</a></span
+          ><a href="/findPwd">PASS 찾기</a></span
         >
         <span id="kakaoLogin"
           ><a href="javascript:loginWithKakao()"

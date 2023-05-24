@@ -1,3 +1,8 @@
+/*  비밀번호 찾기 모달 이벤트 */
+function closeSignUpModal(){
+  $('.signUp-modal').css('display', 'none');
+}
+
 /* 비밀번호 찾기 다음 버튼 활성화 */
 const button = document.getElementById("findPwdBtn");
 const inputEmail = document.getElementById("userEmail");

@@ -21,14 +21,14 @@ public class SpringSecurityConfig {
     public BCryptPasswordEncoder encodePWD(){
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable();
 
         http.authorizeHttpRequests(request -> request
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId").permitAll()
+                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
                 //.antMatchers("").hasRole("ADMIN") // ADMIN 권한이 있는 경우만 해당 url 이용가능
                 .anyRequest()

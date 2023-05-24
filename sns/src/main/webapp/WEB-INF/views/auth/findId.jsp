@@ -23,9 +23,76 @@
           jQuery(spinner).css("display", "");
         }
       };
+
+      // 아이디 찾기 
+      function findIdProcess(){
+        const userName = document.getElementById('userName').value;
+        const userNickName = document.getElementById('userNickName').value;
+        $.ajax({
+          url : "/findUserId",
+          type : "post",
+          data: {
+            userName: userName,
+            userNickName: userNickName
+          },
+          success : function(obj){
+            if(obj.message != null){ // 로그인 실패시
+              document.getElementById("errorAlarmText").innerHTML = obj.message;
+              $('.signUp-modal').css('display', 'block');
+            }
+            if(obj.userEmail != null){
+              var form = document.createElement("form");
+              form.setAttribute("charset", "UTF-8");
+              form.setAttribute("method", "Post");  //Post 방식
+              form.setAttribute("action", "/findIdOk"); //요청 보낼 주소
+              var hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", "userEmail");
+              hiddenField.setAttribute("value", obj.userEmail);
+              form.appendChild(hiddenField);  
+
+              hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", "userRegDate");
+              hiddenField.setAttribute("value", obj.userRegDate);
+              form.appendChild(hiddenField);   
+              
+              document.body.appendChild(form);
+              form.submit();
+            }     
+          },
+          error : function(obj){
+            document.getElementById("errorAlarmText").innerHTML = "존재하지 않은 아이디입니다.";
+            $('.signUp-modal').css('display', 'block');
+          }
+        })
+      }
+
+      /* 아이디 찾기 폼 엔터키로 이벤트 발생 */
+      function onEnterFindId() {
+        const userName = document.getElementById('userName').value;
+        const userNickName = document.getElementById('userNickName').value;
+        var keyCode = window.event.keyCode;
+        if (keyCode == 13) {
+          //엔테키 이면
+          if(userName != "" && userNickName!= ""){
+            findIdProcess();
+          }
+        }
+      }      
     </script>
   </head>
   <body>
+    <!-- 아이디 찾기 모달 -->	   
+    <div class="signUp-modal" style="display:none;" >
+      <div class="bg" >
+        <div class="signUp-Box">
+          <div class="errorMsg"><span id="errorText">오류 메시지</span></div>
+          <div class="errorAlarm"><span id="errorAlarmText"></span></div>
+          <div class="errorCheck" style="cursor: pointer" onclick="closeSignUpModal()"><span id="errorCheckText">확인</span></div>
+        </div>
+      </div>    
+    </div>
     <nav id="navbar">
       <img src="/images/joinLogo.png" id="signUpOkLogo" />
       <a href="/index" id="logo">PhoTalk</a>
@@ -46,7 +113,7 @@
         있습니다.
       </div>
       <!-- 아이디 폼 -->
-      <form action="findIdProc.jsp" method="POST">
+      <form action="" method="POST">
         <div class="input-box">
           <input -webkit-autofill
             id="userName"
@@ -56,6 +123,7 @@
             maxlength="60"
             autocomplete="false"
             style="-webkit-box-shadow: 0 0 0 1000px #fff inset"
+            onkeydown="javascript:onEnterFindId();"
           />
           <label for="userName">성명</label>
         </div>
@@ -68,16 +136,17 @@
             maxlength="60"
             autocomplete="false"
             style="-webkit-box-shadow: 0 0 0 1000px #fff inset"
+            onkeydown="javascript:onEnterFindId();"
           />
           <label for="userNickName">닉네임</label>
         </div>
 
         <button
-          type="submit"
+          type="button"
           class="findIdBtn"
           id="findIdBtn"
           disabled
-          onclick=""
+          onclick="findIdProcess()"
         >
           아이디 찾기
         </button>

@@ -1,6 +1,7 @@
 package com.project.my.module.userRole.entity;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,6 +45,13 @@ public class UserInfoEntity {
     // TODO
     // 카카오 회원가입 생성자
     // TODO
+
+    // // 일반 회원가입 생성자
+    // public UserInfoEntity(String userEmail, String userRegDate, String userInfoType) {      
+    //     this.userEmail = userEmail;
+    //     this.userRegDate = userRegDate;
+    //     this.userInfoType = userInfoType;
+    // }
     public void setRole(String role) {
         this.role = role;
     }

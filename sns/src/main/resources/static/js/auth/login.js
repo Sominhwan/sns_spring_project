@@ -88,26 +88,26 @@ function popClose() {
  $(modalBg).hide();
 }
 
-// /* 로그인 성공시 */
-// function loginOK() {
-//   if(document.getElementById('login_container').style.display !== 'none') {
-//     document.getElementById('login_container').style.display = 'none';
-//     document.getElementById('loginOK_container').style.display = 'block';
-//   } else{
-//     document.getElementById('loginOK_container').style.display = 'none';
-//     document.getElementById('login_container').style.display = 'block';
-//   }  
-// }
+ /* 로그인 성공시 */
+ function loginOK() {
+   if(document.getElementById('login_container').style.display !== 'none') {
+     document.getElementById('login_container').style.display = 'none';
+     document.getElementById('loginOK_container').style.display = 'block';
+   } else{
+     document.getElementById('loginOK_container').style.display = 'none';
+     document.getElementById('login_container').style.display = 'block';
+   }  
+ }
 
 /* 로그인 실패시 팝업 이벤트 */
-// function close () { 
-//     document.querySelector(".background").className = "background";
-// }
+ function close () { 
+     document.querySelector(".background").className = "background";
+ }
 
-// function check () { 
-//   document.querySelector(".background").className = "background";
-// }
+ function check () { 
+   document.querySelector(".background").className = "background";
+ }
 
-// document.querySelector("#close").addEventListener('click', close);
-// document.querySelector("#check").addEventListener('click', check);
+ document.querySelector("#close").addEventListener('click', close);
+ document.querySelector("#check").addEventListener('click', check);
 

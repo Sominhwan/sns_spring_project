@@ -75,6 +75,23 @@
         SET emailcertification = 1
         WHERE userEmail = #{userEmail}
     </update>
+    <!-- 유저 아이디 찾기 -->
+    <select id="findUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity" parameterType="map">
+        SELECT userEmail, userRegDate, userInfoType
+        FROM userinfo
+        WHERE userName = #{userName} and userNickName = #{userNickName} 
+    </select> 
+    <!-- 유저 비밀번호 찾기 -->
+    <select id="findUserPwd" resultType="com.project.my.module.userRole.entity.UserInfoEntity" parameterType="map">
+        SELECT userPwd, userInfoType
+        FROM userinfo
+        WHERE userEmail = #{userEmail} 
+    </select>   
+	<update id="updateUserPassword">
+        UPDATE userinfo 
+        set userPwd = #{changePassword}
+        WHERE userEmail = #{userEmail}
+    </update>      
 </mapper>
 
 

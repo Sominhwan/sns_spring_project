@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,4 +67,30 @@ public class AuthPageController {
     public String findId() {
         return "/auth/findId";
     }    
+    // 아이디 찾기 완료 페이지 이동
+    @PostMapping("/findIdOk")
+    public ModelAndView findIdOk(HttpServletRequest request, ModelAndView mav) {
+        mav.addObject("userEmail", request.getParameter("userEmail"));
+        mav.addObject("userRegDate", request.getParameter("userRegDate"));
+        mav.setViewName("/auth/findIdOk");     
+        return mav;
+    }  
+    // 비밀번호 찾기 페이지 이동
+    @GetMapping("/findPwd")
+    public String findPwd() {
+        return "/auth/findPwd";
+    }  
+    // 비밀번호 변경 페이지 이동
+    @PostMapping("/findPwdChange")
+    public ModelAndView findPwdChange(HttpServletRequest request, ModelAndView mav) {
+        mav.addObject("userEmail", request.getParameter("userEmail"));
+        mav.setViewName("/auth/findPwdChange"); 
+        return mav;
+    } 
+    // 비밀번호 변경 완료 페이지 이동
+    @GetMapping("/findPwdOk")
+    public String findPwdOk() {
+        return "/auth/findPwdOk";
+    }      
+    
 }
