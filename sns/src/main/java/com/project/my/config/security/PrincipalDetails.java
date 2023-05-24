@@ -2,21 +2,27 @@ package com.project.my.config.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.project.my.module.userRole.entity.UserInfoEntity;
 
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails, OAuth2User{
     private UserInfoEntity userInfoEntity;
+    private Map<String, Object> attributes;
 
     // 일반 유저 로그인시 사용하는 생성자
     public PrincipalDetails(UserInfoEntity userInfoEntity){
         this.userInfoEntity = userInfoEntity;
     }
     // OAuth2User 를 사용한 SNS 유저 로그인 시 사용하는 생성자
-    // TODO
+    public PrincipalDetails(UserInfoEntity userInfoEntity, Map<String, Object> attributes) {
+        this.userInfoEntity = userInfoEntity;
+        this.attributes = attributes;
+    }
 
     // 해당 유저의 권한을 리턴
     @Override
@@ -72,6 +78,10 @@ public class PrincipalDetails implements UserDetails{
     public String getUserSocial(){
         return userInfoEntity.getUserSocial();
     }
+    // 해당 유저 소셜id 리턴
+    public String getUserSocialId(){
+        return userInfoEntity.getUserSocialId();
+    }
     // 해당 유저 이메일 인증확인 리턴
     public String getEmailcertification(){
         return Integer.toString(userInfoEntity.getEmailcertification());
@@ -107,5 +117,10 @@ public class PrincipalDetails implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    // OAuth2 소셜 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }    
 }

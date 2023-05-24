@@ -20,6 +20,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
       var emailCheck;
+      var socialEmail = '${userEmail}';
+      if(socialEmail != ""){
+        sessionStorage.setItem('userEmailHash', socialEmail);
+        document.getElementById('loginErrorMsg').style.display = 'none';
+        emailCheck = '${emailCertification}';
+        document.getElementById('login_container').style.display = 'none';
+        document.getElementById('loginOK_container').style.display = 'block';
+        document.getElementById("loginOKBtn").value = userNickName+ " 님으로 계속";      
+        document.getElementById("profile").src = userImage ;
+        document.getElementById("login").innerHTML = userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                          
+      }
 
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
@@ -86,44 +97,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             alert("실패");
           }
         })
-      }
-
-      /* 카카오 로그인 */
-      Kakao.init("7b282dfd5c5c643acd7323bd051ec42b");
-      function loginWithKakao() {
-        Kakao.Auth.login({
-          success: function (authObj) {
-            console.log(authObj); // access토큰 값
-            Kakao.Auth.setAccessToken(authObj.access_token); // access토큰값 저장
-            getInfo();
-          },
-          fail: function (err) {
-            console.log(err);
-          },
-        });
-      }
-      function getInfo() {
-        Kakao.API.request({
-          url: "/v2/user/me",
-          success: function (res) {
-            var id = res.id;
-            var email = res.kakao_account.email;
-            var nickname = res.kakao_account.profile.nickname;
-            var gender = res.kakao_account.gender;
-            f = document.kakaologin;
-            f.id.value = id;
-            f.email.value = email;
-            f.nickname.value = nickname;
-            f.gender.value = gender;
-            f.submit();
-          },
-          fail: function (error) {
-            alert(
-              "카카오 로그인에 실패했습니다. 관리자에게 문의하세요." +
-                JSON.stringify(error)
-            );
-          },
-        });
       }
     </script>
   </head>
@@ -229,28 +202,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span class="id_pwd" id="pass_find"
           ><a href="/findPwd">PASS 찾기</a></span
         >
-        <span id="kakaoLogin"
-          ><a href="javascript:loginWithKakao()"
-            ><img src="/images/kakaoLoginBtn2.svg" /></a
-        ></span>
-        <span id="naverLogin"
-          ><a href="    "><img src="/images/naverLoginBtn.svg" /></a
-        ></span>
-        <!-- 카카오 개인정보 저장 폼 -->
-        <form name="kakaologin" method="post" action="kakaoLoginOk">
-          <input type="hidden" name="id" />
-          <input type="hidden" name="email" />
-          <input type="hidden" name="nickname" />
-          <input type="hidden" name="gender" />
-        </form>
+        <span id="kakaoLogin">
+          <a href="/oauth2/authorization/kakao"><img src="/images/kakaoLoginBtn2.svg" /></a>
+        </span>
+        <span id="naverLogin">
+          <a href="/oauth2/authorization/naver"><img src="/images/naverLoginBtn.svg" /></a>
+        </span>
         <!-- 로그인 실패시 뜨는 문구 -->
         <span id="loginErrorMsg" style="position: absolute; left: 71px; top: 530px; color:#ed4956; font-size:14px; display: none;">
           * 로그인에 실패하였습니다.
         </span>
         <span id="signUp">아직도 회원이 아닌가요?</span>
         <span id="signUpTag"><a href="/signUp">회원가입</a></span>
-      </div>
-      
+      </div>    
       <!-- 로그인 완료 컨테이너  -->
       <div class="loginOK_container" id="loginOK_container" style="display: none;">
         <img src="/images/loginLogo.png" />

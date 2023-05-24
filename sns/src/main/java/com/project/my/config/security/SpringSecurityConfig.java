@@ -11,9 +11,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.project.my.module.sns.service.PrincipalOauth2UserService;
+
 @Configuration
 @EnableMethodSecurity
 public class SpringSecurityConfig {
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
@@ -42,6 +47,11 @@ public class SpringSecurityConfig {
                 .defaultSuccessUrl("/loginOk.action", false) // 로그인 성공시 이동 url
                 .permitAll()
         );
+        http.oauth2Login()
+                .loginPage("/index") // 소셜 로그인 페이지 지정
+                .defaultSuccessUrl("/socialLoginOk.action", false)
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
         http.rememberMe()
                 .key("oingdaddy!")
                 .rememberMeParameter("remember")
@@ -58,10 +68,6 @@ public class SpringSecurityConfig {
             .logoutSuccessHandler((request, response, authentication) -> {
                 response.sendRedirect("/logOut.action");
             }); // 로그아웃 성공 핸들러      
-
-        
-        // 소셜 로그인 oauth2Login() 추가 
-        // TODO
         return http.build();
     }  
 }

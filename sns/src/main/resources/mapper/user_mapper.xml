@@ -11,7 +11,7 @@
         userSchool,
         userAddress,
         userSocial,
-        userSocialid,
+        userSocialId,
         emailHash,
         emailcertification,
         userImage,
@@ -23,6 +23,12 @@
     </sql>
     <!-- 유저 아이디(이메일)를 통해 모든 회원정보 가져오기 -->
     <select id="findByUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
+        SELECT <include refid="fullColumn"/>
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>
+    <!-- 유저 아이디(이메일, 네이버)를 통해 모든 회원정보 가져오기 -->
+    <select id="findByLoginId" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
         SELECT <include refid="fullColumn"/>
         FROM userinfo
         WHERE userEmail = #{userEmail}
@@ -54,13 +60,37 @@
                 '-',
                 '-',
                 #{emailHash},
-                0,
+                '0',
                 'images/profile.svg',
                 NOW(),
                 #{userAd},
                 NOW(),
                 '일반',
                 'USER'
+              )
+    </insert>
+    <!-- 소셜 회원가입 정보 INSERT -->
+    <insert id="insertSocialMember" parameterType="map">
+        INSERT INTO userinfo(<include refid="fullColumn"/>)
+        VALUES(
+                #{userName},
+                #{userGender},
+                #{userNickName},
+                #{userEmail},
+                '-',
+                #{userPN},
+                '-',
+                '-',
+                '-',
+                #{userSocialId},
+                '-',
+                0,
+                'images/profile.svg',
+                NOW(),
+                '0',
+                NOW(),
+                #{userInfoType},
+                #{role}
               )
     </insert>
     <!-- 이메일 해쉬값으로 이메일 찾기 -->
@@ -87,6 +117,7 @@
         FROM userinfo
         WHERE userEmail = #{userEmail} 
     </select>   
+    <!-- 회원 비밀번호 변경하기 -->
 	<update id="updateUserPassword">
         UPDATE userinfo 
         set userPwd = #{changePassword}

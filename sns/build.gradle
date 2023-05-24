@@ -63,7 +63,8 @@ dependencies {
 
 	// 자바 메일 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-mail' // Email
-
+	// OAuth2 소셜 로그인 라이브러리 
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 
