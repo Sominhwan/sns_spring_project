@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Modal with Scroll</title>
-    <style>
+	<meta charset="UTF-8">
+	<title>Modal with Scroll</title>
+	<style>
 		body {
 			margin: 0;
 			padding: 0;
@@ -25,9 +25,8 @@
 		.modal-content {
 			position: relative;
 			background-color: white;
-			width: 1560px;
+			width: 1920px;
 			height: 2080px;
-			padding: 20px;
 			box-sizing: border-box;
 			overflow: scroll;
 			overflow-x: scroll;
@@ -48,42 +47,38 @@
 			margin-bottom: 20px;
 			text-align: left;
 			position: absolute;
-			top: 10px;
-			left: 50px;
+			top: 126px;
+			left: 383px;
 			transform: translateX(-50%);
 			z-index: 3; /* 추가 */
 		}
 		.image-row {
 	        display: flex;
 	        flex-wrap: wrap;
-	        justify-content: space-between;
 	        margin-top: 40px;
 	        gap: 10px; /* 간격 조절 */
    		}
 
     	.image-container {
-	        width: calc(33.33% - 10px);
-	        margin-bottom: 20px;
-	        position: relative;
+	        width: 320px;
+	        height: 320px;
+	        position: absolute;
 	        box-sizing: border-box;
 	        background-color: white;
-	        padding: 40px;
 	        border-radius: 10px;
    		}
    		.image-container .icon {
 		    position: absolute;
-		    width: 34px;
-		    height: 34px;
-		    top: 40px;
-		    right: 40px;
-		    padding: 5px;
+		    width: 40px;
+		    height: 40px;
+		    top: 13px;
+		    right: 12px;
 		}
 
 	    .image-container img {
 	        width: 320px;
 	        height: 320px;
 	        display: block;
-	        margin-bottom: 10px;
 	    }
 
 		/* 이미지 위에 마우스 오버 효과 */
@@ -98,32 +93,108 @@
 	</style>
 </head>
 <body>
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <!-- 탐색 글자 추가 -->
-        <h2 class="search-text">탐색</h2>
-        <div class="image-row">
-            <!-- 이미지 -->
-            <div th:each="imageUrl : ${imageUrls}" class="image-container">
-                <img th:src="@{${imageUrl}}" alt="Image">
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    const modal = document.querySelector("#modal");
-    const closeButton = document.querySelector(".close-button");
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<span class="close-button">&times;</span>
+			<!-- 탐색 글자 추가 -->	
+			<h2 class="search-text">탐색</h2>	
+			<div class="image-row">
+		    <div class="image-container" style="left: 619px; top: 244px;">
+		      <img src="images/image1.jpg" alt="이미지1">
+		    </div>
 
-    window.addEventListener("load", () => {
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    });
+		    <div class="image-container" style="left: 964px; top: 244px;">
+		      <img src="images/image2.jpg" alt="이미지2">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
 
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    });
-</script>
+		    <div class="image-container" style="left: 1309px; top: 244px;">
+		      <img src="images/image3.jpg" alt="이미지3">
+		    </div>
+
+		    <div class="image-container" style="left: 619px; top: 584px;">
+		      <img src="images/image4.jpg" alt="이미지4">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
+
+		    <div class="image-container" style="left: 964px; top: 584px;">
+		      <img src="images/image5.jpg" alt="이미지5">
+		    </div>
+
+		    <div class="image-container" style="left: 1309px; top: 584px;">
+		      <img src="images/image6.jpg" alt="이미지6">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
+
+		    <div class="image-container" style="left: 619px; top: 924px;">
+		      <img src="images/image7.jpg" alt="이미지7">
+		    </div>
+
+		    <div class="image-container" style="left: 964px; top: 924px;">
+		      <img src="images/image8.jpg" alt="이미지8">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
+
+		    <div class="image-container" style="left: 1309px; top: 924px;">
+		      <img src="images/image9.jpg" alt="이미지9">
+		    </div>
+
+		    <div class="image-container" style="left: 619px; top: 1264px;">
+		      <img src="images/image10.jpg" alt="이미지10">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
+
+		    <div class="image-container" style="left: 964px; top: 1264px;">
+		      <img src="images/image11.jpg" alt="이미지11">
+		      <img class="icon" src="images/exploreLinkCopyBtn@3x.png" alt="사진 여러장 있는 게시물">
+		    </div>
+
+		    <div class="image-container" style="left: 1309px; top: 1264px;">
+		      <img src="images/image12.jpg" alt="이미지12">
+		      <img class="icon" src="images/videoicon.png" alt="동영상">
+		    </div>
+
+		    <div class="image-container" style="left: 619px; top: 1604px;">
+		      <img src="images/image13.jpg" alt="이미지13">
+		    </div>
+
+		    <div class="image-container" style="left: 964px; top: 1604px;">
+		      <img src="images/image14.jpg" alt="이미지14">
+		      <img class="icon" src="images/videoicon.png" alt="동영상">
+		    </div>
+
+		    <div class="image-container" style="left: 1309px; top: 1604px;">
+		      <img src="images/image15.jpg" alt="이미지15">
+		    </div>
+
+		    <div class="image-container" style="left: 619px; top: 1944px;">
+		      <img src="images/image16.jpg" alt="이미지16">
+		    </div>
+
+		    <div class="image-container" style="left: 964px; top: 1944px;">
+		      <img src="images/image17.jpg" alt="이미지17">
+		      <img class="icon" src="images/videoicon.png" alt="동영상">
+		    </div>
+
+		    <div class="image-container" style="left: 1309px; top: 1944px;">
+		      <img src="images/image18.jpg" alt="이미지18">
+		    </div>
+		  </div>
+		</div>
+		</div>
+	<script>
+		const modal = document.querySelector("#modal");
+		const closeButton = document.querySelector(".close-button");
+
+		window.addEventListener("load", () => {
+			modal.style.display = "block";
+			document.body.style.overflow = "hidden";
+		});
+
+		closeButton.addEventListener("click", () => {
+			modal.style.display = "none";
+			document.body.style.overflow = "auto";
+		});
+	</script>
 </body>
 </html>
