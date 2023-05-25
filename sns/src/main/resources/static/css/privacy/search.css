@@ -1,0 +1,14 @@
+
+#uniName{
+    z-index:1000;
+    height: 45px; 
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    padding-left: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
