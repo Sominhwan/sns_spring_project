@@ -35,7 +35,7 @@ public class SpringSecurityConfig {
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                 .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
-                //.antMatchers("").hasRole("ADMIN") // ADMIN 권한이 있는 경우만 해당 url 이용가능
+                .antMatchers("/admin/**", "/css/admin/**", "js/admin/**", "/adminImages/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
                 .anyRequest()
                 .authenticated()
         );

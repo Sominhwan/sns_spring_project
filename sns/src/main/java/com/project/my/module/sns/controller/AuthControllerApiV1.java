@@ -32,7 +32,8 @@ public class AuthControllerApiV1 {
         map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
         map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
         map.put("emailcertification", principalDetails.getEmailcertification()); // 이메일 인증 반환
-        map.put("userEmailHash", principalDetails.getUserEmailHash());
+        map.put("userEmailHash", principalDetails.getUserEmailHash()); // 이메일 해쉬 리턴
+        map.put("userRole", principalDetails.getRole()); // 유저 권한 리턴
         return map;
     }
     // 로그아웃 

@@ -122,7 +122,13 @@
         UPDATE userinfo 
         set userPwd = #{changePassword}
         WHERE userEmail = #{userEmail}
-    </update>      
+    </update> 
+    <!-- 유저 정보 찾기(관리자) -->
+    <select id="search" parameterType="map" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
+        SELECT userName, userNickName, userEmail, userSocialId, userPN, userAddress, emailcertification, userInfoType, userRegDate
+        FROM userinfo
+        WHERE userName LIKE concat ('%', #{userName}, '%')
+    </select>      
 </mapper>
 
 

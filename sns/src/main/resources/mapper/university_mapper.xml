@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.UniversityRepository">
+
+    <!-- university의 uniname 데이터 가져오기 -->
+    <select id="universityData" resultType="com.project.my.module.userRole.entity.UniversityEntity">
+        SELECT uniName
+        FROM university
+        WHERE uniName LIKE concat(#{university},'%');
+    </select>
+</mapper>

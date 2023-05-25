@@ -98,6 +98,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
     public String getUserInfoType(){
         return userInfoEntity.getUserInfoType();
     }
+    // 해당 유저 권한 리턴
+    public String getRole(){
+        return userInfoEntity.getRole();
+    }
     // 계정 만료
     @Override
     public boolean isAccountNonExpired() {

@@ -1,5 +1,6 @@
 package com.project.my.module.userRole.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -34,5 +35,9 @@ public interface UserRepository {
     UserInfoEntity findUserPwd(@Param("userEmail") String userEmail);
     // 회원 비밀번호 변경하기 UPDATE
     void updateUserPassword(@Param("userEmail") String userEmail, @Param("changePassword") String changePassword);
+    
+    /************************************* 관리자 기능 ***********************************************************/
+    // 회원이름을 통해 회원정보 검색
+    List<UserInfoEntity> search(String userName);
 
 }

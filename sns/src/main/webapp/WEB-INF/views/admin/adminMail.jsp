@@ -1,25 +1,15 @@
-<%@page import="sns.SMSBean"%>
-<%@page import="sns.UserinfoBean"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="sns.AdminMgr"%>
-<%@page import="java.io.PrintWriter"%>
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="sns.SMS" %>
-<%
-	AdminMgr mgr = new AdminMgr();
-	ArrayList<UserinfoBean> userPNList = mgr.getUserPN();	
-	ArrayList<SMSBean> smsList = mgr.getSMS();
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
-    <link rel="stylesheet" href="css/adminMailPage.css" />
-    <link rel="stylesheet" href="css/adminSmsPage.css" />
-    <link rel="stylesheet" href="css/loading.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/admin/adminMailPage.css" />
+    <link rel="stylesheet" href="/css/admin/adminSmsPage.css" />
+    <link rel="stylesheet" href="/css/auth/loading.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
     <script type="text/javascript" src="../smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -224,9 +214,9 @@
         var uploadFileList = Object.keys(fileList);
         var emailTitle = $('#titleInput').val();
         $('#userAllEmail').val(allEmailArr);
-  	  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
-  	  let content = document.getElementById("editorTxt").value;   
-  	  $('#mailContent').val(content);
+  	    oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
+  	    let content = document.getElementById("editorTxt").value;   
+  	    $('#mailContent').val(content);
         // 받는 이메일 주소가 존재하는지 체크
         if (allEmailArr.length == 0){
             alert("이메일 주소를 입력하세요.");
@@ -243,12 +233,12 @@
           alert("총 용량 초과\n총 업로드 가능 용량 : " + maxUploadSize + " MB");
           return;
         }
-  	  // 메일 내용이 존재하는지 체크
-  	  if(content == "" || content==null || content=='&nbsp;' || content=='<p>&nbsp;</p>') {
-  		  alert("내용을 입력해주세요.");
-  	      oEditors.getById["editorTxt"].exec("FOCUS")
-  		  return;
-  	  } 
+  	    // 메일 내용이 존재하는지 체크
+        if(content == "" || content==null || content=='&nbsp;' || content=='<p>&nbsp;</p>') {
+          alert("내용을 입력해주세요.");
+            oEditors.getById["editorTxt"].exec("FOCUS")
+          return;
+        } 
   		
         if (confirm("메일을 전송 하시겠습니까?")) {
           // 등록할 파일 리스트를 formData로 데이터 입력
@@ -261,10 +251,10 @@
           $('#titleInput').val('');
           $('#emailInput').val('');
           allEmailArr = [];
-  		var emailWrap = document.getElementById("emailWrap");
-  		emailWrap.innerHTML = '';
-          oEditors.getById["editorTxt"].exec("SET_IR", [""]);
-  		document.getElementById("fileTableTbody").innerHTML = "";
+          var emailWrap = document.getElementById("emailWrap");
+          emailWrap.innerHTML = '';
+              oEditors.getById["editorTxt"].exec("SET_IR", [""]);
+          document.getElementById("fileTableTbody").innerHTML = "";
           fileList = [];
           fileSizeList = [];
           
@@ -287,37 +277,38 @@
         }
       }
       
-	  /* 로그아웃 */
-	  function logout(){
-		  if (confirm("로그아웃 하시겟습니까?") == true){ 
-			  location.replace('login.jsp');
-		  } else{
-			  return ;
+	 	/* 로그아웃 */
+	 	function logout(){
+	 		if (confirm("로그아웃 하시겟습니까?") == true){ 
+        sessionStorage.removeItem('userEmailHash');
+		 		location.replace('/index');
+			} else{
+			    return ;
 		  } 		
-	 }      
+	 	}    
     </script>
   </head>
   <!-- 로딩바 -->
     <div id="loading" style="display: none">
       <div id="loading_bar">
         <!-- 로딩바의 경로를 img 태그안에 지정해준다. -->
-        <img src="adminImages/Spin-loading.gif" style="width: 100px;"/>
+        <img src="/adminImages/Spin-loading.gif" style="width: 100px;"/>
       </div>
     </div>
   <body>
     <div class="left-side">
     <aside>
       <div id="side-logo">
-        <img src="adminImages/adminLogo.png" alt="logo" /><a
-          href="adminPage.jsp"
+        <img src="/adminImages/adminLogo.png" alt="logo" /><a
+          href="/admin/adminPage"
           id="adminLogo"
           >PhoTalk</a
         >
       </div>
       <ul>
         <li>
-          <a href="adminPage.jsp" class="icon"
-            ><img src="adminImages/adminProfile.svg" alt="userImg" /><span
+          <a href="/admin/adminPage" class="icon"
+            ><img src="/adminImages/adminProfile.svg" alt="userImg" /><span
               class="sideText"
               >회원</span
             >
@@ -325,27 +316,27 @@
           >
         </li>
         <li>
-          <a href="adminPost.jsp"
+          <a href="/admin/adminPost"
             ><img
-              src="adminImages/adminPost.svg"
+              src="/adminImages/adminPost.svg"
               alt="postImg"
               class="icon"
             /><span class="sideText">게시물 관리</span></a
           >
         </li>
         <li>
-          <a href="adminMail.jsp"
+          <a href="/admin/adminMail"
             ><img
-              src="adminImages/adminMail.svg"
+              src="/adminImages/adminMail.svg"
               alt="messageImg"
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
         </li>
         <li>
-          <a href="adminStatistics.jsp"
+          <a href="/admin/adminStatistics"
             ><img
-              src="adminImages/chartIcon.svg"
+              src="/adminImages/chartIcon.svg"
               alt="charIcon"
               class="icon"
             /><span class="sideText">통계</span></a
@@ -355,7 +346,7 @@
       <!-- 로그아웃 -->
       <div id="logout">
         <img
-            src="adminImages/adminLogout.svg"
+            src="/adminImages/adminLogout.svg"
             alt="logoutImg"
             class="icon"
             style="width: 25px;"
@@ -373,7 +364,7 @@
             <span class="footer_info"><a href="#">운영정책</a></span>
             <span class="footer_info"><a href="#">위치</a></span>
             <span class="footer_info"><a href="#">인기 계정</a></span>
-            <span class="footer_info"><a href="login.jsp">사이트맵</a></span>
+            <span class="footer_info"><a href="/index">사이트맵</a></span>
             <span class="footer_info"><a>&copy;2023 Social Net Work Project</a></span>
       </div>
         </div>
@@ -383,12 +374,12 @@
     <!-- 메일 네비게이션 바 -->
     <nav id="navbar">
         <span id = "adminMailLogo">
-        <img src="adminImages/adminMailLogo.svg" id="navLogo"/>
+        <img src="/adminImages/adminMailLogo.svg" id="navLogo"/>
         </span>
         <span id="adminMailLogo-text">메일 보내기</span>          
     <!--     <span id="adminSMSLogo-text">SMS 보내기</span>   -->  
-        <img src="adminImages/smsBtn.svg" id="smsBtn" onclick="changePage()"/>
-        <img src="adminImages/mailBtn.svg" id="mailBtn" onclick="changePage()"/>
+        <img src="/adminImages/smsBtn.svg" id="smsBtn" onclick="changePage()"/>
+        <img src="/adminImages/mailBtn.svg" id="mailBtn" onclick="changePage()"/>
     </nav>
     <!-- 메일 보내기 컨텐츠 -->
     <div class="mailTable">
@@ -436,9 +427,9 @@
             </div>	   		
       		<div id="dropZone" style="position:absolute; left: 120px; top:245px; width: 354px; height: 50px; 
       			border: solid 1px #e3e3e3; border-radius: 5px; overflow-y: auto">
-        	<div id="fileDragDesc"><img src="adminImages/file.svg" id="fileIcon" alt="file" style="width: 11px; margin-right: -17px; margin-top: 5px;"/>
+        	<div id="fileDragDesc"><img src="/adminImages/file.svg" id="fileIcon" alt="file" style="width: 11px; margin-right: -17px; margin-top: 5px;"/>
         		파일을 드래그 해주세요.</div>
-        	<table id="fileListTable" style="width=100%; height=100%; border=0px; font-size: 12px;">
+        	<table id="fileListTable" style="width:100%; height:100%; border:0px; font-size: 12px;">
           		<tbody id="fileTableTbody"></tbody>
         	</table>
       		</div>
@@ -455,9 +446,9 @@
      	<span id="smsSend">
             SMS 보내기
         </span> 
-        	<img alt="iphone" src="adminImages/iphone.png" id="iphone">
+        	<img alt="iphone" src="/adminImages/iphone.png" id="iphone">
         	<form method="post" name="smsForm" class="smsForm">
-        	<table class="table" style="border: 1px solid #eeeee">
+        	<table class="table" style="border: 1px solid #eeeeee">
         		<thead>
         			<tr>
         				<th style="text-align: left; color: #fff; padding-left: 7px;">문자 전송 양식</th>
@@ -494,7 +485,7 @@
         					<input type="hidden" name="sphone2" value="4662">
         					<input type="hidden" name="sphone3" value="7527">
         					<input class="sendBtn" type="button" value="전송하기" onclick="sendSms()">
-        					<img alt="kakaoShare" src="adminImages/kakaoShare.svg" id="kakaoShare" onclick="changeSharePage()">
+        					<img alt="kakaoShare" src="/adminImages/kakaoShare.svg" id="kakaoShare" onclick="changeSharePage()">
         				</td>
         			</tr>         			     			 			
         		</tbody>
@@ -502,23 +493,23 @@
     		</form>   		
     		<!-- 카카오 공유하기 페이지 -->
     		<div class="kakaoSharePage" style="display: none">
-    			<img alt="phoneNav" src="adminImages/phoneNav.svg" id="phoneNav">
-    			<img alt="kakaoProfile" src="images/profile.svg" id="kakaoProfile" style="border-radius: 40%; width: 28px;">
-    			<img alt="kakaoShareImg" src="adminImages/kakaoShareImg.png" id="kakaoShareImg">
+    			<img alt="phoneNav" src="/adminImages/phoneNav.svg" id="phoneNav">
+    			<img alt="kakaoProfile" src="/images/profile.svg" id="kakaoProfile" style="border-radius: 40%; width: 28px;">
+    			<img alt="kakaoShareImg" src="/adminImages/kakaoShareImg.png" id="kakaoShareImg">
     			<span style="position:absolute; left:55px; top:45px;font-size: 14px;">관리자</span>
     			<span style="position:absolute; left:3px; top:3px;font-size: 10px;">오후 2:30</span>
     			<span style="position:absolute; left:90px; top:400px;color:#040404;font-size: 11px;">오후 1:30</span>
     			<button type="button" id="shareBtn" onclick="sendLinkCustom();">PhoTalk 바로가기</button>
-    			<img alt="smsSendBtn" src="adminImages/smsSendBtn.svg" id="smsSendBtn" onclick="changeSharePage()">
+    			<img alt="smsSendBtn" src="/adminImages/smsSendBtn.svg" id="smsSendBtn" onclick="changeSharePage()">
     		</div>
          	<div id="userPhone-content" style="display: none">
 				<table class="userPhoneTable" style="text-align: center;">
            			<tbody id="ajaxTable2">
-           				<% for(int i=0;i<userPNList.size();i++){ %>
+           			
             				<tr>
-           						<td><%=userPNList.get(i).getUserPN()%></td>
+           						<td></td>
            	 				</tr>							   	          				
-           				<% } %>          	 			           	 			       	 			           	 			
+            	 			           	 			       	 			           	 			
         			</tbody>
        			</table>
        		</div>   
@@ -536,13 +527,13 @@
                			</tr>
            			</thead>
            	 		<tbody id="ajaxTable3">
-           	 		<% for(int i=0;i<smsList.size();i++) { %>
+
             			<tr>
-           					<td scope="row" id="phone-row"><%=smsList.get(i).getUserPN()%></td>
-           					<td scope="row" id="content-row"><%=smsList.get(i).getContent()%></td>
-           					<td scope="row" id="date-row"><%=smsList.get(i).getUserRegTime()%></td>      					
+           					<td scope="row" id="phone-row"></td>
+           					<td scope="row" id="content-row"></td>
+           					<td scope="row" id="date-row"></td>      					
            	 			</tr>	
-           	 		<% } %>               	 			       	 		
+                       	 			       	 		
         			</tbody>
         		</table>  
 				<table class="smsSampleTable" id="smsSampleTable" style="display: none">
@@ -606,8 +597,8 @@
     	</div>             
   </body>
   <APM_DO_NOT_TOUCH>
-  <script src="js/adminMail.js"></script>
-  <script src="js/adminSms.js"></script>
+  <script src="/js/admin/adminMail.js"></script>
+  <script src="/js/admin/adminSms.js"></script>
   <script type="text/javascript" src="/TSPD/0853a021f8ab20004ce16954474b4eb6ec765da1c130ccc822f9ab76985e173c293e33c8ec870e68?type=9"></script>
   <!-- Sheet JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
@@ -615,5 +606,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
   <!-- 카카오 스크립트 -->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-  <script src="js/loading.js"></script>
+  <script src="/js/auth/loading.js"></script>
 </html>

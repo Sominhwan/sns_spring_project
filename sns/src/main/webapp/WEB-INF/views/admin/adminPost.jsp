@@ -1,13 +1,13 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
-    <link rel="stylesheet" href="css/adminPostPage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/admin/adminPostPage.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
     <script type="text/javascript">
@@ -74,30 +74,30 @@
 					var td = tr.children();
 				    if( $(this).is(":checked") == true ){
 				    	td.eq(0).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(1).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(2).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(3).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(4).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(5).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(6).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(7).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(8).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(9).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(10).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(11).css({"background-color":"#F5F5F5","color":"#000"});	
+              td.eq(1).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(2).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(3).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(4).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(5).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(6).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(7).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(8).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(9).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(10).css({"background-color":"#F5F5F5","color":"#000"});
+              td.eq(11).css({"background-color":"#F5F5F5","color":"#000"});	
 				    }else{
 				    	td.eq(0).css({"background-color":"#fff","color":"#000"});
-						td.eq(1).css({"background-color":"#fff","color":"#000"});
-						td.eq(2).css({"background-color":"#fff","color":"#000"});
-						td.eq(3).css({"background-color":"#fff","color":"#000"});
-						td.eq(4).css({"background-color":"#fff","color":"#000"});
-						td.eq(5).css({"background-color":"#fff","color":"#000"});
-						td.eq(6).css({"background-color":"#fff","color":"#000"});
-						td.eq(7).css({"background-color":"#fff","color":"#000"});
-						td.eq(8).css({"background-color":"#fff","color":"#000"});
-						td.eq(9).css({"background-color":"#fff","color":"#000"});
-						td.eq(10).css({"background-color":"#fff","color":"#000"});
-						td.eq(11).css({"background-color":"#fff","color":"#000"});	
+              td.eq(1).css({"background-color":"#fff","color":"#000"});
+              td.eq(2).css({"background-color":"#fff","color":"#000"});
+              td.eq(3).css({"background-color":"#fff","color":"#000"});
+              td.eq(4).css({"background-color":"#fff","color":"#000"});
+              td.eq(5).css({"background-color":"#fff","color":"#000"});
+              td.eq(6).css({"background-color":"#fff","color":"#000"});
+              td.eq(7).css({"background-color":"#fff","color":"#000"});
+              td.eq(8).css({"background-color":"#fff","color":"#000"});
+              td.eq(9).css({"background-color":"#fff","color":"#000"});
+              td.eq(10).css({"background-color":"#fff","color":"#000"});
+              td.eq(11).css({"background-color":"#fff","color":"#000"});	
 				    }
 				  });
 		};
@@ -139,10 +139,11 @@
 	 	/* 로그아웃 */
 	 	function logout(){
 	 		if (confirm("로그아웃 하시겟습니까?") == true){ 
-		 		location.replace('login.jsp');
+        sessionStorage.removeItem('userEmailHash');
+		 		location.replace('/index');
 			} else{
 			    return ;
-		    } 		
+		  } 		
 	 	}
 	 	/* 페이지 로드시 searchFunction() 실행 */
     	window.onload = function(){
@@ -154,16 +155,16 @@
     <div class="left-side">
     <aside>
       <div id="side-logo">
-        <img src="adminImages/adminLogo.png" alt="logo" /><a
-          href="adminPage.jsp"
+        <img src="/adminImages/adminLogo.png" alt="logo" /><a
+          href="/admin/adminPage"
           id="adminLogo"
           >PhoTalk</a
         >
       </div>
       <ul>
         <li>
-          <a href="adminPage.jsp" class="icon"
-            ><img src="adminImages/adminProfile.svg" alt="userImg" /><span
+          <a href="/admin/adminPage" class="icon"
+            ><img src="/adminImages/adminProfile.svg" alt="userImg" /><span
               class="sideText"
               >회원</span
             >
@@ -171,27 +172,27 @@
           >
         </li>
         <li>
-          <a href="adminPost.jsp"
+          <a href="/admin/adminPost"
             ><img
-              src="adminImages/adminPost.svg"
+              src="/adminImages/adminPost.svg"
               alt="postImg"
               class="icon"
             /><span class="sideText">게시물 관리</span></a
           >
         </li>
         <li>
-          <a href="adminMail.jsp"
+          <a href="/admin/adminMail"
             ><img
-              src="adminImages/adminMail.svg"
+              src="/adminImages/adminMail.svg"
               alt="messageImg"
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
         </li>
         <li>
-          <a href="adminStatistics.jsp"
+          <a href="/admin/adminStatistics"
             ><img
-              src="adminImages/chartIcon.svg"
+              src="/adminImages/chartIcon.svg"
               alt="charIcon"
               class="icon"
             /><span class="sideText">통계</span></a
@@ -201,7 +202,7 @@
       <!-- 로그아웃 -->
       <div id="logout">
         <img
-            src="adminImages/adminLogout.svg"
+            src="/adminImages/adminLogout.svg"
             alt="logoutImg"
             class="icon"
             style="width: 25px;"
@@ -219,7 +220,7 @@
             <span class="footer_info"><a href="#">운영정책</a></span>
             <span class="footer_info"><a href="#">위치</a></span>
             <span class="footer_info"><a href="#">인기 계정</a></span>
-            <span class="footer_info"><a href="login.jsp">사이트맵</a></span>
+            <span class="footer_info"><a href="/index">사이트맵</a></span>
             <span class="footer_info"><a>&copy;2023 Social Net Work Project</a></span>
       </div>
         </div>
@@ -229,7 +230,7 @@
     <!-- 게시물 네비게이션 바 -->
     <nav id="navbar">
         <span id = "adminPostLogo">
-        <img src="adminImages/adminPostLogo.svg" />
+        <img src="/adminImages/adminPostLogo.svg" />
         </span>
         <span id="adminPostLogo-text">게시물 목록</span>    
     </nav>
@@ -268,7 +269,7 @@
         </div>
         
         </div>
-        <img src="adminImages/delete.svg" alt="deleteBtn" id="deleteBtn">
+        <img src="/adminImages/delete.svg" alt="deleteBtn" id="deleteBtn">
     </div>
   </body>
 </html>

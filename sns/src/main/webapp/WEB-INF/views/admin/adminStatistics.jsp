@@ -1,25 +1,24 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page contentType="text/html; charset=UTF-8"%>
-<%
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
-    <link rel="stylesheet" href="css/adminStatisticsPage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/admin/adminStatisticsPage.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
     <script type="text/javascript"> 	 	
 	 	/* 로그아웃 */
 	 	function logout(){
 	 		if (confirm("로그아웃 하시겟습니까?") == true){ 
-		 		location.replace('login.jsp');
+        sessionStorage.removeItem('userEmailHash');
+		 		location.replace('/index');
 			} else{
 			    return ;
-		    } 		
+		  } 		
 	 	}
     </script>
   </head>
@@ -27,16 +26,16 @@
     <div class="left-side">
     <aside>
       <div id="side-logo">
-        <img src="adminImages/adminLogo.png" alt="logo" /><a
-          href="adminPage.jsp"
+        <img src="/adminImages/adminLogo.png" alt="logo" /><a
+          href="/admin/adminPage"
           id="adminLogo"
           >PhoTalk</a
         >
       </div>
       <ul>
         <li>
-          <a href="adminPage.jsp" class="icon"
-            ><img src="adminImages/adminProfile.svg" alt="userImg" /><span
+          <a href="/admin/adminPage" class="icon"
+            ><img src="/adminImages/adminProfile.svg" alt="userImg" /><span
               class="sideText"
               >회원</span
             >
@@ -44,27 +43,27 @@
           >
         </li>
         <li>
-          <a href="adminPost.jsp"
+          <a href="/admin/adminPost"
             ><img
-              src="adminImages/adminPost.svg"
+              src="/adminImages/adminPost.svg"
               alt="postImg"
               class="icon"
             /><span class="sideText">게시물 관리</span></a
           >
         </li>
         <li>
-          <a href="adminMail.jsp"
+          <a href="/admin/adminMail"
             ><img
-              src="adminImages/adminMail.svg"
+              src="/adminImages/adminMail.svg"
               alt="messageImg"
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
         </li>
         <li>
-          <a href="adminStatistics.jsp"
+          <a href="/admin/adminStatistics"
             ><img
-              src="adminImages/chartIcon.svg"
+              src="/adminImages/chartIcon.svg"
               alt="charIcon"
               class="icon"
             /><span class="sideText">통계</span></a
@@ -74,7 +73,7 @@
       <!-- 로그아웃 -->
       <div id="logout">
         <img
-            src="adminImages/adminLogout.svg"
+            src="/adminImages/adminLogout.svg"
             alt="logoutImg"
             class="icon"
             style="width: 25px;"
@@ -92,7 +91,7 @@
             <span class="footer_info"><a href="#">운영정책</a></span>
             <span class="footer_info"><a href="#">위치</a></span>
             <span class="footer_info"><a href="#">인기 계정</a></span>
-            <span class="footer_info"><a href="login.jsp">사이트맵</a></span>
+            <span class="footer_info"><a href="/index">사이트맵</a></span>
             <span class="footer_info"><a>&copy;2023 Social Net Work Project</a></span>
       </div>
         </div>
@@ -102,7 +101,7 @@
     <!-- 통계 네비게이션 바 -->
     <nav id="navbar">
         <span id = "adminStatisticsLogo">
-        <img src="adminImages/adminStatisticsLogo.svg" />
+        <img src="/adminImages/adminStatisticsLogo.svg" />
         </span>
         <span id="adminStatistics-text">통계</span>    
     </nav>
@@ -135,5 +134,5 @@
  <script src="https://code.highcharts.com/modules/exporting.js"></script>
  <script src="https://code.highcharts.com/modules/export-data.js"></script>
  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
- <script src="js/adminStatistics.js"></script>
+ <script src="/js/admin/adminStatistics.js"></script>
 </html>

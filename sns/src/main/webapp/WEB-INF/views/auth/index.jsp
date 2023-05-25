@@ -20,6 +20,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
       var socialEmail = '${userEmail}';
+      var userRole;
 
       if(socialEmail == "false"){
         alert('이미 존재하는 계정입니다.');
@@ -50,6 +51,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
              sessionStorage.setItem('userEmailHash', obj.userEmailHash);
              document.getElementById('loginErrorMsg').style.display = 'none';
              emailCheck = obj.emailcertification;
+             userRole = obj.userRole;
              document.getElementById('login_container').style.display = 'none';
              document.getElementById('loginOK_container').style.display = 'block';
              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
@@ -73,6 +75,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       /* 메인화면 이동 검증 */
       function checkEmail() {
         if(emailCheck == 1){
+          if(userRole == "ADMIN"){
+            alert("관리자 모드 진입");
+            document.getElementById("loginOk_frm").action = "/admin/adminPage";
+          }
           document.getElementById("loginOk_frm").submit();
         } else{
           alert("이메일 인증을 하지 않은 계정입니다.");
@@ -218,7 +224,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span id="logo2_text">PhoTalk</span>
         <img class="profile" id="profile" src="" />
         <!-- form action 에 메인 페이지 주소 넣기 -->
-        <form action="/main" method="POST" name="loginOk_frm" id = "loginOk_frm">
+        <form action="/main" method="get" name="loginOk_frm" id = "loginOk_frm">
           <input
             class="loginOKBtn"
             id="loginOKBtn"
