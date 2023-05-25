@@ -19,20 +19,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     ></script>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
-      var emailCheck;
       var socialEmail = '${userEmail}';
+
       if(socialEmail == "false"){
         alert('이미 존재하는 계정입니다.');
       }   
       if(socialEmail != "" || socialEmail != "false"){
         sessionStorage.setItem('userEmailHash', socialEmail);
-        document.getElementById('loginErrorMsg').style.display = 'none';
-        emailCheck = '${emailCertification}';
-        document.getElementById('login_container').style.display = 'none';
-        document.getElementById('loginOK_container').style.display = 'block';
-        document.getElementById("loginOKBtn").value = userNickName+ " 님으로 계속";      
-        document.getElementById("profile").src = userImage ;
-        document.getElementById("login").innerHTML = userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                          
       } 
 
       /* 로그인 확인 폼 제출 */
@@ -188,6 +181,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             disabled
             value="로그인"
             onclick="loginFrm()"
+            onsubmit="return false;"
           />
         </form>
         <!-- modal 영역 -->

@@ -59,6 +59,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .userNickName(nickname)
                     .userGender(gender)
                     .userPN(mobile)
+                    .emailcertification(1)
+                    .userImage("images/profile.svg")
                     .userInfoType(provider)
                     .role("USER")
                     .build();
