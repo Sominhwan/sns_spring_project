@@ -109,13 +109,13 @@
     <select id="findUserId" resultType="com.project.my.module.userRole.entity.UserInfoEntity" parameterType="map">
         SELECT userEmail, userRegDate, userInfoType
         FROM userinfo
-        WHERE userName = #{userName} and userNickName = #{userNickName} 
+        WHERE userName = #{userName} and userNickName = #{userNickName} and role = 'USER'
     </select> 
     <!-- 유저 비밀번호 찾기 -->
     <select id="findUserPwd" resultType="com.project.my.module.userRole.entity.UserInfoEntity" parameterType="map">
         SELECT userPwd, userInfoType
         FROM userinfo
-        WHERE userEmail = #{userEmail} 
+        WHERE userEmail = #{userEmail} and role = 'USER'
     </select>   
     <!-- 회원 비밀번호 변경하기 -->
 	<update id="updateUserPassword">
@@ -127,7 +127,7 @@
     <select id="search" parameterType="map" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
         SELECT userName, userNickName, userEmail, userSocialId, userPN, userAddress, emailcertification, userInfoType, userRegDate
         FROM userinfo
-        WHERE userName LIKE concat ('%', #{userName}, '%')
+        WHERE userName LIKE concat ('%', #{userName}, '%') and role = 'USER'
     </select>      
 </mapper>
 

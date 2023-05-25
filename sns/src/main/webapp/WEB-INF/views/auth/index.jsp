@@ -57,6 +57,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
              document.getElementById("profile").src = obj.userImage ;
              document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
+          },
+          error : function(){
+            alert('실패');
           }
         })
       }
@@ -88,15 +91,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       function loginContainerChange() {       
         $.ajax({
           url : "/logout",
-          type : "post",
+          type : "get",
           data: {},
           success : function(obj){             
             document.getElementById('loginOK_container').style.display = 'none';
             document.getElementById('login_container').style.display = 'block';
-            sessionStorage.removeItem('userEmailHash');        
+            //sessionStorage.removeItem('userEmailHash');        
           },
           error : function(obj){
-            alert("실패");
           }
         })
       }
@@ -277,7 +279,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       if(sessionStorage.getItem('userEmailHash')!=null){
         $.ajax({
           url : "/loginOk.action",
-          type : "get",
+          type : "post",
           data: {
           },
           success : function(obj){   
@@ -286,12 +288,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               location.href("/index");        
              }
              document.getElementById('loginErrorMsg').style.display = 'none';
+             document.getElementById('login_container').style.display = 'none';
+             document.getElementById('loginOK_container').style.display = 'block';
+
              emailCheck = obj.emailcertification;
              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
              document.getElementById("profile").src = obj.userImage ;
              document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
-             document.getElementById('login_container').style.display = 'none';
-             document.getElementById('loginOK_container').style.display = 'block';
+
           }
         })
       }

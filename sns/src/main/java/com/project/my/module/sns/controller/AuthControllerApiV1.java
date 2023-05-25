@@ -25,7 +25,7 @@ public class AuthControllerApiV1 {
     private final AuthServiceApiV1 authServiceApiV1;
     private final UserRepository userRepository;
     // 로그인 성공후 해당 유저 정보
-    @RequestMapping("/loginOk.action")
+    @RequestMapping(value = "/loginOk.action")
     public HashMap<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
         HashMap<String, String> map = new HashMap<String,String>();
         map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
