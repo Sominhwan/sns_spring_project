@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,7 @@ public class AuthControllerApiV1 {
     private final AuthServiceApiV1 authServiceApiV1;
     private final UserRepository userRepository;
     // 로그인 성공후 해당 유저 정보
-    @GetMapping("/loginOk.action")
-    @ResponseBody 
+    @RequestMapping("/loginOk.action")
     public HashMap<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
         HashMap<String, String> map = new HashMap<String,String>();
         map.put("userEmail", principalDetails.getUsername()); // 아이디 반환

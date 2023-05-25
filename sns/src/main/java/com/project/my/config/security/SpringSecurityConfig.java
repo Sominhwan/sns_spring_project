@@ -29,7 +29,7 @@ public class SpringSecurityConfig {
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable();
+        http.csrf().disable();
 
         http.authorizeHttpRequests(request -> request
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
@@ -44,7 +44,7 @@ public class SpringSecurityConfig {
                 .loginProcessingUrl("/login-process") // submit 받을 url
                 .usernameParameter("userEmail") // submit할 아이디
                 .passwordParameter("password") // submit할 비밀번호
-                .defaultSuccessUrl("/loginOk.action", false) // 로그인 성공시 이동 url
+                .defaultSuccessUrl("/loginOk.action") // 로그인 성공시 이동 url
                 .permitAll()
         );
         http.oauth2Login()
