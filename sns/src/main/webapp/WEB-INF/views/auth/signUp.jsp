@@ -26,41 +26,6 @@
           jQuery(spinner).css("display", "");
         }
       };
-      
-      /* 카카오 회원가입 */
-      Kakao.init('7b282dfd5c5c643acd7323bd051ec42b');
-		function loginWithKakao() {
-     	 Kakao.Auth.login({
-          success: function (authObj) {
-              console.log(authObj); // access토큰 값
-              Kakao.Auth.setAccessToken(authObj.access_token); // access토큰값 저장
-              getInfo();
-          },
-          fail: function (err) {
-              console.log(err);
-          }
-     	 });
-  	   }
-		function getInfo() {
-          Kakao.API.request({
-              url: '/v2/user/me',
-              success: function (res) {
-            	  var id = res.id;
-                  var email = res.kakao_account.email;      
-                  var nickname = res.kakao_account.profile.nickname;
-                  var gender = res.kakao_account.gender;
-                  f = document.kakaologin;
-          		  f.kakaoid.value = id;
-          		  f.email.value = email;
-          		  f.nickname.value = nickname;
-          		  f.gender.value = gender;
-          		  f.submit();
-              },
-              fail: function (error) {
-                  alert('카카오 로그인에 실패했습니다. 관리자에게 문의하세요.' + JSON.stringify(error));
-              }
-          });
-       }
     </script>
   </head>
   <body>
@@ -92,7 +57,7 @@
         </a>
       </div>
       <div id="naverSignUpBtn_false">
-        <a href=""
+        <a href="/oauth2/authorization/naver"
           ><img
             src="/images/naverBtn.svg"
             onmouseover="this.src='/images/naverBtnTrue.svg'"
@@ -101,7 +66,7 @@
         /></a>
       </div>
       <div id="kakaoSignUpBtn_false">
-        <a href="javascript:loginWithKakao()"
+        <a href="/oauth2/authorization/kakao"
           ><img
             src="/images/kakaoBtn.svg"
             onmouseover="this.src='/images/kakaoBtnTrue.svg'"

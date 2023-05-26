@@ -1,31 +1,30 @@
-<%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="sns.UserinfoBean"%>
-<jsp:useBean id="mgr" class="sns.UserMgr"/>
-<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
-<%
-request.setCharacterEncoding("UTF-8");  
-	String Name = (String)session.getAttribute("idKey");
-	String email = (String)session.getAttribute("userEmail");
-	UserinfoBean bean = mgr.getMember(email);
-	String userInfoType = bean.getUserInfoType();
-	if(userInfoType == null){
-		userInfoType = "1";
-	}
-	System.out.print(userInfoType);
-	UserinfoBean mbean = umgr.getPMember(email);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      function redirectToUpdatePage() {
+          window.location.href = "/userUpdate";
+      }
+      function redirectToDeletePage() {
+        window.location.href = "/userDelete";
+    }
+      function redirectToSearchPage() {
+        window.location.href = "/search";
+  }
+      </script>
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link type="text/css" rel="stylesheet" href="css/navbar.css"></link>    
-    <link rel="stylesheet" href="./css/update1.css" />
-    <link rel="stylesheet" href="./css/profile.css"/>
-    <link rel="stylesheet" href="./css/modal.css"/>
-    <link rel="stylesheet" href="css/message.css?after"/>
+    <link type="text/css" rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="/css/privacy/update1.css" />
+    <link rel="stylesheet" href="/css/privacy/profile.css"/>
+    <link rel="stylesheet" href="/css/privacy/modal.css"/>
+    <link rel="stylesheet" href="css/privacy/message.css?after"/>
     <title>회원 정보 변경</title>
     <link
       rel="shortcut icon"
@@ -85,7 +84,7 @@ request.setCharacterEncoding("UTF-8");
             }).open();
           }
         function openPopup() {
-	    	  var url = "search.jsp"; // 열고자 하는 페이지 URL
+	    	  var url = "/search"; // 열고자 하는 페이지 URL
 	    	  var name = "searchWindow"; // 팝업 창 이름
 	    	  var option = "width=500, height=500, top=100, left=100, resizable=no, scrollbars=no"; // 팝업 창 옵션
 	    	  window.open(url, name, option);
@@ -103,28 +102,74 @@ request.setCharacterEncoding("UTF-8");
 <div class="modal-wrapper"></div>
 <body style="overflow-x: hidden">
 	<nav>
-    	<div class = "navbar">
-         	<a href="javascript:goURL('Main.jsp','')"><img src="./images/mainLogo.png"  alt="Image Button"/></a>
-	     	<a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
-	        <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>	     	
-	     	<!-- 네브바 추가할것 !!!! -->
-		    <form method="post" id="navSearch" >
-	        	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
-	        	<input type="text" style="display:none;"/>
-	        </form>
-	        <!-- 모달창 -->
-	        <div class="absol">
-	       <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
-	        <div id="alarm" class="alarm">
-	        <span class="alarmBalloon"></span>
-	        </div>
-	        </div>             
-	        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
-	    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
-    	</div>
-	</nav>
-    <!-- 검색 창 -->
-    <!-- 네브바 추가할것 !!!! -->
+    <div class="navbar">
+      <img src="/images/mainLogo.png" alt="Image Button" />
+      <a id="PhoTalk" class="navbar-brand" href="profile.html">PhoTalk</a>
+      <span><input class="InputBase" placeholder="검색" /></span>
+      <img
+        id="mainMessageFalse"
+        src="/images/mainMessageFalse.png"
+        alt="Image Button"
+      />
+      <img
+        id="mainAlarmFalse"
+        src="/images/mainAlarmFalse.png"
+        alt="Image Button"
+      />
+      <img
+        id="mainProfile2"
+        src="/images/mainProfile2.png"
+        alt="Image Button"
+      />
+    </div>
+  </nav>
+      <!-- 모달창 -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="modal-body">
+            <a href="profile.jsp" style="text-decoration: none; color: black"
+              ><img
+                class="Profile"
+                src="/images/mainProfileModalProfile.svg"
+              /><span class="Profile-T">프로필 보기</span></a
+            >
+            <a href="update.jsp" style="text-decoration: none; color: black"
+              ><img class="N-Info" src="/images/mainProfileModalInfo.svg" /><span
+                class="Info-T"
+                >개인 정보</span
+              ><br
+            /></a>
+            <a href="help.jsp" style="text-decoration: none; color: black"
+              ><img class="Help" src="/images/mainProfileModalHelp.svg" /><span
+                class="Help-T"
+                >도움말</span
+              ><br
+            /></a>
+            <a href="login.jsp" style="text-decoration: none; color: black"
+              ><img
+                class="Logout"
+                src="/images/mainProfileModalLogout.svg" /><span class="Logout-T"
+                >로그아웃</span
+              ><br
+            /></a>
+          </div>
+        </div>
+      </div>
+      <script>
+        // 모달창 보이기
+        document
+          .getElementById("mainProfile2")
+          .addEventListener("click", function () {
+            document.getElementById("modal").style.display = "block";
+          });
+        // 모달창 외부를 클릭하면 모달창 닫기
+        window.onclick = function (event) {
+          if (event.target == document.getElementById("modal")) {
+            document.getElementById("modal").style.display = "none";
+          }
+        };
+      </script>
 	<table class="userTable" id="userTable">
 		<tbody id="ajaxTable">
 	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
@@ -177,8 +222,8 @@ position:absolute;
     <hr class="line6" />
     <hr class="line7" />
    
-	<span class="Text-Name1"> <%=bean.getUserName() %> </span>
-	<span class="Text-Phone1"><%=bean.getUserPN() %></span>
+	<span class="Text-Name1"> 이름 </span>
+	<span class="Text-Phone1">전화번호</span>
     <span class="Text-Name"> 성명 </span> 
     <span class="Text-Nickname">닉네임</span>
     <span class="Text-Email">이메일 주소</span>
@@ -190,29 +235,39 @@ position:absolute;
     <span class="Text-Update">탈퇴하기</span>
     <span class="gaininfo">개인정보</span>
     <div class="Text-back">
-      <a href="update.jsp" id="back">뒤로가기</a>
+      <a href="/userUpdate" id="back">뒤로가기</a>
     </div>
     
     <div class="go-update">
-      <a href="update.jsp" id="go" style="
-    z-index: 200;
-    position: absolute;
-	left: 0px;
-    top: 150px;
-	width: 360px;
-  	height: 60px;"></a>
-    </div>
-    
-    <div class="go-delete">
-    <a href="delete.jsp" id="go-delete" style="
- 	z-index: 200;
-    position: absolute;
-	left: 0px;
-    top: 210px;
-	width: 360px;
-  	height: 60px;">
+    <a
+      href="/userUpdate"
+      id="go"
+      style="
+        z-index: 200;
+        position: absolute;
+        left: 0px;
+        top: 150px;
+        width: 360px;
+        height: 60px;
+      "
+    ></a>
+  </div>
+
+  <div class="go-delete">
+    <a
+      href="/userdelete"
+      id="go-delete"
+      style="
+        z-index: 200;
+        position: absolute;
+        left: 0px;
+        top: 210px;
+        width: 360px;
+        height: 60px;
+      "
+    >
     </a>
-    </div>
+  </div>
     
 
     <div class="side-bar" style="
@@ -247,26 +302,24 @@ position:absolute;
 
       <div class="email-box">
         <input
-        <%if(userInfoType.equals("naver")||userInfoType.equals("kakao")) { %>
-          
-          value="<%=bean.getUserEmail() %>"
-          style="background-color: #efefef4d;
-          color: #aaa;"
-          id="email2" 
-          readonly
-     	  <%} else if(userInfoType.equals("1")) { %>
-          id="email"
-          <%} %>           
+          <c:if test="${userInfoType eq 'naver' or userInfoType eq 'kakao'}">
+            value="${bean.userEmail}"
+            style="background-color: #efefef4d; color: #aaa;"
+            id="email2"
+            readonly
+          </c:if>
+          <c:if test="${userInfoType eq '1'}">
+            id="email"
+          </c:if>
           type="text"
           name="email"
-          placeholder="이메일을 입력하세요." 
+          placeholder="이메일을 입력하세요."
           maxlength="30"
           autocomplete="false"
-          
         />
       </div>
       
-<input type="hidden" name="selectedUni" value="<%= request.getParameter("selectedUni") %>">
+      <input type="hidden" name="selectedUni" value="${param.selectedUni}" />
 <input
     id="school"
     type="text"
@@ -342,11 +395,11 @@ position:absolute;
     </footer>
     
 	<script src="js/message.js"></script>    
-	<script>
+	<!--<script>
 	    window.onload = function() {
-	    	ready('<%=email%>','<%=mbean.getUserName()%>');
+	    	ready('꺽쇠=email','꺽쇠=mbean.getUserName()');
 	    };
-	</script>    
+	</script>    -->
   </body>
 
 

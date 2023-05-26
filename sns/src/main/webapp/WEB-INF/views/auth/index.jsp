@@ -19,7 +19,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     ></script>
     <title>PhoTalk</title>
     <script type="text/javascript"> 
-      var emailCheck;
+      var socialEmail = '${userEmail}';
+      var userRole;
+
+      if(socialEmail == "false"){
+        alert('이미 존재하는 계정입니다.');
+      }   
+      if(socialEmail != "" || socialEmail != "false"){
+        sessionStorage.setItem('userEmailHash', socialEmail);
+      } 
 
       /* 로그인 확인 폼 제출 */
       function loginFrm() {
@@ -43,11 +51,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
              sessionStorage.setItem('userEmailHash', obj.userEmailHash);
              document.getElementById('loginErrorMsg').style.display = 'none';
              emailCheck = obj.emailcertification;
+             userRole = obj.userRole;
              document.getElementById('login_container').style.display = 'none';
              document.getElementById('loginOK_container').style.display = 'block';
              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
              document.getElementById("profile").src = obj.userImage ;
              document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
+          },
+          error : function(){
+            alert('실패');
           }
         })
       }
@@ -66,6 +78,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       /* 메인화면 이동 검증 */
       function checkEmail() {
         if(emailCheck == 1){
+          if(userRole == "ADMIN"){
+            alert("관리자 모드 진입");
+            document.getElementById("loginOk_frm").action = "/admin/adminPage";
+          }
           document.getElementById("loginOk_frm").submit();
         } else{
           alert("이메일 인증을 하지 않은 계정입니다.");
@@ -75,55 +91,16 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       function loginContainerChange() {       
         $.ajax({
           url : "/logout",
-          type : "post",
+          type : "get",
           data: {},
           success : function(obj){             
             document.getElementById('loginOK_container').style.display = 'none';
             document.getElementById('login_container').style.display = 'block';
-            sessionStorage.removeItem('userEmailHash');        
+            //sessionStorage.removeItem('userEmailHash');        
           },
           error : function(obj){
-            alert("실패");
           }
         })
-      }
-
-      /* 카카오 로그인 */
-      Kakao.init("7b282dfd5c5c643acd7323bd051ec42b");
-      function loginWithKakao() {
-        Kakao.Auth.login({
-          success: function (authObj) {
-            console.log(authObj); // access토큰 값
-            Kakao.Auth.setAccessToken(authObj.access_token); // access토큰값 저장
-            getInfo();
-          },
-          fail: function (err) {
-            console.log(err);
-          },
-        });
-      }
-      function getInfo() {
-        Kakao.API.request({
-          url: "/v2/user/me",
-          success: function (res) {
-            var id = res.id;
-            var email = res.kakao_account.email;
-            var nickname = res.kakao_account.profile.nickname;
-            var gender = res.kakao_account.gender;
-            f = document.kakaologin;
-            f.id.value = id;
-            f.email.value = email;
-            f.nickname.value = nickname;
-            f.gender.value = gender;
-            f.submit();
-          },
-          fail: function (error) {
-            alert(
-              "카카오 로그인에 실패했습니다. 관리자에게 문의하세요." +
-                JSON.stringify(error)
-            );
-          },
-        });
       }
     </script>
   </head>
@@ -212,6 +189,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             disabled
             value="로그인"
             onclick="loginFrm()"
+            onsubmit="return false;"
           />
         </form>
         <!-- modal 영역 -->
@@ -229,35 +207,26 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span class="id_pwd" id="pass_find"
           ><a href="/findPwd">PASS 찾기</a></span
         >
-        <span id="kakaoLogin"
-          ><a href="javascript:loginWithKakao()"
-            ><img src="/images/kakaoLoginBtn2.svg" /></a
-        ></span>
-        <span id="naverLogin"
-          ><a href="    "><img src="/images/naverLoginBtn.svg" /></a
-        ></span>
-        <!-- 카카오 개인정보 저장 폼 -->
-        <form name="kakaologin" method="post" action="kakaoLoginOk">
-          <input type="hidden" name="id" />
-          <input type="hidden" name="email" />
-          <input type="hidden" name="nickname" />
-          <input type="hidden" name="gender" />
-        </form>
+        <span id="kakaoLogin">
+          <a href="/oauth2/authorization/kakao"><img src="/images/kakaoLoginBtn2.svg" /></a>
+        </span>
+        <span id="naverLogin">
+          <a href="/oauth2/authorization/naver"><img src="/images/naverLoginBtn.svg" /></a>
+        </span>
         <!-- 로그인 실패시 뜨는 문구 -->
         <span id="loginErrorMsg" style="position: absolute; left: 71px; top: 530px; color:#ed4956; font-size:14px; display: none;">
           * 로그인에 실패하였습니다.
         </span>
         <span id="signUp">아직도 회원이 아닌가요?</span>
         <span id="signUpTag"><a href="/signUp">회원가입</a></span>
-      </div>
-      
+      </div>    
       <!-- 로그인 완료 컨테이너  -->
       <div class="loginOK_container" id="loginOK_container" style="display: none;">
         <img src="/images/loginLogo.png" />
         <span id="logo2_text">PhoTalk</span>
         <img class="profile" id="profile" src="" />
         <!-- form action 에 메인 페이지 주소 넣기 -->
-        <form action="/main" method="POST" name="loginOk_frm" id = "loginOk_frm">
+        <form action="/main" method="get" name="loginOk_frm" id = "loginOk_frm">
           <input
             class="loginOKBtn"
             id="loginOKBtn"
@@ -310,7 +279,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       if(sessionStorage.getItem('userEmailHash')!=null){
         $.ajax({
           url : "/loginOk.action",
-          type : "get",
+          type : "post",
           data: {
           },
           success : function(obj){   
@@ -319,12 +288,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               location.href("/index");        
              }
              document.getElementById('loginErrorMsg').style.display = 'none';
+             document.getElementById('login_container').style.display = 'none';
+             document.getElementById('loginOK_container').style.display = 'block';
+
              emailCheck = obj.emailcertification;
              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
              document.getElementById("profile").src = obj.userImage ;
              document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
-             document.getElementById('login_container').style.display = 'none';
-             document.getElementById('loginOK_container').style.display = 'block';
+
           }
         })
       }

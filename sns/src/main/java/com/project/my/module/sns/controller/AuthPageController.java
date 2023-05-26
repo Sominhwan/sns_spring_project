@@ -2,6 +2,7 @@ package com.project.my.module.sns.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.sns.service.SHA256CheckService;
 
 import lombok.RequiredArgsConstructor;
@@ -92,5 +94,15 @@ public class AuthPageController {
     public String findPwdOk() {
         return "/auth/findPwdOk";
     }      
-    
+    // 소셜로그인 완료 페이지 이동
+    @GetMapping("/socialLoginOk.action")
+    public ModelAndView socialLoginOk(@AuthenticationPrincipal PrincipalDetails principalDetails, ModelAndView mav){
+        mav.addObject("userEmail", principalDetails.getUsername());
+        mav.addObject("userNickName", principalDetails.getUserNickName());
+        mav.addObject("emailCertification", principalDetails.getEmailcertification());
+        mav.addObject("userImage", principalDetails.getUserImage());
+        mav.setViewName("/auth/index");
+        return mav;
+    }
+   
 }

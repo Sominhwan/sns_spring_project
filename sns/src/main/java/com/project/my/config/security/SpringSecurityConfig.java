@@ -11,9 +11,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.project.my.module.sns.service.PrincipalOauth2UserService;
+
 @Configuration
 @EnableMethodSecurity
 public class SpringSecurityConfig {
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
@@ -24,13 +29,13 @@ public class SpringSecurityConfig {
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable();
+        http.csrf().disable();
 
         http.authorizeHttpRequests(request -> request
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                 .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
-                //.antMatchers("").hasRole("ADMIN") // ADMIN 권한이 있는 경우만 해당 url 이용가능
+                .antMatchers("/admin/**", "/css/admin/**", "js/admin/**", "/adminImages/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
                 .anyRequest()
                 .authenticated()
         );
@@ -39,9 +44,14 @@ public class SpringSecurityConfig {
                 .loginProcessingUrl("/login-process") // submit 받을 url
                 .usernameParameter("userEmail") // submit할 아이디
                 .passwordParameter("password") // submit할 비밀번호
-                .defaultSuccessUrl("/loginOk.action", false) // 로그인 성공시 이동 url
+                .defaultSuccessUrl("/loginOk.action") // 로그인 성공시 이동 url
                 .permitAll()
         );
+        http.oauth2Login()
+                .loginPage("/index") // 소셜 로그인 페이지 지정
+                .defaultSuccessUrl("/socialLoginOk.action", false)
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
         http.rememberMe()
                 .key("oingdaddy!")
                 .rememberMeParameter("remember")
@@ -58,10 +68,6 @@ public class SpringSecurityConfig {
             .logoutSuccessHandler((request, response, authentication) -> {
                 response.sendRedirect("/logOut.action");
             }); // 로그아웃 성공 핸들러      
-
-        
-        // 소셜 로그인 oauth2Login() 추가 
-        // TODO
         return http.build();
     }  
 }

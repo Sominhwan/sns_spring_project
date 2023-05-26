@@ -1,45 +1,20 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page contentType="text/html; charset=UTF-8"%>
-<%
-	/* PrintWriter script = response.getWriter();
-
-	if(session.getAttribute("adminId")!=null){
-		String adminId = (String)session.getAttribute("adminId");
-		if(adminId.equals("admin")){
-			script.println("<script>");
-			script.println("alert('관리자 페이지 진입.');");
-			script.println("</script>");	
-		} else {
-			session.invalidate();
-			script.println("<script>");
-			script.println("history.back();");
-			script.println("</script>");
-			script.close();		
-		}
-	} else {
-		session.invalidate();
-		script.println("<script>");
-		script.println("history.back();");
-		script.println("</script>");
-		script.close();
-	} */
-	session.invalidate();
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/loginLogo.png" />
-    <link rel="stylesheet" href="css/adminPage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
+    <link rel="stylesheet" href="/css/admin/adminPage.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
     <script type="text/javascript">
     	var request = new XMLHttpRequest();
     	
     	function searchFunction(){
-    		request.open("Post", "UserSearch?userName=" + encodeURIComponent(document.getElementById("userName").value),true);
+    		request.open("Post", "/admin/UserSearch?userName=" + encodeURIComponent(document.getElementById("userName").value),true);
     		request.onreadystatechange = searchProcess;
     		request.send(null);
     	}
@@ -65,8 +40,8 @@
     		}
     	}
     	
-    	/* 회원정보 삭제 */
-        // 버튼 클릭시 Row 값 가져오기
+    /* 회원정보 삭제 */
+    // 버튼 클릭시 Row 값 가져오기
 		$(document).on('click', '.checkBtn', function(){
 			var checkBtn = $(this);
 			var tr = checkBtn.parent().parent();
@@ -75,53 +50,54 @@
 			
 		    deleteUser(userEmail);
 		});
-	   	
-    	function deleteUser(userEmail) {
-    		var request = new XMLHttpRequest();
-    		request.open("Post", "UserInfoDelete?userEmail=" +userEmail,true);
-    		request.onreadystatechange = deleteProcess;
-    		request.send(null);
+    function deleteUser(userEmail) {
+      var request = new XMLHttpRequest();
+      request.open("Post", "/admin/UserInfoDelete?userEmail=" +userEmail,true);
+      request.onreadystatechange = deleteProcess;
+      request.send(null);
 		};
 	 	function deleteProcess(){
     		// 통신 성공시
     		if(request.readyState == 4 && request.status == 200){	
     			searchFunction();
-    		} 
+    		} else {
+          alert('시스템 오류');
+        }
     	}
 	 			
 	 	/* 체크박스 체크시 색상 변경 */
 		function changeColor(){
 			 $("input[name=myCheck]").each(function(i){
-				 var tr = $("input[name=myCheck]").parent().parent().eq(i);
-					var td = tr.children();
-				    if( $(this).is(":checked") == true ){
-				    	td.eq(0).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(1).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(2).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(3).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(4).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(5).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(6).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(7).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(8).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(9).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(10).css({"background-color":"#F5F5F5","color":"#000"});
-						td.eq(11).css({"background-color":"#F5F5F5","color":"#000"});	
-				    }else{
-				    	td.eq(0).css({"background-color":"#fff","color":"#000"});
-						td.eq(1).css({"background-color":"#fff","color":"#000"});
-						td.eq(2).css({"background-color":"#fff","color":"#000"});
-						td.eq(3).css({"background-color":"#fff","color":"#000"});
-						td.eq(4).css({"background-color":"#fff","color":"#000"});
-						td.eq(5).css({"background-color":"#fff","color":"#000"});
-						td.eq(6).css({"background-color":"#fff","color":"#000"});
-						td.eq(7).css({"background-color":"#fff","color":"#000"});
-						td.eq(8).css({"background-color":"#fff","color":"#000"});
-						td.eq(9).css({"background-color":"#fff","color":"#000"});
-						td.eq(10).css({"background-color":"#fff","color":"#000"});
-						td.eq(11).css({"background-color":"#fff","color":"#000"});	
-				    }
-				  });
+        var tr = $("input[name=myCheck]").parent().parent().eq(i);
+		    var td = tr.children();
+        if( $(this).is(":checked") == true ){
+          td.eq(0).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(1).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(2).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(3).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(4).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(5).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(6).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(7).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(8).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(9).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(10).css({"background-color":"#F5F5F5","color":"#000"});
+          td.eq(11).css({"background-color":"#F5F5F5","color":"#000"});	
+        }else{
+          td.eq(0).css({"background-color":"#fff","color":"#000"});
+          td.eq(1).css({"background-color":"#fff","color":"#000"});
+          td.eq(2).css({"background-color":"#fff","color":"#000"});
+          td.eq(3).css({"background-color":"#fff","color":"#000"});
+          td.eq(4).css({"background-color":"#fff","color":"#000"});
+          td.eq(5).css({"background-color":"#fff","color":"#000"});
+          td.eq(6).css({"background-color":"#fff","color":"#000"});
+          td.eq(7).css({"background-color":"#fff","color":"#000"});
+          td.eq(8).css({"background-color":"#fff","color":"#000"});
+          td.eq(9).css({"background-color":"#fff","color":"#000"});
+          td.eq(10).css({"background-color":"#fff","color":"#000"});
+          td.eq(11).css({"background-color":"#fff","color":"#000"});	
+        }
+			});
 		};
 	 	/* 체크박스 회원정보 삭제 */
 	 	$(function(){
@@ -129,7 +105,7 @@
 				if (confirm("선택한 데이터를 삭제하시겠습니까?") == true){ 
 				}else{
 			  	  return ;
-		    	}
+		    }
 			
 				var tdArr = new Array();
 				var checkbox = $("input[name=myCheck]:checked");
@@ -142,50 +118,47 @@
 					tdArr.push(email);			
 				});
 				deleteCheckUser(tdArr);
-		    });
+		  });
 		});
 	 	
-    	function deleteCheckUser(tdArr) {
-    		var request = new XMLHttpRequest();
-    		request.open("Post", "UserInfoDelete?userEmailAll=" +tdArr,true);
-    		request.onreadystatechange = deletAllProcess;
-    		request.send(null);
+    function deleteCheckUser(tdArr) {
+      var request = new XMLHttpRequest();
+      request.open("Post", "/admin/UserInfoDelete?userEmailAll=" +tdArr,true);
+      request.onreadystatechange = deletAllProcess;
+      request.send(null);
 		};
 	 	function deletAllProcess(){
-    		// 통신 성공시
-    		if(request.readyState == 4 && request.status == 200){	
-    			searchFunction();
-    		} 
-    	}
+      // 통신 성공시
+      if(request.readyState == 4 && request.status == 200){	
+        searchFunction();
+      } 
+    }
 	 	
 	 	/* 로그아웃 */
 	 	function logout(){
 	 		if (confirm("로그아웃 하시겟습니까?") == true){ 
-		 		location.replace('login.jsp');
+        sessionStorage.removeItem('userEmailHash');
+		 		location.replace('/index');
 			} else{
 			    return ;
-		    } 		
+		  } 		
 	 	}
 	 	
-    	window.onload = function(){
-    		searchFunction();
-    	}
+    window.onload = function(){
+      searchFunction();
+    }
     </script>
   </head>
   <body>
     <div class="left-side">
     <aside>
       <div id="side-logo">
-        <img src="adminImages/adminLogo.png" alt="logo" /><a
-          href="adminPage.jsp"
-          id="adminLogo"
-          >PhoTalk</a
-        >
+        <img src="/adminImages/adminLogo.png" alt="logo" /><a href="/admin/adminPage" id="adminLogo">PhoTalk</a>
       </div>
       <ul>
         <li>
-          <a href="adminPage.jsp" class="icon"
-            ><img src="adminImages/adminProfile.svg" alt="userImg" /><span
+          <a href="/admin/adminPage" class="icon"
+            ><img src="/adminImages/adminProfile.svg" alt="userImg" /><span
               class="sideText"
               >회원</span
             >
@@ -193,27 +166,27 @@
           >
         </li>
         <li>
-          <a href="adminPost.jsp"
+          <a href="/admin/adminPost"
             ><img
-              src="adminImages/adminPost.svg"
+              src="/adminImages/adminPost.svg"
               alt="postImg"
               class="icon"
             /><span class="sideText">게시물 관리</span></a
           >
         </li>
         <li>
-          <a href="adminMail.jsp"
+          <a href="/admin/adminMail"
             ><img
-              src="adminImages/adminMail.svg"
+              src="/adminImages/adminMail.svg"
               alt="messageImg"
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
         </li>
         <li>
-          <a href="adminStatistics.jsp"
+          <a href="/admin/adminStatistics"
             ><img
-              src="adminImages/chartIcon.svg"
+              src="/adminImages/chartIcon.svg"
               alt="charIcon"
               class="icon"
             /><span class="sideText">통계</span></a
@@ -222,14 +195,8 @@
       </ul>
       <!-- 로그아웃 -->
       <div id="logout">
-        <img
-            src="adminImages/adminLogout.svg"
-            alt="logoutImg"
-            class="icon"
-            style="width: 25px;"
-          /><span class="sideText"><a href="#" id="logout" onclick="logout()"
-            >로그아웃</span></a
-        >
+        <img src="/adminImages/adminLogout.svg" alt="logoutImg" class="icon" style="width: 25px;"/>
+        <span class="sideText"><a href="#" id="logout" onclick="logout()">로그아웃</span></a>
       </div>
       <!-- 푸터 시작 -->
       <footer class="sidebar-footer">
@@ -241,7 +208,7 @@
             <span class="footer_info"><a href="#">운영정책</a></span>
             <span class="footer_info"><a href="#">위치</a></span>
             <span class="footer_info"><a href="#">인기 계정</a></span>
-            <span class="footer_info"><a href="login.jsp">사이트맵</a></span>
+            <span class="footer_info"><a href="/index">사이트맵</a></span>
             <span class="footer_info"><a>&copy;2023 Social Net Work Project</a></span>
       </div>
         </div>
@@ -251,7 +218,7 @@
     <!-- 회원정보 네비게이션 바 -->
     <nav id="navbar">
         <span id = "adminProfileLogo">
-        <img src="adminImages/adminProfileLogo.svg" />
+        <img src="/adminImages/adminProfileLogo.svg" />
         </span>
         <span id="adminProfile-text">회원 관리</span>    
     </nav>
@@ -290,7 +257,7 @@
         </div>
         
         </div>
-        <img src="adminImages/delete.svg" alt="deleteBtn" id="deleteBtn">
+        <img src="/adminImages/delete.svg" alt="deleteBtn" id="deleteBtn">
     </div>
   </body>
 </html>
