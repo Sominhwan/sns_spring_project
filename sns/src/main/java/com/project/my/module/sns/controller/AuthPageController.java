@@ -1,5 +1,7 @@
 package com.project.my.module.sns.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -104,5 +106,13 @@ public class AuthPageController {
         mav.setViewName("/auth/index");
         return mav;
     }
+    // 세션 만료시
+    @PostMapping("/sessionExpired")
+    public ModelAndView sessionExpired(ModelAndView mav){
+        HashMap<String, String> map = new HashMap<String,String>();
+        mav.addObject("sessionMsg", "세션이 만료되었습니다.");
+        mav.setViewName("/auth/index");
+        return mav;
+    }   
    
 }

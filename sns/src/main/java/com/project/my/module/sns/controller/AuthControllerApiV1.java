@@ -7,9 +7,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.sns.dto.AuthDTO;
@@ -25,9 +25,9 @@ public class AuthControllerApiV1 {
     private final AuthServiceApiV1 authServiceApiV1;
     private final UserRepository userRepository;
     // 로그인 성공후 해당 유저 정보
-    @RequestMapping(value = "/loginOk.action")
-    public HashMap<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        HashMap<String, String> map = new HashMap<String,String>();
+    @GetMapping(value = "/loginOk.action")
+    public Map<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        Map<String, String> map = new HashMap<>();
         map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
         map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
         map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
@@ -37,10 +37,11 @@ public class AuthControllerApiV1 {
         return map;
     }
     // 로그아웃 
-    @GetMapping("/logOut.action")
+    @PostMapping("/logOut.action")
     @ResponseBody 
-    public HashMap<String, String> logOutPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public HashMap<String, String> logOutPage(@AuthenticationPrincipal PrincipalDetails principalDetails, SessionStatus sessionStatus){
         HashMap<String, String> map = new HashMap<String,String>();
+        if(sessionStatus.isComplete()==false) sessionStatus.isComplete();
         //map.put("userEmail",  principalDetails.getUsername()); 
         map.put("logOutMsg", "true"); 
         return map;

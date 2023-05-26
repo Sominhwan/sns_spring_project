@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -30,23 +29,25 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
-
-        http.authorizeHttpRequests(request -> request
+        http.authorizeHttpRequests()
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                .antMatchers("/status", "/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
+                .antMatchers("/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
-                .antMatchers("/admin/**", "/css/admin/**", "js/admin/**", "/adminImages/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
+                .antMatchers("/admin/**", "/css/admin/**", "/js/admin/**", "/adminImages/**", "/smarteditor/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
                 .anyRequest()
-                .authenticated()
-        );
-        http.formLogin(login -> login
+                .authenticated();
+        http.sessionManagement()
+                .maximumSessions(1) // 세션 개수 제한
+                .maxSessionsPreventsLogin(true) // 동시 로그인 차단
+                .expiredUrl("/sessionExpired"); // 세션 만료시 이동 url
+        http.formLogin()
                 .loginPage("/index") // 커스텀 로그인 페이지 지정
                 .loginProcessingUrl("/login-process") // submit 받을 url
                 .usernameParameter("userEmail") // submit할 아이디
                 .passwordParameter("password") // submit할 비밀번호
                 .defaultSuccessUrl("/loginOk.action") // 로그인 성공시 이동 url
-                .permitAll()
-        );
+                .permitAll();
+        
         http.oauth2Login()
                 .loginPage("/index") // 소셜 로그인 페이지 지정
                 .defaultSuccessUrl("/socialLoginOk.action", false)
@@ -58,12 +59,10 @@ public class SpringSecurityConfig {
                 .tokenValiditySeconds(86400 * 30)
                 .alwaysRemember(false)
                 .userDetailsService(myUserDetailsService);
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED ) // 시큐리티가 세션 필요시 생성
-                .maximumSessions(1) // 세션 개수 제한
-                .expiredUrl("/logOut.action"); // 세션 만료시 이동 url
         http.logout()
             .logoutUrl("/logout") // 로그아웃 시 이동 url
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
             .deleteCookies("JSESSIONID", "remember") // 로그아웃시 쿠키, 세션 삭제
             .logoutSuccessHandler((request, response, authentication) -> {
                 response.sendRedirect("/logOut.action");

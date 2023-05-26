@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 
 @Mapper
@@ -39,5 +40,10 @@ public interface UserRepository {
     /************************************* 관리자 기능 ***********************************************************/
     // 회원이름을 통해 회원정보 검색
     List<UserInfoEntity> search(String userName);
-
+    // 회원 이메일을 통해 userinfo 삭제
+    void deleteUserInfo(@Param("userEmail") String userEmail);
+    // 회원이메일을 통해 회원 게시물 검색
+    List<PostEntity> searchPost(String userEmail);
+    // PostId를 통해 post 삭제
+    void deleteUserPost(@Param("postId") String postId);
 }

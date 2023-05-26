@@ -60,9 +60,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     		// 통신 성공시
     		if(request.readyState == 4 && request.status == 200){	
     			searchFunction();
-    		} else {
-          alert('시스템 오류');
-        }
+    		} 
     	}
 	 			
 	 	/* 체크박스 체크시 색상 변경 */

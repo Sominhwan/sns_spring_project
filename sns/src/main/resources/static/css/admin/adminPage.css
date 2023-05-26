@@ -163,7 +163,7 @@ input:focus {
   width: 22px;
   right: 0;
   height: inherit;
-  background: url("../adminImages/adminSearch.svg") no-repeat 0 0px / contain;
+  background: url("/adminImages/adminSearch.svg") no-repeat 0 0px / contain;
   border: none;
   outline: none;
   cursor: pointer;

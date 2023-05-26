@@ -24,7 +24,7 @@ let oEditors = [];
       		nhn.husky.EZCreator.createInIFrame({
        			oAppRef: oEditors,
         		elPlaceHolder: "editorTxt",
-        		sSkinURI: "../smarteditor/SmartEditor2Skin.html",
+        		sSkinURI: "/smarteditor/SmartEditor2Skin.html",
         		htParams : { 
             		// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
             			bUseToolbar : true, 
@@ -242,7 +242,8 @@ let oEditors = [];
 	 	}
     	
     	window.onload = function(){
-    		searchFunction();
+    		//searchFunction();
+			// TODO
     	}
     	
     	

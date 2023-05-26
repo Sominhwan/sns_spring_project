@@ -12,7 +12,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="/css/auth/loading.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
-    <script type="text/javascript" src="../smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script type="text/javascript">
     $(document).ready(function () {
         $("#input_file").bind("change", function () {
@@ -426,7 +426,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   placeholder="내용을 입력해주세요"></textarea>   
             </div>	   		
       		<div id="dropZone" style="position:absolute; left: 120px; top:245px; width: 354px; height: 50px; 
-      			border: solid 1px #e3e3e3; border-radius: 5px; overflow-y: auto">
+      			border: solid 1px #e3e3e3; border-radius: 5px; overflow-x: hidden">
         	<div id="fileDragDesc"><img src="/adminImages/file.svg" id="fileIcon" alt="file" style="width: 11px; margin-right: -17px; margin-top: 5px;"/>
         		파일을 드래그 해주세요.</div>
         	<table id="fileListTable" style="width:100%; height:100%; border:0px; font-size: 12px;">

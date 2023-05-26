@@ -14,7 +14,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     	var request = new XMLHttpRequest();
     	
     	function searchFunction(){
-    		request.open("Post", "PostSearch?userEmail=" + encodeURIComponent(document.getElementById("userEmail").value),true);
+    		request.open("Post", "/admin/PostSearch?userEmail=" + encodeURIComponent(document.getElementById("userEmail").value),true);
     		request.onreadystatechange = searchProcess;
     		request.send(null);
     	}
@@ -44,8 +44,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     		}
     	}
     	  	
-    	/* 회원정보 삭제 */
-        // 버튼 클릭시 Row 값 가져오기
+    /* 회원정보 삭제 */
+    // 버튼 클릭시 Row 값 가져오기
 		$(document).on('click', '.checkBtn', function(){
 			var checkBtn = $(this);
 			var tr = checkBtn.parent().parent();
@@ -125,7 +125,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	 	
     	function deleteCheckUser(tdArr) {
     		var request = new XMLHttpRequest();
-    		request.open("Post", "PostDelete?postIdAll=" +tdArr,true);
+    		request.open("Post", "/admin/PostDelete?postIdAll=" +tdArr,true);
     		request.onreadystatechange = deletAllProcess;
     		request.send(null);
 		};

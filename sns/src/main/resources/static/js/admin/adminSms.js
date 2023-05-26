@@ -244,7 +244,8 @@ function s2ab(s) {
 }
 
 $(document).ready(function () {
-    getSMSCount();	
+    //getSMSCount();
+	// TODO	
     changeColor();	
     changeColor2();
     changeColor3();
