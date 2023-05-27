@@ -29,6 +29,7 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.headers().frameOptions().sameOrigin(); // iframe 스마트에디터 가능함
         http.authorizeHttpRequests()
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                 .antMatchers("/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
