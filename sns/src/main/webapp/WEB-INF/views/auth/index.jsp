@@ -32,7 +32,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       }  
       /* 세션만료시 */
       if(sessionMsg == "세션이 만료되었습니다."){
-        sessionStorage.removeItem('id');    
         alert(sessionMsg);
       }
 
@@ -52,7 +51,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           },
           success : function(obj){
             if(obj.userEmail != null){ // 로그인 성공시
-              sessionStorage.setItem('id', "true");
               document.getElementById('loginErrorMsg').style.display = 'none';
               emailCheck = obj.emailcertification;
               userRole = obj.userRole;
@@ -104,8 +102,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           data: {},
           success : function(obj){             
             document.getElementById('loginOK_container').style.display = 'none';
-            document.getElementById('login_container').style.display = 'block';
-            sessionStorage.removeItem('id');        
+            document.getElementById('login_container').style.display = 'block';     
           },
           error : function(obj){
             alert("오류");
@@ -292,7 +289,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           data: {
           },
           success : function(obj){   
-            if(sessionStorage.getItem('id') != null && obj.userEmail != "false"){ // 다른 url에서 로그인 후 로그아웃 할시
+            if(obj.userEmail != "false" && obj.userEmail != null){ // 다른 url에서 로그인 후 로그아웃 할시
               document.getElementById('loginErrorMsg').style.display = 'none';
               document.getElementById('login_container').style.display = 'none';
               document.getElementById('loginOK_container').style.display = 'block';
