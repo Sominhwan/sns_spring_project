@@ -13,7 +13,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <script type="text/javascript"> 	 	
 	 	/* 로그아웃 */
 	 	function logout(){
-	 		if (confirm("로그아웃 하시겟습니까?") == true){ 
+	 		if (confirm("나가겠습니까?") == true){ 
         sessionStorage.removeItem('userEmailHash');
 		 		location.replace('/index');
 			} else{
@@ -78,7 +78,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             class="icon"
             style="width: 25px;"
           /><span class="sideText"><a href="#" id="logout" onclick="logout()"
-            >로그아웃</span></a
+            >나가기</span></a
         >
       </div>
       <!-- 푸터 시작 -->

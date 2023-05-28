@@ -6,8 +6,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="_csrf" th:content="${_csrf.token}">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -22,15 +20,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <title>PhoTalk</title>
     <script type="text/javascript">       
       var socialEmail = '${userEmail}';
+      var sessionMsg;
       var userRole;
-      var sessionMsg = '${sessionMsg}';
+      console.log(sessionMsg);
+      /* 중복된 계정 확인 */
       if(socialEmail == "false"){
         alert('이미 존재하는 계정입니다.');
-      }   
-      if(socialEmail != "" || socialEmail != "false"){
-        sessionStorage.setItem('userEmailHash', socialEmail);
       } 
-      if(sessionMsg != ""){
+      if(socialEmail !="false" && socialEmail != ""){
+        sessionStorage.setItem('id', "true");
+      }  
+      /* 세션만료시 */
+      if(sessionMsg == "세션이 만료되었습니다."){
+        sessionStorage.removeItem('id');    
         alert(sessionMsg);
       }
 
@@ -49,8 +51,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             remember: remember,
           },
           success : function(obj){
-            if(obj.userEmail != null){ // 로그인 실패시
-              sessionStorage.setItem('userEmailHash', obj.userEmailHash);
+            if(obj.userEmail != null){ // 로그인 성공시
+              sessionStorage.setItem('id', "true");
               document.getElementById('loginErrorMsg').style.display = 'none';
               emailCheck = obj.emailcertification;
               userRole = obj.userRole;
@@ -66,7 +68,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
              }
           },
           error : function(){
-            alert('실패');
+
           }
         })
       }
@@ -103,9 +105,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           success : function(obj){             
             document.getElementById('loginOK_container').style.display = 'none';
             document.getElementById('login_container').style.display = 'block';
-            //sessionStorage.removeItem('userEmailHash');        
+            sessionStorage.removeItem('id');        
           },
           error : function(obj){
+            alert("오류");
           }
         })
       }
@@ -131,7 +134,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         </div>
       </div>
       <!-- 로그인 컨테이너 -->
-      <div class="login_container" id="login_container">
+      <div class="login_container" id="login_container" style="display: none;">
         <img src="/images/loginLogo.png" />
         <span id="logo_text">PhoTalk</span>
         <form
@@ -283,29 +286,26 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   </body>
   <script>
     // 페이지 새로고침시 로그인 유지
-      if(sessionStorage.getItem('userEmailHash')!=null){
         $.ajax({
           url : "/loginOk.action",
-          type : "post",
+          type : "get",
           data: {
           },
           success : function(obj){   
-            if(obj.userNickName == undefined){ // 다른 url에서 로그인 후 로그아웃 할시
-              sessionStorage.removeItem('userEmailHash');        
-              location.href("/index");        
-             }
-             document.getElementById('loginErrorMsg').style.display = 'none';
-             document.getElementById('login_container').style.display = 'none';
-             document.getElementById('loginOK_container').style.display = 'block';
-
-             emailCheck = obj.emailcertification;
-             document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
-             document.getElementById("profile").src = obj.userImage ;
-             document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
-
-          }
+            if(sessionStorage.getItem('id') != null && obj.userEmail != "false"){ // 다른 url에서 로그인 후 로그아웃 할시
+              document.getElementById('loginErrorMsg').style.display = 'none';
+              document.getElementById('login_container').style.display = 'none';
+              document.getElementById('loginOK_container').style.display = 'block';
+              userRole = obj.userRole;
+              emailCheck = obj.emailcertification;
+              document.getElementById("loginOKBtn").value = obj.userNickName+ " 님으로 계속";      
+              document.getElementById("profile").src = obj.userImage ;
+              document.getElementById("login").innerHTML = obj.userNickName + ` 님이 아닌가요?  <a href="#" style="text-decoration: none;color: #1877f2;"onclick="loginContainerChange()">계정 변경</a>` ;                  
+            } else{
+              document.getElementById('login_container').style.display = 'block';
+            }
+          } 
         })
-      }
   </script>
   <script src="/js/auth/login.js"></script>
 </html>
