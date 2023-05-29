@@ -1,5 +1,6 @@
 package com.project.my.module.userRole.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,4 +47,6 @@ public interface UserRepository {
     List<PostEntity> searchPost(String userEmail);
     // PostId를 통해 post 삭제
     void deleteUserPost(@Param("postId") String postId);
+    // 회원이메일을 통해 회원이메일주소 검색
+    ArrayList<UserInfoEntity> searchUserEmail(String userEmail);    
 }

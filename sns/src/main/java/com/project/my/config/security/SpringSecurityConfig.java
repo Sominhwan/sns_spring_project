@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-import com.project.my.module.sns.service.PrincipalOauth2UserService;
-
 @Configuration
 @EnableMethodSecurity
 public class SpringSecurityConfig {
@@ -62,7 +60,7 @@ public class SpringSecurityConfig {
                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                 .antMatchers("/css/auth/**", "/images/**", "/js/auth/**", "/signUp","/termsService", "/signUpInfo","/signUpInfoCheck", "/emailCheck", "/emailHashCheck", "/signUpOk", "/findId", "/findUserId", "/findIdOk", "/findPwd", "/findUserPwd", "/findPwdChange", "/changeUserPwd", "/findPwdOk").permitAll()
                 .antMatchers("/main").hasRole("USER") // USER 권환이 있는 경우만 해당 url 이용가능
-                .antMatchers("/admin/**", "/css/admin/**", "/js/admin/**", "/adminImages/**", "/smarteditor/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
+                .antMatchers("/admin/**", "/admin/UserEmailSearch", "/css/admin/**", "/js/admin/**", "/adminImages/**", "/smarteditor/**").hasRole("ADMIN") // ADMIN 권환이 있는 경우만 해당 url 이용가능
                 .anyRequest()
                 .authenticated();
         http.sessionManagement()

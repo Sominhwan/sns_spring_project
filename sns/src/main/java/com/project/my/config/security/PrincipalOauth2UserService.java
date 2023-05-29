@@ -1,4 +1,4 @@
-package com.project.my.module.sns.service;
+package com.project.my.config.security;
 
 import java.util.Map;
 import java.util.Optional;
@@ -10,10 +10,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.project.my.config.security.KakaoUserInfo;
-import com.project.my.config.security.NaverUserInfo;
-import com.project.my.config.security.OAuth2UserInfo;
-import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
 

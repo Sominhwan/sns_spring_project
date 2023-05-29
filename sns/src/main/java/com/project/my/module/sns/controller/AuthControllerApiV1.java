@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthControllerApiV1 {
     private final AuthServiceApiV1 authServiceApiV1;
     private final UserRepository userRepository;
+
     // 로그인 성공후 해당 유저 정보
     @GetMapping(value = "/loginOk.action")
     public Map<String, String> loginOkPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
@@ -91,6 +92,6 @@ public class AuthControllerApiV1 {
         Map result = new HashMap<String, Object>();  // 비밀번호 변경 성공 여부 메시지
         result = authServiceApiV1.changeUserPwd(reqDTO);
         return result;
-    }        
+    }  
     
 }

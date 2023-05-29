@@ -70,7 +70,7 @@ let oEditors = [];
     	/* 주소록 검색 */
     	function searchFunction(){	  		
     		$.ajax({
-                url : "UserEmailSearch?userEmail="+document.getElementById("userEmail").value,
+                url : "/admin/UserEmailSearch?userEmail="+document.getElementById("userEmail").value,
                 type : "post",
                 dataType : "json",
                 global: false,
@@ -79,7 +79,7 @@ let oEditors = [];
                 	searchProcess(result);
                 },
                 error : function(xhr, status, error){
-    				alert("통신 실패");
+    				//alert("통신 실패");
                 }
             });
     	}
@@ -242,7 +242,7 @@ let oEditors = [];
 	 	}
     	
     	window.onload = function(){
-    		//searchFunction();
+    		searchFunction();
 			// TODO
     	}
     	

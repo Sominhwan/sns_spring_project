@@ -1,5 +1,6 @@
 package com.project.my.module.sns.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -88,5 +89,25 @@ public class AdminServiceAp1V1 {
 		userRepository.deleteUserPost(postId);			
 		// 회원게시물과 관련된 모든 데이터 삭제
 		// TODO
+    } 	
+
+    // 회원 이메일 주소 검색
+    @Transactional
+    public String getUserEmail(String userEmail){
+		if(userEmail==null) 
+			userEmail = "";
+           
+		ArrayList<UserInfoEntity> userEmailList = userRepository.searchUserEmail(userEmail);
+		net.minidev.json.JSONObject sendObject = new net.minidev.json.JSONObject();
+		net.minidev.json.JSONArray sendArray = new net.minidev.json.JSONArray();
+
+		for(int i = 0; i < userEmailList.size(); i++ ){
+			net.minidev.json.JSONObject informationObject = new net.minidev.json.JSONObject();
+			informationObject.put("userEmail",userEmailList.get(i).getUserEmail());
+			sendArray.add(informationObject);
+		}
+		sendObject.put("result",sendArray);			
+
+		return sendObject.toString();
     } 	
 }

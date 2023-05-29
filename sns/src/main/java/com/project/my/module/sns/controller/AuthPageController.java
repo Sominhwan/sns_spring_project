@@ -37,7 +37,7 @@ public class AuthPageController {
     // 회원가입 및 정보 입력 페이지 이동
     @GetMapping("/signUpInfo")
     public String signUpInfo(HttpServletRequest request, ModelMap model) throws Exception {    
-        String[] arr = request.getParameterValues("agreement");    
+        String[] arr = request.getParameterValues("agreement");
         model.addAttribute("arr", arr);
         return "auth/signUpInfo";
     }

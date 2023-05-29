@@ -243,10 +243,16 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         if (confirm("메일을 전송 하시겠습니까?")) {
           // 등록할 파일 리스트를 formData로 데이터 입력
           //var form = $("#uploadForm");
-          var formData = new FormData($("#uploadForm")[0]);
+          //var formData = new FormData($("#uploadForm")[0]);
+          var formData = new FormData();
+        
           for (var i = 0; i < uploadFileList.length; i++) {
             formData.append("files", fileList[uploadFileList[i]]);    
           }
+          formData.append("titleInput", $('#titleInput').val());
+          formData.append("userAllEmail", $('#userAllEmail').val());
+          formData.append("mailContent", $('#mailContent').val());
+          console.log(formData);
           // 전송 후 입력폼 초기화
           $('#titleInput').val('');
           $('#emailInput').val('');
@@ -259,7 +265,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           fileSizeList = [];
           
           $.ajax({
-              url : "UserAdEmailSend",
+              url : "/admin/UserAdEmailSend",
               data : formData,
               type:'POST',
               enctype:'multipart/form-data',
@@ -426,7 +432,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   placeholder="내용을 입력해주세요"></textarea>   
             </div>	   		
       		<div id="dropZone" style="position:absolute; left: 120px; top:245px; width: 354px; height: 50px; 
-      			border: solid 1px #e3e3e3; border-radius: 5px; overflow-x: hidden">
+      			border: solid 1px #e3e3e3; border-radius: 5px; overflow-x: hidden; overflow-y: scroll;">
         	<div id="fileDragDesc"><img src="/adminImages/file.svg" id="fileIcon" alt="file" style="width: 11px; margin-right: -17px; margin-top: 5px;"/>
         		파일을 드래그 해주세요.</div>
         	<table id="fileListTable" style="width:100%; height:100%; border:0px; font-size: 12px;">

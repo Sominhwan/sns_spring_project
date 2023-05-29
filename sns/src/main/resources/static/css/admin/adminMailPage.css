@@ -330,7 +330,7 @@ input:focus {
   width: 17px;
   right: 0;
   height: inherit;
-  background: url("../adminImages/adminSearch.svg") no-repeat 0 0px / contain;
+  background: url("/adminImages/adminSearch.svg") no-repeat 0 0px / contain;
   border: none;
   outline: none;
   cursor: pointer;
@@ -482,7 +482,7 @@ input:focus {
    left: 140px;
    width: 100px; /* size of a single icon */
    height: 20px;
-   background-image: url("../adminImages/file.svg"); /* all icons in a single file */
+   background-image: url("/adminImages/file.svg"); /* all icons in a single file */
    background-repeat: no-repeat;
    color: #D8D8D8;
 }
