@@ -28,7 +28,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         alert('이미 존재하는 계정입니다.');
       } 
       if(socialEmail !="false" && socialEmail != ""){
-        sessionStorage.setItem('id', "true");
+        //sessionStorage.setItem('id', "true");
       }  
       /* 세션만료시 */
       if(sessionMsg == "세션이 만료되었습니다."){

@@ -1,4 +1,4 @@
-package com.project.my.util;
+package com.project.my.util.Gmail;
 
 import java.security.MessageDigest;
 

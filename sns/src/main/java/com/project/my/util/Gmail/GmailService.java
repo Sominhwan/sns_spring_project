@@ -1,15 +1,16 @@
-package com.project.my.util;
+package com.project.my.util.Gmail;
 
 
 import java.util.List;
-import java.util.Vector;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -41,18 +42,25 @@ public class GmailService {
         }       
     }
     // 다중 전송
-    public boolean sendMutlEmail(String []userAllEmail, String title, String content, Vector<String> getFilePath, List<MultipartFile> multipartFile){
+    public boolean sendMutlEmail(String []userAllEmail, String title, String content, List<MultipartFile> multipartFile){
         MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        MimeMessageHelper helper;
         try {
+            helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(userAllEmail);
             helper.setSubject(title);
             helper.setText(content, true);
-            //String [] fileName = StringUtils.cleanPath(fileName);
-            
-        } catch (Exception e) {
+            if(!CollectionUtils.isEmpty(multipartFile)) { // 파일 첨부
+                for(MultipartFile multiFile: multipartFile) {
+                    helper.addAttachment(multiFile.getOriginalFilename(), multiFile);
+                }
+            }
+            sender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
             return false;
         }
+
         return true;
     }
 }

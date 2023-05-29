@@ -1,4 +1,4 @@
-package com.project.my.module.sns.service;
+package com.project.my.util.S3;
 
 import java.io.IOException;
 import java.io.InputStream;

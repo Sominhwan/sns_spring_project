@@ -17,6 +17,5 @@ public class SHA256CheckService {
             userRepository.setEmailcertification(userEmail);
         }
         return userEmail;
-    }
-    
+    }  
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.my.module.sns.dto.AuthDTO;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
-import com.project.my.util.GmailService;
+import com.project.my.util.Gmail.GmailService;
 
 import lombok.RequiredArgsConstructor;
 

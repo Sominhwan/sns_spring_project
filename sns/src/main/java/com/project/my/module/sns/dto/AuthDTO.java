@@ -4,7 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
-import com.project.my.util.SHA256;
+import com.project.my.util.Gmail.SHA256;
 
 import lombok.Builder;
 import lombok.Data;
