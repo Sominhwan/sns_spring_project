@@ -60,7 +60,6 @@ public class GmailService {
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
 }

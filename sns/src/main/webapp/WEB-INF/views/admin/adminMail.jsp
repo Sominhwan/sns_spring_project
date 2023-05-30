@@ -292,6 +292,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			    return ;
 		  } 		
 	 	}    
+    /* 보낸 메일함 버튼 열기 */
+    function sentMailbox(){
+      if ($('#sentMailbox').css('display') == 'block') {
+        $('#sentMailbox').css('display', 'none');
+      } else {
+        $('#sentMailbox').css('display', 'block');          	    
+      }
+    }
     </script>
   </head>
   <!-- 로딩바 -->
@@ -338,6 +346,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
+          <img src="/adminImages/mailSendCategory.svg" style="position: fixed; top: 395px; left: 300px; z-index: 100; cursor: pointer;" onclick="sentMailbox()"/>
+          <a href="/admin/sentMailbox" id="sentMailbox" style="display: none;">
+            <img
+              src="/adminImages/sendMailLogo.svg"
+              alt="messageImg"
+              class="category-icon"
+              style="position:fixed; left: 80px;"
+            /><span class="sideText2" style="position: fixed; left: 130px; top: 448px; font-size: 18px;">보낸 메일함</span></a
+          >          
         </li>
         <li>
           <a href="/admin/adminStatistics"

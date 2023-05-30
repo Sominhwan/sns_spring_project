@@ -1,6 +1,5 @@
 package com.project.my.module.sns.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,10 +79,10 @@ public class AdminControllerApiV1 {
     // 메일 전송하기
     @PostMapping("/admin/UserAdEmailSend")
     @ResponseBody 
-    public Map userAdEmailSend(@Param("titleInput") String titleInput, @Param("userAllEmail") String []userAllEmail, @Param("mailContent") String mailContent,  @RequestPart("files") List<MultipartFile> files) throws IOException{       
+    public Map userAdEmailSend(@Param("titleInput") String titleInput, @Param("userAllEmail") String []userAllEmail, @Param("mailContent") String mailContent,  @RequestPart(value = "files", required = false) List<MultipartFile> files){       
         Map result = new HashMap<String, Object>();
-        
-        if(files.isEmpty()){
+  
+        if(files == null){
             List<String> fileEmptyList = new ArrayList<>();
             fileEmptyList.add("-");
             boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);

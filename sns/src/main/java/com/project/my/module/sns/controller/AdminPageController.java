@@ -23,9 +23,14 @@ public class AdminPageController {
     public String adminMail() {    
         return "/admin/adminMail";
     }     
+    // 보낼메일함 페이지 이동
+    @GetMapping("/admin/sentMailbox")
+    public String sentMailbox() {    
+        return "/admin/sentMailbox";
+    }       
     // 통계 차트 페이지 이동
     @GetMapping("/admin/adminStatistics")
     public String adminStatistics() {    
         return "/admin/adminStatistics";
-    }                        
+    }                              
 }

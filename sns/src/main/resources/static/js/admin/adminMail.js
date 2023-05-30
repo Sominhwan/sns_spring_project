@@ -8,14 +8,14 @@ let oEditors = [];
             	$('#smsBtn').css('display', 'none');
             	$('#mailBtn').css('display', 'block');       
             	document.getElementById("adminMailLogo-text").innerHTML = "SMS 보내기";	
-            	document.getElementById("navLogo").setAttribute("src", "./adminImages/adminSMSLogo.svg");    	
+            	document.getElementById("navLogo").setAttribute("src", "/adminImages/adminSMSLogo.svg");    	
         	} else {
            	    $('.mailTable').css('display', 'block');
             	$('.smsTable').css('display', 'none');           	    
            		$('#mailBtn').css('display', 'none');
             	$('#smsBtn').css('display', 'block');
             	document.getElementById("adminMailLogo-text").innerHTML = "메일 보내기";	
-            	document.getElementById("navLogo").setAttribute("src", "./adminImages/adminMailLogo.svg");      	
+            	document.getElementById("navLogo").setAttribute("src", "/adminImages/adminMailLogo.svg");      	
         	}
 		}
 		/* 스마트 에디터 기능*/
