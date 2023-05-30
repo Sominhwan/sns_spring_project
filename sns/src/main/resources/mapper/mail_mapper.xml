@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.MailRepository">
+    <!-- 발송내역 INSERT -->
+    <insert id="insertSendMail" parameterType="com.project.my.module.userRole.entity.SendMailEntity">
+        INSERT INTO sendmail(email,title,content,sendTime)
+        VALUES(
+                #{email},
+                #{title},
+                #{content},
+                NOW()
+              )
+        <selectKey keyProperty="sendmail_idx" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>              
+    </insert>
+    <!-- 첨부파일 내역 INSERT -->
+    <insert id="insertMailFile" parameterType="com.project.my.module.userRole.entity.MailFileEntity">
+        INSERT INTO mailfile(file_url)
+        VALUES(
+                #{file_url}
+              )
+        <selectKey keyProperty="mailfile_idx" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>              
+    </insert>   
+    <!-- 모든 첨부파일 내역 INSERT -->
+    <insert id="insertMailFileLog" parameterType="com.project.my.module.userRole.entity.MailFileLogEntity">
+        INSERT INTO mailfile_log(sendmail_idx, mailfile_idx)
+        VALUES(
+                #{sendmail_idx},
+                #{mailfile_idx}
+              )           
+    </insert>             
+</mapper>
+
+

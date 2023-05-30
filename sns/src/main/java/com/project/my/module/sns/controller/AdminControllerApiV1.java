@@ -1,6 +1,7 @@
 package com.project.my.module.sns.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
 import com.project.my.util.S3.AwsS3Service;
+import com.project.my.util.S3.MailLogService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ public class AdminControllerApiV1 {
     private final AdminServiceAp1V1 adminServiceAp1V1;
     private final AwsS3Service awsS3Service;
     private final GmailService gmailService;
+    private final MailLogService mailLogService;
         
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
@@ -79,11 +82,28 @@ public class AdminControllerApiV1 {
     @ResponseBody 
     public Map userAdEmailSend(@Param("titleInput") String titleInput, @Param("userAllEmail") String []userAllEmail, @Param("mailContent") String mailContent,  @RequestPart("files") List<MultipartFile> files) throws IOException{       
         Map result = new HashMap<String, Object>();
+        
+        if(files.isEmpty()){
+            List<String> fileEmptyList = new ArrayList<>();
+            fileEmptyList.add("-");
+            boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);
+            if(flag) {
+                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileEmptyList);
+                result.put("result", "전송완료");
+            } else{
+                result.put("result", "전송실패");
+            }
+        } else{
+            List<String> fileUrl =  awsS3Service.uploadFile(files);
+            boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);
+            if(flag) {
+                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileUrl);
+                result.put("result", "전송완료");
+            } else{
+                result.put("result", "전송실패");
+            }
+        }
 
-        String arr = awsS3Service.uploadFile(files);
-        boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);
-
-        result.put("result", "전송완료");
         return result;
     }         
 }

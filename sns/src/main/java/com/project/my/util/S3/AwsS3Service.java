@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -25,29 +26,34 @@ public class AwsS3Service {
     private String bucket;
 
     private final AmazonS3 amazonS3;
+    private final AmazonS3Client amazonS3Client;
 
-    public String uploadFile(List<MultipartFile> multipartFiles){
+    public List<String> uploadFile(List<MultipartFile> multipartFiles){
         List<String> fileNameList = new ArrayList<>();
+        //String fileUrl = "";
 
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
         multipartFiles.forEach(file -> {
           // 파일명 난수화
           String fileName = createFileName(file.getOriginalFilename());
+          String fileUrl = amazonS3Client.getUrl(bucket, fileName).toString(); // 파일 경로 저장 
           //String fileName = file.getOriginalFilename();
           ObjectMetadata objectMetadata = new ObjectMetadata();
           objectMetadata.setContentLength(file.getSize());
           objectMetadata.setContentType(file.getContentType());
 
           try(InputStream inputStream = file.getInputStream()){
-              amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                       .withCannedAcl(CannedAccessControlList.PublicRead));
+            
           } catch (IOException e){
               System.out.println("파일 업로드 실패");
           }
-          fileNameList.add(fileName);
+          //fileNameList.add(fileName);
+          fileNameList.add(fileUrl);
 
         });
-        return bucket;
+        return fileNameList;
     }
 
     // 먼저 파일 업로드시, 파일명을 난수화하기 위해 UUID 를 활용하여 난수를 돌린다.
