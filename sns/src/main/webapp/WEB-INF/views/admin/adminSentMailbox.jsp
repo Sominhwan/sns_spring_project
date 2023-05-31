@@ -8,6 +8,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" type="image/x-icon" href="/images/loginLogo.png" />
     <link rel="stylesheet" href="/css/admin/adminStatisticsPage.css" />
+    <link rel="stylesheet" href="/css/admin/adminSentMailboxPage.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>관리자페이지 - Photalk</title>
     <script type="text/javascript"> 	 	
@@ -20,14 +21,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			    return ;
 		  } 		
 	 	}
-    /* 보낸 메일함 버튼 열기 */
-    function sentMailbox(){
-      if ($('#sentMailbox').css('display') == 'block') {
-        $('#sentMailbox').css('display', 'none');
-      } else {
-        $('#sentMailbox').css('display', 'block');          	    
-      }
-    }    
+        /* 보낸 메일함 버튼 열기 */
+        function sentMailbox(){
+        if ($('#sentMailbox').css('display') == 'block') {
+            $('#sentMailbox').css('display', 'none');
+        } else {
+            $('#sentMailbox').css('display', 'block');          	    
+        }
+        }   
+        function changePage(){
+            alert("안녕");
+        } 
     </script>
   </head>
   <body>
@@ -115,41 +119,50 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </footer>
     </aside>
 </div>
-    <!-- 통계 네비게이션 바 -->
+    <!-- 보낸 메일함 네비게이션 바 -->
     <nav id="navbar">
-        <span id = "adminStatisticsLogo">
-        <img src="/adminImages/adminStatisticsLogo.svg" />
+        <span id = "sentMailboxLogo">
+        <img src="/adminImages/sentMailboxLogo.svg" />
         </span>
-        <span id="adminStatistics-text">통계</span>    
+        <span id="sentMailboxLogo-text">보낸 메일함</span>    
     </nav>
-    <!-- 차트 컨텐츠 -->
-    <div class="chartTable">
-        <div id="statistics">
-            통계
+    <!-- 보낸 메일함 컨텐츠 -->
+    <div class="sentMailTable">
+        <div id="sentMail">
+            보낸 메일함
         </div>      
-        <div class="tab_content">
-        	<input type="radio" name="tabmenu" id="tab01" checked/>
-        	<label for="tab01">회원&게시물 수</label>
-        	<input type="radio" name="tabmenu" id="tab02"/>
-        	<label for="tab02">좋아요 수</label>
-        	<input type="radio" name="tabmenu" id="tab03"/>
-        	<label for="tab03">게시물 수</label>        	        	
-        <div class="conbox con1" id="container1"><div id="container"></div></div>
-        <div class="conbox con2" id="container2"><div id="container2_1"></div></div>
-        <div class="conbox con3" id="container3">
-        	<figure class="highcharts-figure">
-  			<div id="container3_1"></div>
-			</figure>
-		</div>
-		</div>           
-    </div>
-    
+       		<!-- 보낸 메일함 테이블 -->
+             <table class="sendSentMailBoxTable" id="sendSentMailBoxTable">
+                 <thead id="mailBoxHead">
+                        <tr> 
+                         <th scope="cols" id="num">번호</th>       
+                         <th scope="cols" id="attachFile">첨부파일</th>            
+                         <th scope="cols" id="email">받는 이메일</th>            
+                         <th scope="cols" id="title">제목</th>            
+                         <th scope="cols" id="time">보낸시간</th>            
+                        </tr>
+                    </thead>
+                     <tbody id="ajaxTable4">
+                        <tr onclick="changePage()" style="cursor: pointer;">
+                            <td scope="row" id="num-row">1</td>
+                            <td scope="row" id="attachFile-row"><img src="/adminImages/attachmentIcon.svg" /></td>    					
+                            <td scope="row" id="email-row">thalsghks@naver.com</td>    					
+                            <td scope="row" id="title-row">안녕하세요 PhoTalk 입니다.</td>    					
+                            <td scope="row" id="time-row">2022.03.10 11:48</td>    					
+                        </tr>
+                        <tr>
+                            <td scope="row" id="num-row">1</td>
+                            <td scope="row" id="attachFile-row"></td>    					
+                            <td scope="row" id="email-row">thalsghks@naver.com</td>    					
+                            <td scope="row" id="title-row">안녕하세요 PhoTalk 입니다.</td>    					
+                            <td scope="row" id="time-row">2022.03.10 11:48</td>    					
+                        </tr>	
+	                                                                                                                        	                                                                                                                                                                                                                                                                       	 			          	 			           	 			           	 			           	 			           	 			           	 			           	 			           	 			           	 			             	 			       	 		
+                 </tbody>
+             </table>          		       
+   		
+            </div>       
+    </div>   
   </body>
- <script src="https://code.highcharts.com/highcharts.js"></script>
- <script src="https://code.highcharts.com/modules/data.js"></script>
- <script src="https://code.highcharts.com/modules/drilldown.js"></script>
- <script src="https://code.highcharts.com/modules/exporting.js"></script>
- <script src="https://code.highcharts.com/modules/export-data.js"></script>
- <script src="https://code.highcharts.com/modules/accessibility.js"></script>
- <script src="/js/admin/adminStatistics.js"></script>
+ <script src="/js/admin/adminSentMailbox.js"></script>
 </html>

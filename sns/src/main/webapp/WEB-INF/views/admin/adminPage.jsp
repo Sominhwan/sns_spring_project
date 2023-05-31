@@ -189,7 +189,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             /><span class="sideText">메일 보내기</span></a
           >
           <img src="/adminImages/mailSendCategory.svg" style="position: fixed; top: 395px; left: 300px; z-index: 100; cursor: pointer;" onclick="sentMailbox()"/>
-          <a href="/admin/sentMailbox" id="sentMailbox" style="display: none;">
+          <a href="/admin/adminSentMailbox" id="sentMailbox" style="display: none;">
             <img
               src="/adminImages/sendMailLogo.svg"
               alt="messageImg"

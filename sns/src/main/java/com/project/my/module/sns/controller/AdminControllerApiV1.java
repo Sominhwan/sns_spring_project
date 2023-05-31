@@ -104,5 +104,13 @@ public class AdminControllerApiV1 {
         }
 
         return result;
-    }         
+    }   
+    
+    // 보낸 메일함 데이터 가져오기
+    @PostMapping("/admin/getSentMailData")
+    @ResponseBody 
+    public void getSentMailData() {      
+        String a = adminServiceAp1V1.getSentMailData();
+        System.out.println(a);
+    }     
 }

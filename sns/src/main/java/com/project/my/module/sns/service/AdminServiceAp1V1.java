@@ -110,4 +110,11 @@ public class AdminServiceAp1V1 {
 
 		return sendObject.toString();
     } 	
+    // 회원 이메일 주소 검색
+    @Transactional
+    public String getSentMailData(){         
+
+		return "zz";
+    } 
+
 }
