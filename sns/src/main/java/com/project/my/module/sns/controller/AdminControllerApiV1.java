@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.my.module.sns.dto.MailDTO;
 import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
 import com.project.my.util.S3.AwsS3Service;
@@ -109,8 +110,8 @@ public class AdminControllerApiV1 {
     // 보낸 메일함 데이터 가져오기
     @PostMapping("/admin/getSentMailData")
     @ResponseBody 
-    public void getSentMailData() {      
-        String a = adminServiceAp1V1.getSentMailData();
-        System.out.println(a);
+    public List<?> getSentMailData() {      
+        List<MailDTO> mailList = adminServiceAp1V1.getSentMailData();
+        return mailList;
     }     
 }

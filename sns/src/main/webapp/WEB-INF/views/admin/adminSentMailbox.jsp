@@ -143,7 +143,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         </tr>
                     </thead>
                      <tbody id="ajaxTable4">
-                        <tr onclick="changePage()" style="cursor: pointer;">
+                        <!-- <tr onclick="changePage()" style="cursor: pointer;">
                             <td scope="row" id="num-row">1</td>
                             <td scope="row" id="attachFile-row"><img src="/adminImages/attachmentIcon.svg" /></td>    					
                             <td scope="row" id="email-row">thalsghks@naver.com</td>    					
@@ -156,7 +156,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             <td scope="row" id="email-row">thalsghks@naver.com</td>    					
                             <td scope="row" id="title-row">안녕하세요 PhoTalk 입니다.</td>    					
                             <td scope="row" id="time-row">2022.03.10 11:48</td>    					
-                        </tr>	
+                        </tr>	 -->
 	                                                                                                                        	                                                                                                                                                                                                                                                                       	 			          	 			           	 			           	 			           	 			           	 			           	 			           	 			           	 			           	 			             	 			       	 		
                  </tbody>
              </table>          		       

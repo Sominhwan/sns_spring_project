@@ -31,7 +31,31 @@
                 #{sendmail_idx},
                 #{mailfile_idx}
               )           
-    </insert>             
+    </insert>    
+    <!-- 모든 메일 리스트 SELECT -->
+	<resultMap type="com.project.my.module.sns.dto.MailDTO" id="MailDTO">
+		<result column="sendmail_idx" property="sendmail_idx" />
+		<result column="file_url" property="attachFile" />
+		<result column="email" property="email" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="sendTime" property="sendTime" />
+	</resultMap>
+
+    <select id="selectAllMessageList" resultMap="MailDTO"> 
+        SELECT 
+            sm.sendmail_idx,
+            GROUP_CONCAT(DISTINCT mf.file_url SEPARATOR ', ') AS file_url,
+            sm.email,
+            sm.title,
+            sm.content, 
+            sm.sendTime
+        FROM sendmail sm
+        RIGHT OUTER JOIN mailfile_log mfl ON sm.sendmail_idx = mfl.sendmail_idx
+        RIGHT OUTER JOIN mailfile mf ON mfl.mailfile_idx = mf.mailfile_idx
+        GROUP BY sm.sendmail_idx, sm.email, sm.title, sm.content, sm.sendTime
+        ORDER BY sm.sendTime DESC
+    </select>    
 </mapper>
 
 

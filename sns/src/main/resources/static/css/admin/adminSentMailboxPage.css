@@ -225,9 +225,17 @@ nav {
   font-weight: normal;		
 }
 
+#email-row:hover{
+  text-decoration: underline;
+}
+
 #title-row{
   width: 930px; 
   font-weight: normal;		
+}
+
+#title-row:hover{
+  text-decoration: underline;
 }
 
 #time-row{
@@ -237,4 +245,13 @@ nav {
 
 .changeAjaxTable4Color {
   background-color: #f5f5f5;
+}
+
+/* 마우스 끌기 및 복사 방지 */
+table { 
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 }

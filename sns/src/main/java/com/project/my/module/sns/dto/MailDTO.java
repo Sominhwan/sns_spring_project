@@ -11,11 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MailDTO { 
+    private int sendmail_idx;
     private String attachFile;
     private String email;
     private String title;
+    private String content;
     private String sendTime;
     
+    public void sendmail_idx(int sendmail_idx) {
+        this.sendmail_idx = sendmail_idx;
+    } 
     public void setAttachFile(String attachFile) {
         this.attachFile = attachFile;
     }
@@ -25,7 +30,10 @@ public class MailDTO {
     public void setTitle(String title) {
         this.title = title;
     }
+    public void setContent(String content) {
+        this.content = content;
+    }    
     public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
-    } 
+    }
 }

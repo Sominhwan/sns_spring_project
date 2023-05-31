@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.my.module.sns.dto.MailDTO;
 import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
+import com.project.my.module.userRole.repository.MailRepository;
 import com.project.my.module.userRole.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = false) // readOnly = true 경우 db 접근시 select 만 가능
 public class AdminServiceAp1V1 {
     private final UserRepository userRepository; 
+	private final MailRepository mailRepository;
     
     // 회원 이름으로 회원 정보 검색
     @Transactional
@@ -110,11 +113,12 @@ public class AdminServiceAp1V1 {
 
 		return sendObject.toString();
     } 	
-    // 회원 이메일 주소 검색
+    // 모든 메일 리스트 가져오기
     @Transactional
-    public String getSentMailData(){         
-
-		return "zz";
+    public List<MailDTO> getSentMailData(){         
+		List<MailDTO> mailList = new ArrayList<>();
+		mailList = mailRepository.selectAllMessageList();
+		return mailList;
     } 
 
 }
