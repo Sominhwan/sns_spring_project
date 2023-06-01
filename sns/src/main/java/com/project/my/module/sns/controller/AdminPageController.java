@@ -2,6 +2,8 @@ package com.project.my.module.sns.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,5 +34,12 @@ public class AdminPageController {
     @GetMapping("/admin/adminStatistics")
     public String adminStatistics() {    
         return "/admin/adminStatistics";
-    }                              
+    }  
+    // 해당하는 보낸 메일함 페이지 이동
+    @GetMapping("/admin/adminSentMailbox/read")
+    public ModelAndView read(@RequestParam("num") String num, ModelAndView mav) {
+        mav.addObject("num", num);
+        mav.setViewName("/admin/read");
+        return mav;   
+    }
 }

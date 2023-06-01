@@ -113,5 +113,17 @@ public class AdminControllerApiV1 {
     public List<?> getSentMailData() {      
         List<MailDTO> mailList = adminServiceAp1V1.getSentMailData();
         return mailList;
+    } 
+
+    // 보낸 메일함 특정 데이터 가져오기
+    @PostMapping("/admin/getSentMailDetailData")
+    @ResponseBody 
+    public String getSentMailDetailData(@Param("num") int num, @Param("num2") String num2) {      
+        //List<MailDTO> mailList = adminServiceAp1V1.getSentMailData();
+        System.out.println(num);
+        System.out.println(num2);
+        //return mailList;
+        return "안녕";
     }     
+    
 }

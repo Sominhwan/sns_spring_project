@@ -51,8 +51,8 @@
             sm.content, 
             sm.sendTime
         FROM sendmail sm
-        RIGHT OUTER JOIN mailfile_log mfl ON sm.sendmail_idx = mfl.sendmail_idx
-        RIGHT OUTER JOIN mailfile mf ON mfl.mailfile_idx = mf.mailfile_idx
+        JOIN mailfile_log mfl ON sm.sendmail_idx = mfl.sendmail_idx
+        JOIN mailfile mf ON mfl.mailfile_idx = mf.mailfile_idx
         GROUP BY sm.sendmail_idx, sm.email, sm.title, sm.content, sm.sendTime
         ORDER BY sm.sendTime DESC
     </select>    
