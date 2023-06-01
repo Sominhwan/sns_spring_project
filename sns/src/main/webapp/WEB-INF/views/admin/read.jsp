@@ -20,6 +20,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 return ;
             } 		
         }
+        /* 보낸 메일함 버튼 열기 */
+        function sentMailbox(){
+          if ($('#sentMailbox').css('display') == 'block') {
+            $('#sentMailbox').css('display', 'none');
+          } else {
+            $('#sentMailbox').css('display', 'block');          	    
+          }
+        }
     </script>
   </head>
   <body>
@@ -97,19 +105,27 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </footer>
     </aside>
 </div>
-    <!-- 회원정보 네비게이션 바 -->
+    <!-- 상세 메일정보 네비게이션 바 -->
     <nav id="navbar">
         <span id = "material-message-logo">
         <img src="/adminImages/material-message.svg" />
         </span>
         <span id="adminProfile-text">상세 메일함</span>    
     </nav>
-    <!-- 회원정보 컨텐츠 -->
-    <div class="userTable">
+    <!-- 상세 메일정보 컨텐츠 -->
+    <div class="mailTable">
         <input type="hidden" id="num" value="${num}"/>
-        <div id="userManage">
-            ${num}
+        <div id="mailTitle">   
         </div>
+        <div id="sender">   
+          보낸사람
+        </div>
+        <div id="senderWrap">   
+          <span id="senderEmail">photalk2@gmail.com</span>
+        </div>
+        <div id="receiver">   
+          받는사람
+        </div>        
     </div>
   </body>
   <script src="/js/admin/adminRead.js"></script>

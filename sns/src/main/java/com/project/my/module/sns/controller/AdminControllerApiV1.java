@@ -85,25 +85,31 @@ public class AdminControllerApiV1 {
   
         if(files == null){
             List<String> fileEmptyList = new ArrayList<>();
+            List<String> fileNameEmptyList = new ArrayList<>();
             fileEmptyList.add("-");
+            fileNameEmptyList.add("-");
             boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);
             if(flag) {
-                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileEmptyList);
+                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileEmptyList, fileNameEmptyList);
                 result.put("result", "전송완료");
             } else{
                 result.put("result", "전송실패");
             }
         } else{
+            List<String> fileNameList = new ArrayList<>();
+            files.forEach(file -> {
+                String fileName = file.getOriginalFilename();
+                fileNameList.add(fileName);
+              });
             List<String> fileUrl =  awsS3Service.uploadFile(files);
             boolean flag = gmailService.sendMutlEmail(userAllEmail, titleInput, mailContent, files);
             if(flag) {
-                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileUrl);
+                mailLogService.saveSendMailLog(userAllEmail, titleInput, mailContent, fileUrl, fileNameList);
                 result.put("result", "전송완료");
             } else{
                 result.put("result", "전송실패");
             }
         }
-
         return result;
     }   
     
@@ -118,12 +124,8 @@ public class AdminControllerApiV1 {
     // 보낸 메일함 특정 데이터 가져오기
     @PostMapping("/admin/getSentMailDetailData")
     @ResponseBody 
-    public String getSentMailDetailData(@Param("num") int num, @Param("num2") String num2) {      
-        //List<MailDTO> mailList = adminServiceAp1V1.getSentMailData();
-        System.out.println(num);
-        System.out.println(num2);
-        //return mailList;
-        return "안녕";
-    }     
-    
+    public List<?> getSentMailDetailData(@Param("num") int num) {      
+        List<MailDTO> mailList = adminServiceAp1V1.getSelectMailData(num);
+        return mailList;
+    }      
 }

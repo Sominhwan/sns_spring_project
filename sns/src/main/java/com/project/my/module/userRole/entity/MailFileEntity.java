@@ -15,11 +15,15 @@ import lombok.NoArgsConstructor;
 public class MailFileEntity {
     private int mailfile_idx;
     private String file_url;
-
+    private String file_name;
+  
     public void setIdx(int mailfile_idx) {
         this.mailfile_idx = mailfile_idx;
     }
     public void setFile_url(String file_url) {
         this.file_url = file_url;
-    }    
+    }   
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }         
 }

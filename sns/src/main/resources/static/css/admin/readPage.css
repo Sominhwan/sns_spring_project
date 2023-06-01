@@ -118,7 +118,7 @@
   }
   
   /* 회원정보 컨텐츠 */
-  .userTable {
+  .mailTable {
     position: fixed;
     left: 358px;
     top: 106px;
@@ -126,12 +126,58 @@
     height: 100%;
   }
   
-  #userManage {
+  #mailTitle {
     position: relative;
-    left: 45px;
-    top: 62px;
+    left: 37px;
+    top: 27px;
     font-family: MalgunGothic;
     font-size: 20px;
     font-weight: bold;
+    color: #474747;
+  }
+
+  #sender {
+    position: relative;
+    left: 37px;  
+    top: 60px;
+    font-family: MalgunGothic;
+    font-size: 14px; 
+    font-weight: bold;
+    color: #474747;     
+  }
+  
+  #senderWrap {
+    position: relative;
+    display: inline-block;
+    left: 110px;
+    top: 40px;
+    max-width: 1000px;
+    height: 70px;
+    font-family: MalgunGothic;
+    font-size: 13px;    
+  }
+
+  #senderEmail {
+    background-color: #0073E61A;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #senderEmail:hover{
+    text-decoration: underline;
+    background-color: #0073E633;
+  }
+
+  #receiver {
+    position: relative;
+    left: 37px;  
+    top: 20px;
+    font-family: MalgunGothic;
+    font-size: 14px; 
+    font-weight: bold;
+    color: #474747;     
   }
   

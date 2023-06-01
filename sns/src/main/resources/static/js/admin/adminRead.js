@@ -7,11 +7,11 @@ $(document).ready(function () {
         dataType : "json",
         global: false,
         data : {
-            num: num,
-            num2: "2"
+            num: num
         },
         success : function(obj){
-
+            console.log(obj);
+            document.getElementById("mailTitle").innerText = obj[0].title;
         }
     });
 });

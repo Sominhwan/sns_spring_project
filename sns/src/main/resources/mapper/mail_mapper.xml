@@ -16,9 +16,10 @@
     </insert>
     <!-- 첨부파일 내역 INSERT -->
     <insert id="insertMailFile" parameterType="com.project.my.module.userRole.entity.MailFileEntity">
-        INSERT INTO mailfile(file_url)
+        INSERT INTO mailfile(file_url,file_name)
         VALUES(
-                #{file_url}
+                #{file_url},
+                #{file_name}
               )
         <selectKey keyProperty="mailfile_idx" order="AFTER" resultType="Integer">
             SELECT LAST_INSERT_ID()
@@ -56,6 +57,33 @@
         GROUP BY sm.sendmail_idx, sm.email, sm.title, sm.content, sm.sendTime
         ORDER BY sm.sendTime DESC
     </select>    
+    <!-- 모든 메일 리스트 SELECT -->
+	<resultMap type="com.project.my.module.sns.dto.MailDTO" id="MailDTO2">
+		<result column="sendmail_idx" property="sendmail_idx" />
+		<result column="file_url" property="attachFile" />
+		<result column="file_name" property="fileName" />
+		<result column="email" property="email" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="sendTime" property="sendTime" />
+	</resultMap>
+
+    <select id="selectMessageList" resultMap="MailDTO2"> 
+        SELECT 
+            sm.sendmail_idx,
+            GROUP_CONCAT(DISTINCT mf.file_url SEPARATOR ', ') AS file_url,
+            GROUP_CONCAT(DISTINCT mf.file_name SEPARATOR ', ') AS file_name,  
+            sm.email,
+            sm.title,
+            sm.content,
+            sm.sendTime
+        FROM sendmail sm
+        JOIN mailfile_log mfl ON sm.sendmail_idx = mfl.sendmail_idx
+        JOIN mailfile mf ON mfl.mailfile_idx = mf.mailfile_idx
+        WHERE sm.sendmail_idx = #{num}
+        GROUP BY sm.sendmail_idx, sm.email, sm.title, sm.content, sm.sendTime
+        ORDER BY sm.sendTime DESC;
+    </select>     
 </mapper>
 
 

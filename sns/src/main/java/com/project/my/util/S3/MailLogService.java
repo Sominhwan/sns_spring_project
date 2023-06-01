@@ -20,7 +20,7 @@ public class MailLogService {
     private final MailFileLogEntity mailFileLogEntity;
 
 
-    public String saveSendMailLog(String []email, String title, String content, List<String> fileUrl) {
+    public String saveSendMailLog(String []email, String title, String content, List<String> fileUrl, List<String> fileName) {
         int [] mailIdx = new int[email.length]; // 발송내역 idx
         int [] fileIdx = new int[fileUrl.size()]; // 첨부파일 내역 idx
 
@@ -35,6 +35,7 @@ public class MailLogService {
         }
         for(int i = 0 ; i<fileUrl.size(); i++){ // 첨부파일 내역 저장
             mailFileEntity.setFile_url(fileUrl.get(i));
+            mailFileEntity.setFile_name(fileName.get(i));
             mailRepository.insertMailFile(mailFileEntity); 
             fileIdx[i] = mailFileEntity.getMailfile_idx();             
         }

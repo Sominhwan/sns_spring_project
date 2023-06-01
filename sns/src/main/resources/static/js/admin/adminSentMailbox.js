@@ -38,10 +38,6 @@ function displayData(currentPage, dataPerPage){
     dataPerPage = Number(dataPerPage);
    
     for(var i = (currentPage-1) * dataPerPage; i< (currentPage-1) * dataPerPage + dataPerPage; i++){
-
-        //var tr = $("#mail-tr").parent().parent().eq(i);
-        //var td = tr.children();
-        //alert(td.eq(0).text());
         table.innerHTML += '<tr id="mail-tr" style="cursor: pointer;">' +
                             '<td scope="row" id="num-row">'+ (i+1) +'</td>' +
                             '<td scope="row" id="attachFile-row">'+ attachFile[i] +'</td>' +
@@ -68,11 +64,6 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
     let first = last - (pageCount - 1); //화면에 보여질 첫번째 페이지 번호
     let next = last + 1;
     let prev = first - 1;
-    
-    console.log(first);
-    console.log(last);
-    console.log(next);
-    console.log(prev);
 
     let pageHtml = "";
   

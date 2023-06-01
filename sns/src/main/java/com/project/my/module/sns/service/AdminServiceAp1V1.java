@@ -120,5 +120,11 @@ public class AdminServiceAp1V1 {
 		mailList = mailRepository.selectAllMessageList();
 		return mailList;
     } 
-
+    // 특정 메일 데이터 가져오기
+    @Transactional
+    public List<MailDTO> getSelectMailData(int num){         
+		List<MailDTO> mailList = new ArrayList<>();
+		mailList = mailRepository.selectMessageList(num);
+		return mailList;
+    } 
 }

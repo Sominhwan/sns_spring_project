@@ -21,5 +21,6 @@ public interface MailRepository {
     void insertMailFileLog(MailFileLogEntity mailFileLogEntity);
     // 모든 메일내역 SELECT
     List<MailDTO> selectAllMessageList();
-    
+    // 특정 메일내역 SELECT
+    List<MailDTO> selectMessageList(int num);
 }
