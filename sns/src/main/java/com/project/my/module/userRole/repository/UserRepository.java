@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 
@@ -49,4 +50,6 @@ public interface UserRepository {
     void deleteUserPost(@Param("postId") String postId);
     // 회원이메일을 통해 회원이메일주소 검색
     ArrayList<UserInfoEntity> searchUserEmail(String userEmail);    
+    // 광고수신 회원 휴대폰 번호 SELECT
+    List<SMSDTO> selectUserPhoneList();
 }

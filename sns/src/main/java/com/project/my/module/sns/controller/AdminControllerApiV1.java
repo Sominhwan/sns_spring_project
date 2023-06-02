@@ -20,6 +20,7 @@ import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
 import com.project.my.util.S3.AwsS3Service;
 import com.project.my.util.S3.MailLogService;
+import com.project.my.util.SMS.SmsCountService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ public class AdminControllerApiV1 {
     private final AwsS3Service awsS3Service;
     private final GmailService gmailService;
     private final MailLogService mailLogService;
+    private final SmsCountService countService;
         
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
@@ -137,5 +139,23 @@ public class AdminControllerApiV1 {
     @ResponseBody 
     public ResponseEntity<UrlResource> downloadFile(@Param("num") int num, @Param("file") String file) {      
         return awsS3Service.downloadImage(file);
+    }
+    
+    // 광고수신 유저 휴대폰 리스트 가져오기
+    @PostMapping("/admin/userPhoneList")
+    @ResponseBody 
+    public List<?> userPhoneList() {  
+        return adminServiceAp1V1.getUserPhoneList();    
+    }  
+    
+    // 카페24 SMS 잔여 문자량 가져오기
+    @GetMapping("/admin/mySMSCount")
+    @ResponseBody 
+    public String mySMSCount() {  
+        try {
+            return countService.getCount();
+        } catch (Exception e) {
+            return "실패";
+        }   
     }     
 }

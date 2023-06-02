@@ -55,13 +55,11 @@ function B(a){var d=+new Date;if(!document[t(86,199,203,187,200,207,169,187,194,
 function getSMSCount(){
     timer = setInterval(function(){
     	$.ajax({
-			url : "SMSCount",
+			url : "/admin/mySMSCount",
         	type : "get",
-        	dataType : "json",
         	global: false,
         	success : function(obj){
-				var result = obj.result; 
-           	 	setSMSCount(result);
+           	 	setSMSCount(obj);
            	 	clickTd2();
         	},
         	error : function(xhr, status, error){
@@ -167,6 +165,25 @@ function userPhoneList(){
 	if ($('#userPhone-content').css('display') == 'block') {
 		$('#userPhone-content').css('display', 'none');
     } else {
+    	$.ajax({
+			url : "/admin/userPhoneList",
+        	type : "post",
+			global: false, // global false 시 loading.js 의 이벤트 막음
+        	success : function(obj){
+				var phoneFormat = [];
+				var table = document.getElementById("ajaxTable2");
+				table.innerHTML = "";
+				   $.each(obj , function(i){
+					   phoneFormat[i] = (obj[i].userPN).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+					   table.innerHTML += '<tr><td>'+phoneFormat[i]+'</td></td>';
+				});	
+				changeColor();	  
+				clickTd();
+        	},
+        	error : function(xhr, status, error){
+    			alert("통신 실패");
+        	}
+    	});			
         $('#userPhone-content').css('display', 'block');          	    
     }	
 }
@@ -244,12 +261,10 @@ function s2ab(s) {
 }
 
 $(document).ready(function () {
-    //getSMSCount();
+    getSMSCount();
 	// TODO	
-    changeColor();	
     changeColor2();
     changeColor3();
-    clickTd();
     clickTd2();
     clickTd3();
 });

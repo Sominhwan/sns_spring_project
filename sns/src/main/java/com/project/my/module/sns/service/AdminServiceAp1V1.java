@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.my.module.sns.dto.MailDTO;
+import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.MailRepository;
@@ -127,4 +128,12 @@ public class AdminServiceAp1V1 {
 		mailList = mailRepository.selectMessageList(num);
 		return mailList;
     } 
+    // 광고수신 유저 휴대폰번호 가져오기
+    @Transactional
+    public List<SMSDTO> getUserPhoneList(){ 
+		List<SMSDTO> userPhoneList = new ArrayList<>();     
+		userPhoneList = userRepository.selectUserPhoneList();
+		return userPhoneList;
+    } 
+
 }
