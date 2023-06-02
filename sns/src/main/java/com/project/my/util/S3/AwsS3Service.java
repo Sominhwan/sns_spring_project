@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,9 +38,9 @@ public class AwsS3Service {
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
         multipartFiles.forEach(file -> {
           // 파일명 난수화
-          String fileName = createFileName(file.getOriginalFilename());
+          //String fileName = createFileName(file.getOriginalFilename());
+          String fileName = file.getOriginalFilename();
           String fileUrl = amazonS3Client.getUrl(bucket, fileName).toString(); // 파일 경로 저장 
-          //String fileName = file.getOriginalFilename();
           ObjectMetadata objectMetadata = new ObjectMetadata();
           objectMetadata.setContentLength(file.getSize());
           objectMetadata.setContentType(file.getContentType());
@@ -69,6 +72,17 @@ public class AwsS3Service {
          
       }
       return fileName;
+    }
+
+    // 파일 다운로드
+    public ResponseEntity<UrlResource> downloadImage(String originalFilename) {
+        UrlResource urlResource = new UrlResource(amazonS3.getUrl(bucket, originalFilename));
+    
+        String contentDisposition = "attachment; filename=\"" +  originalFilename + "\"";
+        // header에 CONTENT_DISPOSITION 설정을 통해 클릭 시 다운로드 진행
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(urlResource);
     }
 
     public void deleteFile(String fileName){

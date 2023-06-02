@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -127,5 +130,12 @@ public class AdminControllerApiV1 {
     public List<?> getSentMailDetailData(@Param("num") int num) {      
         List<MailDTO> mailList = adminServiceAp1V1.getSelectMailData(num);
         return mailList;
-    }      
+    }   
+
+    // 메일함 첨부파일 다운로드
+    @GetMapping("/admin/downloadFile")
+    @ResponseBody 
+    public ResponseEntity<UrlResource> downloadFile(@Param("num") int num, @Param("file") String file) {      
+        return awsS3Service.downloadImage(file);
+    }     
 }

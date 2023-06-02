@@ -1,3 +1,8 @@
+/* @page { size: A4 landscape; margin:0; }
+@media print{
+	.left-side, footer, #nabvar, #printPage {display:none}
+} */
+
 .left-side {
     position: fixed;
     left: 0%;
@@ -28,7 +33,7 @@
     text-decoration: none;
     color: #fff;
   }
-  ul {
+  #read-ul {
     position: relative;
     list-style-type: none;
     top: 150px;
@@ -36,7 +41,7 @@
     padding: 0;
   }
   
-  li a {
+  #read-li a {
     display: block;
     color: #fff;
     font-size: 22px;
@@ -44,7 +49,7 @@
     text-decoration: none;
   }
   
-  li a:hover:not(.active) {
+  #read-li a:hover:not(.active) {
     background-color: #555;
     color: white;
   }
@@ -136,6 +141,27 @@
     color: #474747;
   }
 
+  #printPage {
+    position: fixed;
+    left: 1850px;
+    top: 120px;
+    font-family: MalgunGothic;
+    font-size: 14px;  
+    color: #767678;
+    cursor: pointer;
+    width: 35px;
+  }
+
+  #printPage:hover {
+    text-decoration: underline;
+  }
+
+  #printIcon{
+    position: relative;
+    right: 50px;
+    top: 24px;
+  }
+
   #sender {
     position: relative;
     left: 37px;  
@@ -155,6 +181,7 @@
     height: 70px;
     font-family: MalgunGothic;
     font-size: 13px;    
+    cursor: pointer;
   }
 
   #senderEmail {
@@ -174,10 +201,164 @@
   #receiver {
     position: relative;
     left: 37px;  
-    top: 20px;
+    top: 15px;
     font-family: MalgunGothic;
     font-size: 14px; 
     font-weight: bold;
-    color: #474747;     
+    obj[0].email;    
+  }
+
+  #receiverWrap {
+    position: relative;
+    display: inline-block;
+    left: 110px;
+    top: -5px;
+    max-width: 1000px;
+    height: 70px;
+    font-family: MalgunGothic;
+    font-size: 13px;   
+    cursor: pointer; 
+  }
+
+  #receiverEmail {
+    background-color: #0073E61A;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #receiverEmail:hover {
+    text-decoration: underline;
+    background-color: #0073E633;
+  }  
+
+  #senderTime {
+    position: relative;
+    top: -35px;
+    left: 37px;
+    font-size: 13px;
+    font-family: MalgunGothic;
+    color: #767678;
+  }
+
+  #hr {
+    position: fixed;
+    top: 310px;
+    background: rgba(230, 230, 234, 0.7);
+    height:1px;
+    border:0;
+    width: 1490px;
+    left: 395px;
+  }
+
+  /* 첨부파일 리스트 */
+  #mail-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  #file-attachment-summary{
+    position: relative;
+    left: 37px;
+    top: 0px;
+    font-size: 14px;
+    color: #1E1E23;
+    font-family: MalgunGothic;
+  }
+
+  #arrow-down{
+    position: fixed;
+    left: 440px;
+    top: 340px;
+    cursor: pointer;
+  }
+
+  #arrow-up{
+    position: fixed;
+    left: 440px;
+    top:340px;
+    cursor: pointer;  
+  }
+
+  #attachment-inner {
+    position: relative;
+    left: 37px;
+    top: 15px;
+    border: solid 1px #eee;
+    width: 650px;
+  }
+
+  .fileList {
+    list-style: none;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #fileItem {
+    display: block;
+    height: 30px;
+    line-height: 25px;
+  }
+
+  #fileItem:hover {
+    background-color: #F9F9F9;
+  }
+
+  #fileImg {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
   }
   
+  #fileName {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #1E1E23;
+    width:100%; 
+    margin-left: -15px;
+  }
+
+  #img-preview {
+    text-decoration: none;
+  }
+
+  #preview {
+    vertical-align: middle; 
+    font-size: 14px;
+    color: #6b77a7;
+    padding-left: 10px;
+  }
+
+  #preview:hover {
+    text-decoration: underline;  
+  }
+
+  #download {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle; 
+    float: right; 
+    cursor: pointer;
+  }
+
+  #download:hover {
+    content: url('/adminImages/feather-download2.svg');
+  }
+
+  #mail-content-text {
+    position: relative;
+    left: 37px;
+    top: 30px;
+    width: 78%;
+    font-size: 14px;
+  }
+
