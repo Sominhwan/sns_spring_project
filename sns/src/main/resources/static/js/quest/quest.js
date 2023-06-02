@@ -1,3 +1,4 @@
+// quest.js
 document.addEventListener("DOMContentLoaded", () => {
 	const modal = document.querySelector("#modal");
 	const closeButton = document.querySelector(".close-button");
