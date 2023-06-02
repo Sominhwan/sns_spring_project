@@ -181,27 +181,6 @@
 		    </div>
 		  </div>
 		</div>
-	<script>
-		const modal = document.querySelector("#modal");
-		const closeButton = document.querySelector(".close-button");
-		const images = document.querySelectorAll(".image-container a"); // 모든 이미지 선택
-
-		window.addEventListener("load", () => {
-			modal.style.display = "block";
-			document.body.style.overflow = "hidden";
-		});
-
-		closeButton.addEventListener("click", () => {
-			modal.style.display = "none";
-			document.body.style.overflow = "auto";
-		});
-
-		images.forEach(image => {
-			image.addEventListener("click", (event) => {
-			event.preventDefault(); // 기본 동작 취소
-			window.location.href = "/profile"; // 프로필 페이지 링크로 이동
-			});
-		});
-	</script>
+	<script src="quest.js"></script>
 </body>
 </html>
