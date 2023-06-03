@@ -7,13 +7,12 @@ var postPercent = [];
 var otherPercent = 0;
 function searchUserCount(){
     $.ajax({
-		url : "UserInfoCount",
+		url : "/admin/userInfoCount",
         type : "get",
         dataType : "json",
         global: false,
         success : function(obj){
-			var result = obj.count; 
-			userSignCount = result;
+			userSignCount = obj;
 			searchPostCount();
         },
         error : function(xhr, status, error){
@@ -23,15 +22,13 @@ function searchUserCount(){
 }
 
 function searchPostCount(){
-	var post = "true";
     $.ajax({
-		url : "UserInfoCount?post="+post,
+		url : "/admin/userPostCount",
         type : "get",
         dataType : "json",
         global: false,
         success : function(obj){
-			var result = obj.count; 
-			userPostCount = result;
+			userPostCount = obj;
 			chart();
         },
         error : function(xhr, status, error){
@@ -69,25 +66,24 @@ function chart(){
 	    },
 	    series: [{
 	        name: '회원 수',
-	        data: [userSignCount[0].result, userSignCount[1].result, userSignCount[2].result, userSignCount[3].result, userSignCount[4].result,
-	         		userSignCount[5].result, userSignCount[6].result, userSignCount[7].result, userSignCount[8].result, userSignCount[9].result, userSignCount[10].result, userSignCount[11].result]
+	        data: [userSignCount[0], userSignCount[1], userSignCount[2], userSignCount[3], userSignCount[4],
+	         		userSignCount[5], userSignCount[6], userSignCount[7], userSignCount[8], userSignCount[9], userSignCount[10], userSignCount[11]]
 	    }, {
 	        name: '게시물 수',
-	        data: [userPostCount[0].result, userPostCount[1].result, userPostCount[2].result, userPostCount[3].result, userPostCount[4].result, userPostCount[5].result, userPostCount[6].result, 
-	        		userPostCount[7].result, userPostCount[8].result, userPostCount[9].result, userPostCount[10].result, userPostCount[11].result]
+	        data: [userPostCount[0], userPostCount[1], userPostCount[2], userPostCount[3], userPostCount[4], userPostCount[5], userPostCount[6], 
+	        		userPostCount[7], userPostCount[8], userPostCount[9], userPostCount[10], userPostCount[11]]
 	    }]
 	});
 }
 
 function searchPostInfo(){
     $.ajax({
-		url : "PostInfoCount",
+		url : "/admin/postInfoCount",
         type : "get",
         dataType : "json",
         global: false,
         success : function(obj){
-			var result = obj.result; 
-			postList = result;
+			postList = obj;
 			horiStackedBar();
         },
         error : function(xhr, status, error){
@@ -360,7 +356,7 @@ window.onload = function(){
 	searchUserCount();
 	searchPostInfo();
 	
-	 userPostInfo();
+	 //userPostInfo();
 	 //userChart();
 
 }

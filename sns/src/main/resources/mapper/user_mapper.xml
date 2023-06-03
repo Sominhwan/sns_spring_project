@@ -180,7 +180,26 @@
         SELECT userPN, content, userRegTime 
         FROM sms
         ORDER BY userRegTime DESC
-    </select>        
+    </select> 
+    <!-- HighChart 유저 회원가입수 가져오기 -->
+    <select id="selectUserCount" resultType="Integer">
+        SELECT COUNT(*) 
+        FROM userinfo 
+        WHERE MONTH(userRegTime) = #{month} AND YEAR(userRegTime) = 2023
+    </select> 
+    <!-- HighChart 유저 게시물수 가져오기 -->
+    <select id="selectUserPostCount" resultType="Integer">
+        SELECT COUNT(*) 
+        FROM post 
+        WHERE MONTH(creationDate) = #{month} AND YEAR(creationDate) = 2023
+    </select>     
+    <!-- HighChart 상위 5개 좋아요 수 가져오기 -->
+    <select id="selectPostInfoCount" resultType="com.project.my.module.sns.dto.PostDTO">
+        SELECT postId, userEmail, likeNum, shareNum, commentNum, postReport 
+        FROM post 
+        ORDER BY likeNum desc 
+        LIMIT 5
+    </select>     
 </mapper>
 
 

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.my.module.sns.dto.MailDTO;
+import com.project.my.module.sns.dto.PostDTO;
 import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
+import com.project.my.util.HighChart.HighChartService;
 import com.project.my.util.S3.AwsS3Service;
 import com.project.my.util.S3.MailLogService;
 import com.project.my.util.SMS.SmsCountService;
@@ -34,6 +36,7 @@ public class AdminControllerApiV1 {
     private final MailLogService mailLogService;
     private final SmsCountService countService;
     private final SmsSendService sendService;
+    private final HighChartService chartService;
         
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
@@ -174,5 +177,26 @@ public class AdminControllerApiV1 {
     @ResponseBody 
     public List<?> getSmsData() {  
         return adminServiceAp1V1.getSmsData();
-    }     
+    }   
+    
+    // HighChart 유저 회원가입수 가져오기
+    @GetMapping("/admin/userInfoCount")
+    @ResponseBody 
+    public List<?> userInfoCount() {  
+        return chartService.getUserCount();
+    }  
+
+    // HighChart 유저 게시물수 가져오기
+    @GetMapping("/admin/userPostCount")
+    @ResponseBody 
+    public List<?> userPostCount() {  
+        return chartService.getUserPostCount();
+    }   
+    
+    // HighChart 상위 5개 좋아요 수 가져오기
+    @GetMapping("/admin/postInfoCount")
+    @ResponseBody 
+    public List<PostDTO> postInfoCount() {  
+        return chartService.getPostInfoCount();
+    }        
 }

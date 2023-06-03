@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.project.my.module.sns.dto.PostDTO;
 import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.SMSEntity;
@@ -57,4 +58,10 @@ public interface UserRepository {
     void insertSMSData(@Param("setPhone") String setPhone, @Param("setContent") String setContent);
     // 카페24 SMS 전송 데이터 SELECT
     List<SMSEntity> selectSmsData();   
+    // HighChart 유저 회원가입수 SELECT
+    Integer selectUserCount(int month);
+    // HighChart 유저 게시물수 SELECT
+    Integer selectUserPostCount(int month);
+    // HighChart 상위 5개 좋아요 수 SELECT
+    List<PostDTO> selectPostInfoCount();
 }
