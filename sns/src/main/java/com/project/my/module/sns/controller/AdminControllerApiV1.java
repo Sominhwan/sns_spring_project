@@ -21,6 +21,7 @@ import com.project.my.util.Gmail.GmailService;
 import com.project.my.util.S3.AwsS3Service;
 import com.project.my.util.S3.MailLogService;
 import com.project.my.util.SMS.SmsCountService;
+import com.project.my.util.SMS.SmsSendService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,7 @@ public class AdminControllerApiV1 {
     private final GmailService gmailService;
     private final MailLogService mailLogService;
     private final SmsCountService countService;
+    private final SmsSendService sendService;
         
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
@@ -157,5 +159,20 @@ public class AdminControllerApiV1 {
         } catch (Exception e) {
             return "실패";
         }   
+    } 
+    
+    // 카페24 SMS 문자 보내기
+    @PostMapping("/admin/smsSend")
+    @ResponseBody 
+    public Map smsSend(@Param("msg") String msg, @Param("rphone") String rphone, @Param("action") String action, @Param("sphone1") String sphone1,  @Param("sphone2") String sphone2,  @Param("sphone3") String sphone3) {  
+        //Map result = new HashMap<String, Object>();
+        return sendService.sendSMS(msg, rphone, action, sphone1, sphone2, sphone3);
+    }  
+    
+    // 카페24 SMS 문자 전송내역 가져오기
+    @PostMapping("/admin/getSmsData")
+    @ResponseBody 
+    public List<?> getSmsData() {  
+        return adminServiceAp1V1.getSmsData();
     }     
 }

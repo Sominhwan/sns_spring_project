@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
+import com.project.my.module.userRole.entity.SMSEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 
 @Mapper
@@ -52,4 +53,8 @@ public interface UserRepository {
     ArrayList<UserInfoEntity> searchUserEmail(String userEmail);    
     // 광고수신 회원 휴대폰 번호 SELECT
     List<SMSDTO> selectUserPhoneList();
+    // 카페24 SMS 전송 데이터 INSERT
+    void insertSMSData(@Param("setPhone") String setPhone, @Param("setContent") String setContent);
+    // 카페24 SMS 전송 데이터 SELECT
+    List<SMSEntity> selectSmsData();   
 }

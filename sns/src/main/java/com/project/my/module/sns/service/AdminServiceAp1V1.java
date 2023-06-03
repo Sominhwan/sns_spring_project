@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.my.module.sns.dto.MailDTO;
 import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
+import com.project.my.module.userRole.entity.SMSEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.MailRepository;
 import com.project.my.module.userRole.repository.UserRepository;
@@ -136,4 +137,11 @@ public class AdminServiceAp1V1 {
 		return userPhoneList;
     } 
 
+	// 카페24 SMS 전송내역 가져오기
+	@Transactional
+	public List<SMSEntity> getSmsData(){ 
+		List<SMSEntity> smsDataList = new ArrayList<>();     
+		smsDataList = userRepository.selectSmsData();
+		return smsDataList;
+	} 
 }

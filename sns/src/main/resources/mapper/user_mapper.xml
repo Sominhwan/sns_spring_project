@@ -165,7 +165,22 @@
         SELECT userPN 
         FROM userinfo 
         WHERE userAd = 1
-    </select>       
+    </select>     
+      <!-- 카페24 SMS전송 데이터 저장 -->
+    <insert id="insertSMSData" parameterType="map">
+        INSERT INTO sms(userPN, content, userRegTime)
+        VALUES(
+                #{setPhone},
+                #{setContent},
+                NOW()
+              )
+    </insert> 
+    <!-- 카페24 SMS 전송 데이터 가져오기 -->
+    <select id="selectSmsData" resultType="com.project.my.module.userRole.entity.SMSEntity">
+        SELECT userPN, content, userRegTime 
+        FROM sms
+        ORDER BY userRegTime DESC
+    </select>        
 </mapper>
 
 

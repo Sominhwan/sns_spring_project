@@ -573,7 +573,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
            	 			</tr>	
             			<tr>
            					<td scope="row" id="num-row">3</td>
-           					<td scope="row" id="content2-row">$회원님. 본 서비스를 이용해주셔서 감사합니다.</td>    					
+           					<td scope="row" id="content2-row">회원님. 본 서비스를 이용해주셔서 감사합니다.</td>    					
            	 			</tr>	
             			<tr>
            					<td scope="row" id="num-row">4</td>
