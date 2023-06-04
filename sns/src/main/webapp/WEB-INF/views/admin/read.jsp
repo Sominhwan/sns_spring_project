@@ -145,6 +145,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             인쇄
           </a>
         </div>
+        <div style="position: fixed; left: 1790px; top: 142px; color: #eee;">|</div>
+        <div id="translate" onclick="openPopupWindow()">번역</div>
         <div id="sender">   
           보낸사람
         </div>
