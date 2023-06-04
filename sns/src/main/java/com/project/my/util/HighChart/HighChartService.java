@@ -41,4 +41,26 @@ public class HighChartService {
     public List<PostDTO> getPostInfoCount(){
         return userRepository.selectPostInfoCount();   
     }       
+
+    // HighChart 특정 유저가 올린 상위 12개 게시물 가져오기
+    public String getPostUpCount(){
+        ArrayList<PostDTO> postList = new ArrayList<>();
+        postList = userRepository.selectPostUpCount(); 
+        Integer count = userRepository.selectPostAllCount();
+
+
+        net.minidev.json.JSONObject sendObject = new net.minidev.json.JSONObject();
+		net.minidev.json.JSONArray sendArray = new net.minidev.json.JSONArray();
+
+		for(int i = 0; i<postList.size(); i++) {
+			net.minidev.json.JSONObject informationObject = new net.minidev.json.JSONObject();
+			informationObject.put("userEmail",postList.get(i).getUserEmail());
+			informationObject.put("userPostCount",postList.get(i).getCount());
+			sendArray.add(informationObject);
+		}
+		sendObject.put("result",sendArray);			
+		sendObject.put("count",count);			
+
+		return sendObject.toString();
+    }       
 }

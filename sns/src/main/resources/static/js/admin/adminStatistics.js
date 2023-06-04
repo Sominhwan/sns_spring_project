@@ -295,11 +295,12 @@ function horiStackedBar() {
 
 function userPostInfo(){
     $.ajax({
-		url : "PostUpCount",
+		url : "/admin/postUpCount",
         type : "get",
         dataType : "json",
         global: false,
         success : function(obj){
+			console.log(obj);
 			var result = obj.result; 
 			postInfo = result; // 유저 이메일, 포스트 올린 횟수
 			postAllCount = obj.count;
@@ -337,14 +338,14 @@ function userChart(){
 	    data: [
 	      [postInfo[0].userEmail+ ' - '+ Number(postPercent[0]) + '%', Number(postPercent[0]), true, true],
 	      [postInfo[1].userEmail+ ' - '+ Number(postPercent[1]) + '%', Number(postPercent[1]), false],
-	      [postInfo[2].userEmail+ ' - '+ Number(postPercent[2]) + '%', Number(postPercent[2]), false],
-	      [postInfo[3].userEmail+ ' - '+ Number(postPercent[3]) + '%', Number(postPercent[3]), false],
-	      [postInfo[4].userEmail+ ' - '+ Number(postPercent[4]) + '%', Number(postPercent[4]), false],
-	      [postInfo[5].userEmail+ ' - '+ Number(postPercent[5]) + '%', Number(postPercent[5]), false],
-	      [postInfo[6].userEmail+ ' - '+ Number(postPercent[6]) + '%', Number(postPercent[6]), false],
-	      [postInfo[7].userEmail+ ' - '+ Number(postPercent[7]) + '%', Number(postPercent[7]), false],
-	      [postInfo[8].userEmail+ ' - '+ Number(postPercent[8]) + '%', Number(postPercent[8]), false],
-	      [postInfo[9].userEmail+ ' - '+ Number(postPercent[9]) + '%', Number(postPercent[9]) , false],
+	    //   [postInfo[2].userEmail+ ' - '+ Number(postPercent[2]) + '%', Number(postPercent[2]), false],
+	    //   [postInfo[3].userEmail+ ' - '+ Number(postPercent[3]) + '%', Number(postPercent[3]), false],
+	    //   [postInfo[4].userEmail+ ' - '+ Number(postPercent[4]) + '%', Number(postPercent[4]), false],
+	    //   [postInfo[5].userEmail+ ' - '+ Number(postPercent[5]) + '%', Number(postPercent[5]), false],
+	    //   [postInfo[6].userEmail+ ' - '+ Number(postPercent[6]) + '%', Number(postPercent[6]), false],
+	    //   [postInfo[7].userEmail+ ' - '+ Number(postPercent[7]) + '%', Number(postPercent[7]), false],
+	    //   [postInfo[8].userEmail+ ' - '+ Number(postPercent[8]) + '%', Number(postPercent[8]), false],
+	    //   [postInfo[9].userEmail+ ' - '+ Number(postPercent[9]) + '%', Number(postPercent[9]) , false],
 	      ['Other'+ ' - '+ Number(otherPercent) + '%', Number(otherPercent), false]
 	    ],
 	    showInLegend: true
@@ -354,9 +355,6 @@ function userChart(){
 
 window.onload = function(){
 	searchUserCount();
-	searchPostInfo();
-	
-	 //userPostInfo();
-	 //userChart();
-
+	searchPostInfo();	
+	userPostInfo();
 }

@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostDTO {
     private int postId;
+    private int count;
     private String userEmail;
     private int likeNum;
     private int shareNum;
     private int commentNum;
     private int postReport;
-
+    
     public void setPostId(int postId) {
         this.postId = postId;
     }
@@ -34,5 +35,8 @@ public class PostDTO {
     }
     public void setPostReport(int postReport) {
         this.postReport = postReport;
+    }
+    public void setCount(int count) {
+        this.count = count;
     } 
 }

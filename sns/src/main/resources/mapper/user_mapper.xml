@@ -200,6 +200,18 @@
         ORDER BY likeNum desc 
         LIMIT 5
     </select>     
+    <!-- HighChart 상위 12개 게시물 수 가져오기 -->
+    <select id="selectPostUpCount" resultType="com.project.my.module.sns.dto.PostDTO">
+        SELECT userEmail, COUNT(*) as count 
+        FROM post 
+        GROUP BY userEmail 
+        ORDER BY count DESC LIMIT 10
+    </select> 
+    <!-- HighChart 총 게시물 횟수 가져오기 -->
+    <select id="selectPostAllCount" resultType="Integer">
+        SELECT COUNT(*) AS count 
+        FROM post
+    </select>        
 </mapper>
 
 

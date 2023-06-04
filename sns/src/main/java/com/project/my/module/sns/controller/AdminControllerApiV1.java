@@ -198,5 +198,12 @@ public class AdminControllerApiV1 {
     @ResponseBody 
     public List<PostDTO> postInfoCount() {  
         return chartService.getPostInfoCount();
-    }        
+    }   
+    
+    // HighChart 특정 유저가 올린 상위 12개 게시물, 총 게시물 개수 가져오기
+    @GetMapping("/admin/postUpCount")
+    @ResponseBody 
+    public String postUpCount() {  
+        return chartService.getPostUpCount();
+    }     
 }

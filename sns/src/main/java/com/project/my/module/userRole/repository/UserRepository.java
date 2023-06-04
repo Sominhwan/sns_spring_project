@@ -64,4 +64,8 @@ public interface UserRepository {
     Integer selectUserPostCount(int month);
     // HighChart 상위 5개 좋아요 수 SELECT
     List<PostDTO> selectPostInfoCount();
+    // HighChart 상위 12개 게시물 수 SELECT
+    ArrayList<PostDTO> selectPostUpCount();    
+    // HighChart 총 게시물 횟수 SELECT
+    Integer selectPostAllCount();       
 }
