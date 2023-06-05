@@ -525,17 +525,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     			<button type="button" id="shareBtn" onclick="sendLinkCustom();">PhoTalk 바로가기</button>
     			<img alt="smsSendBtn" src="/adminImages/smsSendBtn.svg" id="smsSendBtn" onclick="changeSharePage()">
     		</div>
-         	<div id="userPhone-content" style="display: none">
-				<table class="userPhoneTable" style="text-align: center;">
-           			<tbody id="ajaxTable2">
-           			
-            				<tr>
-           						<td></td>
-           	 				</tr>							   	          				
-            	 			           	 			       	 			           	 			
-        			</tbody>
-       			</table>
-       		</div>   
+        <!-- 광고수신 유저 휴대폰 테이블 -->
+        <div id="userPhone-content" style="display: none">
+				  <table class="userPhoneTable" style="text-align: center;">
+           	<tbody id="ajaxTable2">						   	          				 			           	 			       	 			           	 			
+        		</tbody>
+       		</table>
+       	</div>   
        		<!-- sms 메시지 보관함 -->
        		<div class="sms-log-table">
        			<span class="smsSendLog">SMS 전송 내역</span>		
@@ -577,7 +573,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
            	 			</tr>	
             			<tr>
            					<td scope="row" id="num-row">3</td>
-           					<td scope="row" id="content2-row">$회원님. 본 서비스를 이용해주셔서 감사합니다.</td>    					
+           					<td scope="row" id="content2-row">회원님. 본 서비스를 이용해주셔서 감사합니다.</td>    					
            	 			</tr>	
             			<tr>
            					<td scope="row" id="num-row">4</td>

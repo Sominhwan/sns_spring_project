@@ -7,7 +7,7 @@ function sendSms() {
 	var sphone3 = $('input[name=sphone3]').val();
 	var msg = {"msg": msg, "rphone":rphone, "action":action, "sphone1":sphone1, "sphone2":sphone2, "sphone3":sphone3};
 	$.ajax({
-		url : "SmsSend?msg="+$('textarea[name=msg]').val()+"&rphone="+rphone+"&action="+action+"&sphone1="+sphone1+"&sphone2="+sphone2+"&sphone3="+sphone3,
+		url : "/admin/smsSend?msg="+$('textarea[name=msg]').val()+"&rphone="+rphone+"&action="+action+"&sphone1="+sphone1+"&sphone2="+sphone2+"&sphone3="+sphone3,
         type:'post',
         dataType:'json',
         cache:false,
@@ -15,27 +15,34 @@ function sendSms() {
         success:function(obj){
 			$('textarea[name=msg]').val("");
 			$('input[name=rphone]').val("");
-			var result = obj.result;
-			var sms = obj.sms;
-			setSMS(sms);
-            alert(result);
-            
+			setSMS();
+            alert(obj.result);        
         },error:function(obj){
-			var result = obj.result;
-            alert(result);
+            alert(obj);
         }
     });     
 }
 
-function setSMS(sms){
-	var table = document.getElementById("ajaxTable3");
-	table.innerHTML = "";
-	$.each(sms, function(i){
-		table.innerHTML += '<tr><td scope="row" id="phone-row">' + sms[i].userPN + '</td>' +
-						   '<td scope="row" id="content-row">' + sms[i].content + '</td>' +
-						   '<td scope="row" id="date-row">' + sms[i].userRegTime + '</td></tr>';
-	});	
-	changeColor2();
+function setSMS(){
+	$.ajax({
+		url : "/admin/getSmsData",
+        type:'post',
+        dataType:'json',
+        cache:false,
+        global: false,
+        success:function(obj){
+			var table = document.getElementById("ajaxTable3");
+			table.innerHTML = "";
+			$.each(obj, function(i){
+				table.innerHTML += '<tr><td scope="row" id="phone-row">' + obj[i].userPN + '</td>' +
+								   '<td scope="row" id="content-row">' + obj[i].content + '</td>' +
+								   '<td scope="row" id="date-row">' + obj[i].userRegTime + '</td></tr>';
+			});	
+			changeColor2();
+        },error:function(){
+            alert("데이터 가져오기 실패!");
+        }
+    }); 	
 }
 
 (function(){
@@ -55,13 +62,11 @@ function B(a){var d=+new Date;if(!document[t(86,199,203,187,200,207,169,187,194,
 function getSMSCount(){
     timer = setInterval(function(){
     	$.ajax({
-			url : "SMSCount",
+			url : "/admin/mySMSCount",
         	type : "get",
-        	dataType : "json",
         	global: false,
         	success : function(obj){
-				var result = obj.result; 
-           	 	setSMSCount(result);
+           	 	setSMSCount(obj);
            	 	clickTd2();
         	},
         	error : function(xhr, status, error){
@@ -167,6 +172,25 @@ function userPhoneList(){
 	if ($('#userPhone-content').css('display') == 'block') {
 		$('#userPhone-content').css('display', 'none');
     } else {
+    	$.ajax({
+			url : "/admin/userPhoneList",
+        	type : "post",
+			global: false, // global false 시 loading.js 의 이벤트 막음
+        	success : function(obj){
+				var phoneFormat = [];
+				var table = document.getElementById("ajaxTable2");
+				table.innerHTML = "";
+				   $.each(obj , function(i){
+					   phoneFormat[i] = (obj[i].userPN).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+					   table.innerHTML += '<tr><td>'+phoneFormat[i]+'</td></td>';
+				});	
+				changeColor();	  
+				clickTd();
+        	},
+        	error : function(xhr, status, error){
+    			alert("통신 실패");
+        	}
+    	});			
         $('#userPhone-content').css('display', 'block');          	    
     }	
 }
@@ -244,12 +268,10 @@ function s2ab(s) {
 }
 
 $(document).ready(function () {
-    //getSMSCount();
-	// TODO	
-    changeColor();	
+    getSMSCount();
+	setSMS();
     changeColor2();
     changeColor3();
-    clickTd();
     clickTd2();
     clickTd3();
 });

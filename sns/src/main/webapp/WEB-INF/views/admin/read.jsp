@@ -28,6 +28,29 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             $('#sentMailbox').css('display', 'block');          	    
           }
         }
+        /* 첨부파일 버튼 이벤트 */
+        function arrowBtn(){
+          if ($('#arrow-down').css('display') == 'block') {
+            $('#arrow-down').css('display', 'none');
+            $('#arrow-up').css('display', 'block');
+            $('#attachment-inner').css('display', 'block');     
+          } else {
+            $('#arrow-up').css('display', 'none');          	    
+            $('#arrow-down').css('display', 'block');  
+            $('#attachment-inner').css('display', 'none');           	    
+          }          
+        }
+        /* 메일 프린터하기 */
+        function divPrint(){
+          var initBody = document.body.innerHTML;
+          window.onbeforeprint = function(){
+            document.body.innerHTML = document.getElementById('mailTable').innerHTML;
+          }
+          window.onafterprint = function(){
+            document.body.innerHTML = initBody;
+          }
+          window.print();
+        }
     </script>
   </head>
   <body>
@@ -36,8 +59,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       <div id="side-logo">
         <img src="/adminImages/adminLogo.png" alt="logo" /><a href="/admin/adminPage" id="adminLogo">PhoTalk</a>
       </div>
-      <ul>
-        <li>
+      <ul id="read-ul">
+        <li id="read-li">
           <a href="/admin/adminPage" class="icon"
             ><img src="/adminImages/adminProfile.svg" alt="userImg" /><span
               class="sideText"
@@ -46,7 +69,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             관리</a
           >
         </li>
-        <li>
+        <li id="read-li">
           <a href="/admin/adminPost"
             ><img
               src="/adminImages/adminPost.svg"
@@ -55,7 +78,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             /><span class="sideText">게시물 관리</span></a
           >
         </li>
-        <li>
+        <li id="read-li">
           <a href="/admin/adminMail"
             ><img
               src="/adminImages/adminMail.svg"
@@ -73,7 +96,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             /><span class="sideText2" style="position: fixed; left: 130px; top: 448px; font-size: 18px;">보낸 메일함</span></a
           >          
         </li>
-        <li>
+        <li id="read-li">
           <a href="/admin/adminStatistics"
             ><img
               src="/adminImages/chartIcon.svg"
@@ -113,10 +136,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <span id="adminProfile-text">상세 메일함</span>    
     </nav>
     <!-- 상세 메일정보 컨텐츠 -->
-    <div class="mailTable">
+    <div class="mailTable" id="mailTable">
         <input type="hidden" id="num" value="${num}"/>
         <div id="mailTitle">   
         </div>
+        <div id="printPage" onclick="divPrint()">
+          <img id="printIcon" src="/adminImages/feather-printer.svg">
+            인쇄
+          </a>
+        </div>
+        <div style="position: fixed; left: 1790px; top: 142px; color: #eee;">|</div>
+        <div id="translate" onclick="openPopupWindow()">번역</div>
         <div id="sender">   
           보낸사람
         </div>
@@ -125,7 +155,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         </div>
         <div id="receiver">   
           받는사람
-        </div>        
+        </div>  
+        <div id="receiverWrap">   
+        </div> 
+        <div id="senderTime">
+        </div>    
+        <hr id="hr"> 
+        <!-- 첨부파일 리스트 -->
+        <div id="mail-content">
+          <div id="attachment-inner" style="display: none;">
+          </div> 
+          <div id="mail-content-text">
+          </div>     
+        </div>   
     </div>
   </body>
   <script src="/js/admin/adminRead.js"></script>

@@ -8,7 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.project.my.module.sns.dto.PostDTO;
+import com.project.my.module.sns.dto.SMSDTO;
 import com.project.my.module.userRole.entity.PostEntity;
+import com.project.my.module.userRole.entity.SMSEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 
 @Mapper
@@ -49,4 +52,20 @@ public interface UserRepository {
     void deleteUserPost(@Param("postId") String postId);
     // 회원이메일을 통해 회원이메일주소 검색
     ArrayList<UserInfoEntity> searchUserEmail(String userEmail);    
+    // 광고수신 회원 휴대폰 번호 SELECT
+    List<SMSDTO> selectUserPhoneList();
+    // 카페24 SMS 전송 데이터 INSERT
+    void insertSMSData(@Param("setPhone") String setPhone, @Param("setContent") String setContent);
+    // 카페24 SMS 전송 데이터 SELECT
+    List<SMSEntity> selectSmsData();   
+    // HighChart 유저 회원가입수 SELECT
+    Integer selectUserCount(int month);
+    // HighChart 유저 게시물수 SELECT
+    Integer selectUserPostCount(int month);
+    // HighChart 상위 5개 좋아요 수 SELECT
+    List<PostDTO> selectPostInfoCount();
+    // HighChart 상위 12개 게시물 수 SELECT
+    ArrayList<PostDTO> selectPostUpCount();    
+    // HighChart 총 게시물 횟수 SELECT
+    Integer selectPostAllCount();       
 }

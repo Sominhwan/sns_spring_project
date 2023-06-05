@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,10 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.my.module.sns.dto.MailDTO;
+import com.project.my.module.sns.dto.PostDTO;
 import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
+import com.project.my.util.HighChart.HighChartService;
+import com.project.my.util.Papago.NaverTransDetectionService;
 import com.project.my.util.S3.AwsS3Service;
 import com.project.my.util.S3.MailLogService;
+import com.project.my.util.SMS.SmsCountService;
+import com.project.my.util.SMS.SmsSendService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +35,10 @@ public class AdminControllerApiV1 {
     private final AwsS3Service awsS3Service;
     private final GmailService gmailService;
     private final MailLogService mailLogService;
+    private final SmsCountService countService;
+    private final SmsSendService sendService;
+    private final HighChartService chartService;
+    private final NaverTransDetectionService naverTransDetectionService;
         
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
@@ -127,5 +139,80 @@ public class AdminControllerApiV1 {
     public List<?> getSentMailDetailData(@Param("num") int num) {      
         List<MailDTO> mailList = adminServiceAp1V1.getSelectMailData(num);
         return mailList;
-    }      
+    }   
+
+    // 메일함 첨부파일 다운로드
+    @GetMapping("/admin/downloadFile")
+    @ResponseBody 
+    public ResponseEntity<UrlResource> downloadFile(@Param("num") int num, @Param("file") String file) {      
+        return awsS3Service.downloadImage(file);
+    }
+    
+    // 광고수신 유저 휴대폰 리스트 가져오기
+    @PostMapping("/admin/userPhoneList")
+    @ResponseBody 
+    public List<?> userPhoneList() {  
+        return adminServiceAp1V1.getUserPhoneList();    
+    }  
+    
+    // 카페24 SMS 잔여 문자량 가져오기
+    @GetMapping("/admin/mySMSCount")
+    @ResponseBody 
+    public String mySMSCount() {  
+        try {
+            return countService.getCount();
+        } catch (Exception e) {
+            return "실패";
+        }   
+    } 
+    
+    // 카페24 SMS 문자 보내기
+    @PostMapping("/admin/smsSend")
+    @ResponseBody 
+    public Map smsSend(@Param("msg") String msg, @Param("rphone") String rphone, @Param("action") String action, @Param("sphone1") String sphone1,  @Param("sphone2") String sphone2,  @Param("sphone3") String sphone3) {  
+        //Map result = new HashMap<String, Object>();
+        return sendService.sendSMS(msg, rphone, action, sphone1, sphone2, sphone3);
+    }  
+    
+    // 카페24 SMS 문자 전송내역 가져오기
+    @PostMapping("/admin/getSmsData")
+    @ResponseBody 
+    public List<?> getSmsData() {  
+        return adminServiceAp1V1.getSmsData();
+    }   
+    
+    // HighChart 유저 회원가입수 가져오기
+    @GetMapping("/admin/userInfoCount")
+    @ResponseBody 
+    public List<?> userInfoCount() {  
+        return chartService.getUserCount();
+    }  
+
+    // HighChart 유저 게시물수 가져오기
+    @GetMapping("/admin/userPostCount")
+    @ResponseBody 
+    public List<?> userPostCount() {  
+        return chartService.getUserPostCount();
+    }   
+    
+    // HighChart 상위 5개 좋아요 수 가져오기
+    @GetMapping("/admin/postInfoCount")
+    @ResponseBody 
+    public List<PostDTO> postInfoCount() {  
+        return chartService.getPostInfoCount();
+    }   
+    
+    // HighChart 특정 유저가 올린 상위 12개 게시물, 총 게시물 개수 가져오기
+    @GetMapping("/admin/postUpCount")
+    @ResponseBody 
+    public String postUpCount() {  
+        return chartService.getPostUpCount();
+    } 
+    
+    // HighChart 특정 유저가 올린 상위 12개 게시물, 총 게시물 개수 가져오기
+    @PostMapping("/admin/papagoDetection")
+    @ResponseBody 
+    public String papagoDetection(@Param("text") String text) {  
+        return naverTransDetectionService.getTransDetection(text);
+    }       
 }

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class AdminPageController {
+public class AdminPageController {   
     // 관리자 페이지 이동(회원 관리)
     @GetMapping("/admin/adminPage")
     public String adminPage() {    
@@ -41,5 +41,13 @@ public class AdminPageController {
         mav.addObject("num", num);
         mav.setViewName("/admin/read");
         return mav;   
-    }
+    }  
+    
+    // 메일 번역 팝업 페이지 전환
+    @GetMapping("/admin/adminSentMailbox/popup/read")
+    public ModelAndView popup(@RequestParam("num") String num, ModelAndView mav) {
+        mav.addObject("num", num);
+        mav.setViewName("/admin/translate");
+        return mav;   
+    }      
 }

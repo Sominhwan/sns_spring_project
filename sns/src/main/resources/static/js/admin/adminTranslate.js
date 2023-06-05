@@ -1,6 +1,7 @@
 /* 특정 메일 데이터 검색 후 넣기 */
 $(document).ready(function () { 
     const num = document.getElementById("num").value;	
+    var text = "";
     $.ajax({
         url : "/admin/getSentMailDetailData",
         type : "post",
@@ -57,25 +58,32 @@ $(document).ready(function () {
                 table.innerHTML += '<div id="mail-content-text"></div>';
             }
             document.getElementById("mail-content-text").innerHTML = obj[0].content;
+            text = obj[0].content;
+            $.ajax({
+                url : "/admin/papagoDetection",
+                type : "post",
+                global: false,
+                data: {
+                    text: text
+                },
+                success : function(obj){
+                    console.log(obj);
+                },
+                error : function(xhr, status, error){
+                    alert("통신 실패");
+                }
+            });
         }
     });
+
+	
 });
 
-function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
+// 언어 변경하기
+function changeLanguage(){
+    const language1 = document.getElementById("text").innerText;
+    const language2 = document.getElementById("text2").innerText;
+    document.getElementById("text").innerText = language2;
+    document.getElementById("text2").innerText = language1;
 
-function openPopupWindow(){
-    var num = getUrlParameter('num');
-    var popupUrl = "/admin/adminSentMailbox/popup/read?num="+num;
-
-    var popupWidth = 1000;
-    var popupHeight = 700;
-    var leftPosition = (window.screen.width);
-    var topPosition = (window.screen.height);
-    
-    window.open(popupUrl, "_blank", "width=" + popupWidth + ", height=" + popupHeight + ", left=" + leftPosition + ", top=" + topPosition);
 }
