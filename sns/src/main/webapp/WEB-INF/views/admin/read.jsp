@@ -54,6 +54,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     </script>
   </head>
   <body>
+    <div class="notification-container" id="notification-container">
+      <p>클럽보드에 복사되었습니다.</p>
+    </div>
     <div class="left-side">
     <aside>
       <div id="side-logo">
@@ -150,13 +153,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <div id="sender">   
           보낸사람
         </div>
-        <div id="senderWrap">   
+        <div id="senderWrap" onclick="clubBoard()">   
           <span id="senderEmail">photalk2@gmail.com</span>
         </div>
         <div id="receiver">   
           받는사람
         </div>  
-        <div id="receiverWrap">   
+        <div id="receiverWrap" onclick="clubBoard2()">   
         </div> 
         <div id="senderTime">
         </div>    

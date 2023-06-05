@@ -47,19 +47,36 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           if ($('#downButton2').css('display') == 'block') {
             $('#downButton2').css('display', 'none');
             $('#upButton2').css('display', 'block');
-            //$('#attachment-inner').css('display', 'block');     
+            $('#layer_context2').css('display', 'block');     
           } else {
             $('#upButton2').css('display', 'none');          	    
             $('#downButton2').css('display', 'block');  
-            //$('#attachment-inner').css('display', 'none');           	    
+            $('#layer_context2').css('display', 'none');           	    
           }          
+        }
+        /* 번역 언어 선택 이벤트 */
+        function selectLanguage(result){
+          var e = result.innerText;
+          document.getElementById("text").innerText = e;
+          translateText(e, document.getElementById("mail-content-text").innerHTML, document.getElementById("text2").innerText);
+          languageBtn();
+        }
+        function selectLanguage2(result){
+          var e = result.innerText;
+          document.getElementById("text2").innerText = e;
+          translateText(document.getElementById("text").innerText, document.getElementById("mail-content-text").innerHTML, e);
+          languageBtn2();
         }
     </script>
   </head>
   <body>
+    <div class="notification-container" id="notification-container">
+      <p>클럽보드에 복사되었습니다.</p>
+    </div>
     <!-- 번역 네브바 박스 -->
     <div id="translateBox">
       <div class="popup_title">메일 팝업창</div>
+      <img id="papagoLogo" src="/adminImages/papagoLogo.svg"/>
       <div class="button_translate_wrap">
         <button type="button" class="button_translate" onclick="languageBtn()">
           <span id="text" class="text">한국어</span>
@@ -70,33 +87,40 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       <img id="exchangeLanguage" src="/adminImages/exchangeLanguage.svg" onclick="changeLanguage()"/>  
       <div class="button_translate_wrap2">
         <button type="button" class="button_translate" onclick="languageBtn2()">
-          <span id="text2" class="text">일본어</span>
+          <span id="text2" class="text">한국어</span>
           <img id="downButton2"class="languageChangeButton" src="/adminImages/downButton.svg" onclick="languageBtn2()"/>
           <img id="upButton2" class="languageChangeButton" src="/adminImages/upButton.svg" onclick="languageBtn2()" style="display: none;"/>
         </button>
       </div>
-
     </div>
     <!-- 번역 언어 선택 박스 -->
     <div id="layer_context"class="layer_context" style="display: none;">
       <ul class="context_menu">
           <li class="context_item">
-              <button type="button" class="button_context_item">한국어</button>
+              <button type="button" class="button_context_item" onclick="selectLanguage(this)">한국어</button>
           </li>
           <li class="context_item">
-              <button type="button" class="button_context_item">영어</button>
+              <button type="button" class="button_context_item" onclick="selectLanguage(this)">영어</button>
           </li>
           <li class="context_item">
-              <button type="button" class="button_context_item">일본어</button>
-          </li>
-          <li class="context_item">
-              <button type="button" class="button_context_item">중국어(간체)</button>
-          </li>
-          <li class="context_item">
-              <button type="button" class="button_context_item">중국어(번체)</button>
+              <button type="button" class="button_context_item" onclick="selectLanguage(this)">일본어</button>
           </li>
       </ul>  
-  </div>   
+    </div>   
+    <!-- 번역 언어 선택 박스2 -->
+    <div id="layer_context2"class="layer_context" style="display: none;">
+      <ul class="context_menu">
+          <li class="context_item">
+              <button type="button" class="button_context_item" onclick="selectLanguage2(this)">한국어</button>
+          </li>
+          <li class="context_item">
+              <button type="button" class="button_context_item" onclick="selectLanguage2(this)">영어</button>
+          </li>
+          <li class="context_item">
+              <button type="button" class="button_context_item" onclick="selectLanguage2(this)">일본어</button>
+          </li>
+      </ul>  
+    </div>      
     <!-- 상세 메일정보 컨텐츠 -->
     <div class="mailTable" id="mailTable">
         <input type="hidden" id="num" value="${num}"/>
@@ -106,13 +130,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <div id="sender">   
           보낸사람
         </div>
-        <div id="senderWrap">   
+        <div id="senderWrap" onclick="clubBoard()">   
           <span id="senderEmail">photalk2@gmail.com</span>
         </div>
         <div id="receiver">   
           받는사람
         </div>  
-        <div id="receiverWrap">   
+        <div id="receiverWrap" onclick="clubBoard2()">   
         </div> 
         <div id="senderTime">
         </div>    

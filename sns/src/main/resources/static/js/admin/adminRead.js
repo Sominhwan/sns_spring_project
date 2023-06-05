@@ -77,5 +77,24 @@ function openPopupWindow(){
     var leftPosition = (window.screen.width);
     var topPosition = (window.screen.height);
     
-    window.open(popupUrl, "_blank", "width=" + popupWidth + ", height=" + popupHeight + ", left=" + leftPosition + ", top=" + topPosition);
+    window.open(popupUrl, "_blank", "width=" + popupWidth + ", height=" + popupHeight + ", left=" + 0 + ", top=" + 0);
+}
+
+// 이메일 클럽보드 복사 + 애니매이션 효과
+function clubBoard(){
+    window.navigator.clipboard.writeText(document.getElementById("senderEmail").innerText).then(() => {
+        $('#notification-container').fadeIn();
+        setTimeout(() => {
+            $('#notification-container').fadeOut();
+        }, 2500)
+    });
+}
+// 이메일 클럽보드 복사
+function clubBoard2(){
+    window.navigator.clipboard.writeText(document.getElementById("receiverEmail").innerText).then(() => {
+        $('#notification-container').fadeIn();
+        setTimeout(() => {
+            $('#notification-container').fadeOut();
+        }, 2500)
+    });
 }

@@ -2,8 +2,24 @@
 @media print{
 	.left-side, footer, #nabvar, #printPage {display:none}
 } */
-
-.left-side {
+  /* 클럽보드 박스 */
+  .notification-container {
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.08);
+    color: #fff;
+    background: #252525;
+    font-weight: bold;
+    border-radius: 50px;
+    margin: 0 auto;
+    padding: 0px 30px;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%,0%);
+    display: none;
+  }
+  
+  .left-side {
     position: fixed;
     left: 0%;
     top: 0%;

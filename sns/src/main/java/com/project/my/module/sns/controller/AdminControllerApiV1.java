@@ -21,6 +21,7 @@ import com.project.my.module.sns.service.AdminServiceAp1V1;
 import com.project.my.util.Gmail.GmailService;
 import com.project.my.util.HighChart.HighChartService;
 import com.project.my.util.Papago.NaverTransDetectionService;
+import com.project.my.util.Papago.NaverTransService;
 import com.project.my.util.S3.AwsS3Service;
 import com.project.my.util.S3.MailLogService;
 import com.project.my.util.SMS.SmsCountService;
@@ -39,7 +40,7 @@ public class AdminControllerApiV1 {
     private final SmsSendService sendService;
     private final HighChartService chartService;
     private final NaverTransDetectionService naverTransDetectionService;
-        
+    private final NaverTransService naverTransService;
     // 회원 아이디 찾기
     @PostMapping("/admin/UserSearch")
     @ResponseBody 
@@ -209,10 +210,17 @@ public class AdminControllerApiV1 {
         return chartService.getPostUpCount();
     } 
     
-    // HighChart 특정 유저가 올린 상위 12개 게시물, 총 게시물 개수 가져오기
+    // Naver Papago 언어감지
     @PostMapping("/admin/papagoDetection")
     @ResponseBody 
     public String papagoDetection(@Param("text") String text) {  
         return naverTransDetectionService.getTransDetection(text);
+    }
+    
+    // Naver Papago 언어번역
+    @PostMapping("/admin/papagoTranslate")
+    @ResponseBody 
+    public String papagoTranslate(@Param("text") String text, @Param("source") String source, @Param("target") String target) {  
+        return naverTransService.getTransSentence(text, source, target);
     }       
 }

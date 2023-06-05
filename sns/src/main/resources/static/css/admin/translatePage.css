@@ -1,3 +1,19 @@
+  /* 클럽보드 박스 */
+  .notification-container {
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.08);
+    color: #fff;
+    background: #252525;
+    font-weight: bold;
+    border-radius: 50px;
+    margin: 0 auto;
+    padding: 0px 30px;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%,0%);
+    display: none;
+  }
   
   /* 번역 박스 */
   #translateBox{
@@ -16,6 +32,14 @@
   font-size: 14px;
   font-weight: bold;
   color: #303038;
+ }
+
+ #papagoLogo {
+  position: absolute;
+  left: 62%;
+  top: 8px;
+  width: 120px;
+  height: 30px;
  }
 
  .button_translate_wrap{
@@ -45,11 +69,12 @@
  .text{
   font-size: 14px;
   color: #303038;
+  text-align: left;
  }
 
  #downButton{
   position: fixed;
-  left: 795px;
+  left: 82%;
   top: 20px;
   height: 5px;
   width: 5px;
@@ -58,7 +83,7 @@
 
  #upButton{
   position: fixed;
-  left: 795px;
+  left: 82%;
   top: 20px;
   height: 5px;
   width: 5px;
@@ -67,7 +92,7 @@
 
  #downButton2{
   position: fixed;
-  left: 930px;
+  left: 96%;
   top: 20px;
   height: 5px;
   width: 5px;
@@ -76,7 +101,7 @@
 
  #upButton2{
   position: fixed;
-  left: 930px;
+  left: 96%;
   top: 20px;
   height: 5px;
   width: 5px;
@@ -85,7 +110,7 @@
 
  #exchangeLanguage{
   position: absolute;
-  left: 85%;
+  left: 86%;
   top: 15px;
   width: 18px;
   height: 18px;
@@ -93,13 +118,28 @@
  }
 
   /* 번역 언어 선택 박스 */
-  .layer_context{
-    position: relative;
+  #layer_context{
+    position: absolute;
+    z-index: 100;
     display: block;
-    top: 35px;
+    top: 44px;
     left: 74%;
     width: 110px;
-    height: 160px;
+    height: 105px;
+    margin-top: 3px;  
+    border-radius: 5px;
+    border: solid 1px #eee;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  #layer_context2{
+    position: absolute;
+    z-index: 100;
+    display: block;
+    top: 44px;
+    left: 88%;
+    width: 110px;
+    height: 105px;
     margin-top: 3px;  
     border-radius: 5px;
     border: solid 1px #eee;
@@ -149,7 +189,7 @@
     position: relative;
     left: 37px;
     top: 27px;
-    width: 200px;
+    width: 300px;
     font-family: MalgunGothic;
     font-size: 20px;
     font-weight: bold;
