@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.CommentRepository">
+    <sql id="fullColumn">
+        commentId,
+        postId,
+        userEmail,
+        commentDetail,
+        commentParrent,
+        commentChild,
+        commentDate,
+        commentCorrect
+    </sql>
+    <select id="listPReply" resultType="com.project.my.module.userRole.entity.CommentEntity">
+        WITH RECURSIVE CTE AS (
+            SELECT commentId, postId, userEmail, commentDetail, commentParrent, commentChild, commentDate, commentCorrect, convert(commentId, char) AS path
+            FROM comment
+            WHERE commentParrent IS NULL
+            AND postId = #{postId}
+            UNION ALL
+            SELECT uc.commentId, uc.postId, uc.userEmail, uc.commentDetail, uc.commentParrent, uc.commentChild, uc.commentDate, uc.commentCorrect, concat(CTE.commentId, '-', uc.commentId) AS path
+            FROM comment uc
+            INNER JOIN CTE ON uc.commentParrent = CTE.commentId
+            WHERE uc.postId = #{postId}
+        )
+        SELECT commentId, postId, userEmail, commentDetail, commentParrent, commentChild, commentDate, commentCorrect, path
+        FROM CTE
+        ORDER BY CONVERT(SUBSTRING_INDEX(path, '-', 1), UNSIGNED) ASC, commentId ASC, CONVERT(SUBSTRING_INDEX(path, '-', 2), UNSIGNED) ASC, commentId ASC
+    </select>
+    <select id="replycheck" resultType="com.project.my.module.userRole.entity.CommentEntity">
+        SELECT * 
+        FROM comment 
+        WHERE commentParrent=#{commentId}
+    </select>
+    <select id="commentAdd" resultType="com.project.my.module.userRole.entity.CommentEntity">
+        insert comment(postId,userEmail,commentDetail,commentParrent,commentChild,commentDate,commentCorrect)values(#{postId},#{userEmail},#{commentDetail},NULL,0,now(),NULL)
+    </select>
+    <delete id="commentdel">
+    delete 
+    from comment 
+    where commentId=#{commentId}
+    </delete>
+    <update id="commentupdate">
+    UPDATE comment 
+    SET commentDetail=#{commentDetail} 
+    WHERE commentId=${commentId};
+    </update>
+    <select id="insertReply" resultType="com.project.my.module.userRole.entity.CommentEntity">
+        insert comment(postId,userEmail,commentDetail,commentParrent,commentChild,commentDate,commentCorrect)values(#{postId},#{userEmail},#{commentDetail},#{commentParrent},1,now(),NULL)
+    </select>
+</mapper>

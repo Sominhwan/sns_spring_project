@@ -9,195 +9,200 @@ var Audience ="";
 var sendMsgRoomId = "";
 var roomdata;
 var roomimgdata;
-var myName;
+var userNickName = "";
+var lastCheck = 0;
 /* ----------------- ajax 함수 ----------------- */
 
-function submitFunction(userEmail){	// 채팅 입력시 서블릿 연결후 db 업데이트
-	var chatName = myName//$('#chatName').val();
+function cahtSubmit(userEmail){	
+	var chatName = userNickName
 	var chatContent = $('#chatContent').val();
+	var sendMsgRoomIdInt = parseInt(sendMsgRoomId);
 	console.log(sendMsgRoomId);
+	console.log(chatName);
+	console.log(chatContent);
 	$.ajax({
-		type: "POST",
-		url: "./ChatSubmitServlet",
+		type: "GET",
+		url: "/chatSubmit",
 		data: {
-			chatName: encodeURIComponent(chatName),
-			chatContent: encodeURIComponent(chatContent),
-			sendMsgRoom: encodeURIComponent(sendMsgRoomId),
+			roomId: sendMsgRoomIdInt,
+			chatName: chatName,
+			chatContent: chatContent,
 		},
-		success: function(result) {
-	//		console.log("리절트" + result)
-
+		success: function(obj) {
+			console.log(obj);
+		},
+		error: function(){
+			alert("실패");
 		}
 	});
 		$('#chatContent').val('');
 	}
 
-
-function chatInviteList(userEmail){
-	$.ajax({
-		type: "POST",
-		url: "./chatRoomListImageServlet",
-		data: {
-			userEmail:userEmail,
-		},
-		success: function(data){
-			if(data=="") return;
-			var parsed = JSON.parse(data);
-			for(var i = 0; i<parsed.length; i++){
-				addInviteList(parsed[i].userName, parsed[i].userImage, parsed[i].userEmail);
-			}
-			
-		}
-	})
-}
-
-function chatInviteFunction(userEmail,Email){
-	console.log("초대할 사람:"+Email);
-	$.ajax({
-		type: "POST",
-		url: "./ChatInvite",
-		data: {
-			myEmail:userEmail,
-			Email:Email,
-		},
-		success: function(data){
-			inviteChat(data, Email)
-		}
-	})
-}
-
-function chatListFunction(type,roomId,userEmail){	// 서블릿 연결후 채팅 db연결하여 채팅 리스트 뿌리기
-		$.ajax({
-			type: "POST",
-			url: "./ChatListServlet",
+	function getChatRoom(){
+		$.ajax({					
+			type: "get",
+			url: "/getChatRoom",
 			data: {
-				listType: type,
-				roomList: roomId,
-				userEmail: userEmail,
+				userEmail: userEmail
 			},
-			success: function(data) {
-				if(data == "0") {
-					lastID = 0;
-			//		console.log("빈채팅방")
-					return
-					};
-				var parsed = JSON.parse(data);
-		//		console.log(parsed);
-				var result = parsed.result;
-		//		console.log(data)
-				for(var i = 0; i < result.length; i++) {
-					if(myName==result[i][0].value){
-						addMyChat(result[i][0].value, result[i][1].value, result[i][2].value)
+			success: function(obj) {
+				chatroomList = JSON.stringify(obj)
+				console.log("받아온값:"+chatroomList);
+				console.log("길이:"+obj.length);
+				roomdata = obj;
+				for(var i = 0; obj.length > i; i++){
+					addRoomId(obj[i].roomId, obj[i].userEmail, obj[i].userImage, obj[i].userNickName)
+				}
+				getRecentChat();
+				getChatRoomAlarm();
+				stratGetRecentChat();
+				stratGetChatRoomAlarm();
+			},
+			error: function(){
+				alert("실패");
+			}
+		})
+	}
+
+	function getChatList(){	
+		var sendMsgRoomIdInt = parseInt(sendMsgRoomId);
+		console.log("라스트:"+lastCheck);
+		$.ajax({
+			type: "GET",
+			url: "/getChatList",
+			data: {
+				roomId: sendMsgRoomIdInt,
+				lastCheck: lastCheck,
+				userEmail: userEmail
+			},
+			success: function(obj) {
+				chatList = JSON.stringify(obj)
+				console.log("채팅리스트:"+chatList);
+				for(var i = 0;obj.length > i;i++){
+					if(obj[i].chatName == userNickName){
+						addMyChat(obj[i].chatName, obj[i].chatContent);
+						lastCheck = obj[i].chatID;
 					}else{
-						addChat(result[i][0].value, result[i][1].value, result[i][2].value);
+						addChat(obj[i].chatName, obj[i].chatContent);
+						lastCheck = obj[i].chatID;
 					}
 				}
-				lastID = Number(parsed.last);
-			//	console.log(lastID);
+			},
+			error: function(){
+				alert("실패");
 			}
 		});
 	}
-	
-function chatRoomListFunction(userEmail){
-	$.ajax({
-		type: "POST",
-		url: "./ChatRoomListServlet",
-		data: {
-			listType: userEmail,
-		},
-		success: function(data){
-			if(data=="") return;
-			//console.log("룸data:"+data);
-			var parsed = JSON.parse(data);
-			//console.log("룸parsed"+parsed);
-		//	console.log("chatRoomListFunction진입:"+data);
-			roomdata = parsed;
-			console.log("chatRoomListFunction진입:"+roomdata);
-	//		for(var i = 0; i<parsed.length; i++){
-	//			addRoomId(parsed[i].roomId,parsed[i].userEmail);
-	//		}
-		}
-	})
-}
 
-function recentChat(){
-	$.ajax({
-		type: "POST",
-		url: "./ChatRecentServlet",
-		data: {
-			
-		},
-		success: function(data){
-			if(data=="") return;
-			var parsed = JSON.parse(data);
-			for(var i = 0; i<parsed.length; i++){
-				addRecentChat(parsed[i].roomId, parsed[i].message);
+	function getRecentChat(){
+		$.ajax({
+			type: "get",
+			url: "/getRecentChat",
+			data: {
+				userEmail: userEmail,
+			},
+			success: function(obj){
+				chatList = JSON.stringify(obj)
+				console.log("최근 채팅:"+chatList);
+				if(obj=="") return;
+				for(var i = 0; i<obj.length; i++){
+					addRecentChat(obj[i].roomId, obj[i].chatContent);
+				}
+				
+			},
+			error: function(){
+				alert("실패");
 			}
-			
-		}
-	})
-}
+		})
+	}
 
-function chatRoomListImage(userEmail){
+	function getChatAllAlarm(){
+		var allAlarm = 0;
+		$.ajax({
+			type: "get",
+			url: "/getChatAlarm",
+			data: {
+				userEmail: userEmail,
+			},
+			success: function(obj){
+				for(var i = 0;obj.length > i;i++){
+					allAlarm = allAlarm + obj[i].lastCheck;
+				}
+				if(allAlarm == 0){
+					addAlarmNumZero();
+					return
+				}
+				addAlarmNum(allAlarm);
+			}
+		})
+	}
+
+	function getChatRoomAlarm(){
+		$.ajax({
+			type: "get",
+			url: "/getChatAlarm",
+			data: {
+				userEmail: userEmail,
+			},
+			success: function(obj){
+				for(var i = 0; i<obj.length; i++){
+					if(obj[i].lastCheck == 0){
+						zeroRoomAlarmNum(obj[i].roomId);
+					}else{
+						addRoomAlarmNum(obj[i].roomId,obj[i].lastCheck)
+					}
+				}
+				
+			}
+		})
+	}
+
+
+
+function getFriendList(userEmail){
 	$.ajax({
-		type: "POST",
-		url: "./chatRoomListImageServlet",
+		type: "get",
+		url: "/getFriendList",
 		data: {
 			userEmail:userEmail,
 		},
-		success: function(data){
-			if(data=="") return;
-			var parsed = JSON.parse(data);
-		//	console.log("이미지:"+data);
-			roomimgdata = parsed
-			console.log("chatRoomListFunction진입:"+roomimgdata);
-	//		for(var i = 0; i<parsed.length; i++){
-	//			addRoomImage(parsed[i].userEmail, parsed[i].userImage);
-	//		}
+		success: function(obj){
+			chatroomList = JSON.stringify(obj)
+			console.log("받아온값:"+chatroomList);
+
+			for(var i=0; i<obj.length; i++){
+				addInviteList(obj[i].friendName, obj[i].userImage, obj[i].friendEmail)
+			}
 		}
 	})
 }
 
-function alarmFunction(userEmail){
+function creatChatRoom(userEmail,Email,name){
+	console.log("유저:"+userEmail);
+	console.log("초대할 사람:"+Email+"-"+name);
 	$.ajax({
-		type: "POST",
-		url: "./ChatAlarmServlet",
+		type: "get",
+		url: "/creatChatRoom",
 		data: {
-			userEmail: userEmail,
+			userEmail:userEmail,
+			freindEmail:Email,
 		},
 		success: function(data){
-			if(data=="0"){
-				addAlarmNumZero();
-				return
-			}
-			addAlarmNum(data);
-		}
-	})
-}
-
-
-function roomAlarmFunction(userEmail){
-	$.ajax({
-		type: "POST",
-		url: "ChatAnotherServlet",
-		data: {
-			userEmail: userEmail,
+			console.log("만들방번호:"+data);
+			chat(name);
+			startChat(data);
 		},
-		success: function(data){
-			console.log("data:"+data);
-			var parsed = JSON.parse(data);
-			console.log("룸알람:"+parsed);
-			for(var i = 0; i<parsed.length; i++){
-				if(parsed[i].lastCheck == 0){
-					zeroRoomAlarmNum(parsed[i].roomId);
-				}else{
-					addRoomAlarmNum(parsed[i].roomId,parsed[i].lastCheck)
-				}
-			}
-			
+		error: function(){
+			alert("실패");
 		}
 	})
 }
+
+	
+
+
+
+
 
 
 
@@ -214,7 +219,7 @@ function addAudienceID(chatName){
 }
 
 // 상대 채팅 내용 불러오기/추가
-function addChat(chatName, chatContent, chatTime) {
+function addChat(chatName, chatContent) {
 		$('#chatList').append(
 			'<div id=chatListContent class="chatListContent" style = " font-weight: bold;">'+
 			'<p>'+
@@ -229,7 +234,7 @@ function addChat(chatName, chatContent, chatTime) {
 	}
 	
 // 내 채팅 내용 불러오기/추가
-function addMyChat(chatName, chatContent, chatTime) {
+function addMyChat(chatName, chatContent) {
 		$('#chatList').append(
 			'<div id=MychatListContent class="MychatListContent">'+
 			'<p>'+
@@ -250,7 +255,7 @@ function addInviteList(name,image,Email){
 		'</div>'+
 		'<div id="email" style="margin-left:63px">'+
 		name+
-		'<img src="images/messageInviteBtn.svg" id="'+Email+'" onclick="chatInviteFunction(userEmail, this.id)" style="float: right;">'+
+		'<img src="images/messageInviteBtn.svg" id="'+Email+'" class="'+name+'" onclick="handleCreatChatRoom(event)" style="float: right;">'+
 		'</div>'+
 		'</div>'+
 		'<hr style="background-color: rgba(0,0,0,0.1); border:none; height : 3px;">'
@@ -290,7 +295,7 @@ function addRoomId(roomId,Email,image,name){
 function addRecentChat(roomId, recentChat){
 	$('#'+roomId+'recentContent *').remove();
 	$('#'+roomId+'recentContent').append(
-	'<p>'+
+	'<p id="recentChat">'+
 	recentChat+
 	'</p>'
 	);
@@ -340,15 +345,15 @@ function deleteRoomId(){
 
 /* ----------------- 함수 반복, 정지 ----------------- */
 
-function stratRecentChat(){
+function stratGetRecentChat(){
  timerId2 = setInterval(function(){
-	 recentChat();
+	getRecentChat()
  },500);
 }
 
-function stratAddRoomAlarmNum(userEmail){
+function stratGetChatRoomAlarm(userEmail){
  timerId3 = setInterval(function(){
-	 roomAlarmFunction(userEmail);
+	 getChatRoomAlarm();
  },1000);
 }
 
@@ -356,29 +361,42 @@ function stratAddRoomAlarmNum(userEmail){
 	function startChat(roomId){
 		console.log("확인용 :"+roomId);
 		sendMsgRoomId = roomId;
-		chatListFunction('ten',roomId,userEmail);
+		lastCheck = 0;
+		console.log("라스트체크 초기화");
+		getChatList();
+	//	chatListFunction('ten',roomId,userEmail);
 		setTimeout(	function getInfiniteChat() {
 	timerId = setInterval(function() {
-			chatListFunction(lastID,roomId,userEmail);
+		getChatList();
+		//	chatListFunction(lastID,roomId,userEmail);
 	//		console.log("반복중");
 		}, 200);
 	}, 500)
 	}
 	
-	
 	function ready(id, mName){
-		userEmail = id;
-		myName = mName;
-		console.log(myName);
-		chatRoomListFunction(userEmail);
-		chatRoomListImage(userEmail);
-		alarmFunction(userEmail);
+		$.ajax({					
+			type: "get",
+			url: "/loginOk.action",
+			data: {
+			},
+			success: function(obj) {
+				userEmail = obj.userEmail
+				userNickName = obj.userNickName
+				console.log(userEmail + userNickName)
+				getChatAllAlarm();
+			//	console.log(lastID);
+			}
+		})
+	//	chatRoomListFunction(userEmail);
+	//	chatRoomListImage(userEmail);
+	//	alarmFunction(userEmail);
 		setInterval(function(){
-    alarmFunction(userEmail); // 1초마다 실행
+		getChatAllAlarm(); // 1초마다 실행
   }, 1000);
 	}
 	
-	
+
 // 창이 켜지면 실행 - 알람 관련 함수
 
 	
@@ -392,11 +410,11 @@ function stratAddRoomAlarmNum(userEmail){
 //	}
 	
 	// 각 방의 알람 함수 정지
-	function stopAddRoomAlarmNum() {
+	function stopGetChatRoomAlarm() {
  	 clearInterval(timerId3);
 	}
 	// 각 방의 최근의 메세지 함수 정지
-	function stopRecentChat() {
+	function stopGetRecentChat() {
  	 clearInterval(timerId2);
 	}
 	// 채팅방 통신 정지
@@ -418,7 +436,7 @@ function semdMsg() {
 //  var msgContent = document.getElementById("msgContent").value;
 //  document.getElementById("msgContent").clear;
 //  word.innerHTML = msgContent;
-	submitFunction(userEmail);
+	cahtSubmit(userEmail);
 }
 
 
@@ -427,20 +445,15 @@ function allChatsearchList(){
 	var input = document.getElementById("search").value.trim();
 	deleteRoomId();
 	for(var i = 0; i<roomdata.length; i++){
-		for(var j=0; j<roomimgdata.length; j++){
-			if(roomdata[i].userEmail==roomimgdata[j].userEmail){
 				if(input != ""){
 						console.log(input+" - 필터링");
-						if(roomimgdata[j].userName.indexOf(input) !== -1){
-						addRoomId(roomdata[i].roomId,roomdata[i].userEmail,roomimgdata[j].userImage,roomimgdata[j].userName);
+						if(roomdata[i].userNickName.indexOf(input) !== -1){
+						addRoomId(roomdata[i].roomId,roomdata[i].userEmail,roomdata[i].userImage,roomdata[i].userNickName);
 					}
 				}else{
 				console.log("공백");
-				addRoomId(roomdata[i].roomId,roomdata[i].userEmail,roomimgdata[j].userImage,roomimgdata[j].userName);	
+				addRoomId(roomdata[i].roomId,roomdata[i].userEmail,roomdata[i].userImage,roomdata[i].userNickName);	
 			}
-
-			}
-		}
 	}
 
 }
@@ -462,10 +475,9 @@ function allInvitesearchList(){
 }
 
 // 상단바의 채팅 아이콘 클릭시 실행되는 함수
-function clickChatBtn(id) {	// 말풍선 버튼 클릭시 채팅목록 모달창
+function clickChatBtn() {	// 말풍선 버튼 클릭시 채팅목록 모달창
   var image = document.getElementById('mainMessageButtonfalse');
   var followImage = document.getElementById('mainAlarmFalse');
-  userEmail = id;
  
   if (image.src.match("images/mainMessageFalse.png")) {
     image.src = "images/mainMessageTrue.svg";
@@ -473,15 +485,17 @@ function clickChatBtn(id) {	// 말풍선 버튼 클릭시 채팅목록 모달창
 	followImage.src = "images/mainAlarmFalse.png";
 	closeFollow();
 	}
+	// 현제 로그인한 사람의 이메일과 이름을 불러옴
     // modal.style.display = "flex";
 	openModal();
-	chatRoomListFunction(userEmail);
-	chatRoomListImage(userEmail);
-	recentChat();
-	allChatList(userEmail);
-	roomAlarmFunction(userEmail);
-	stratRecentChat();
-	stratAddRoomAlarmNum(userEmail)
+	getChatRoom();
+//	chatRoomListFunction(userEmail);
+//	chatRoomListImage(userEmail);
+//	recentChat();
+//	allChatList(userEmail);
+//	roomAlarmFunction(userEmail);
+//	stratRecentChat();
+//	stratAddRoomAlarmNum(userEmail)
    	} else {
     image.src = "images/mainMessageFalse.png";
     // modal.style.display = "none";
@@ -492,8 +506,8 @@ function clickChatBtn(id) {	// 말풍선 버튼 클릭시 채팅목록 모달창
 // 채팅 아이콘 한번더 클릭시 실행되는 함수 
 function closeModal() {	
   stopInfiniteChat();
-  stopRecentChat();
-  stopAddRoomAlarmNum();
+  stopGetChatRoomAlarm();
+  stopGetRecentChat();
 //  lastID = 0;
   modal.innerHTML = '';
 }
@@ -513,30 +527,26 @@ function allChatList(){
 	},150)	
 }
 
+//채팅초대 창 열떄 실행되는 함수
+function handleChatInvite(){
+	chatInvite();
+	getFriendList(userEmail);
+	stopGetChatRoomAlarm();
+	stopGetRecentChat();
+}
+
 
 // 채팅방 초대창에서 뒤로가기 눌렀을때 실행되는 함수
 function inviteBack(userEmail){
 	openModal();
-	chatRoomListFunction(userEmail);
-	chatRoomListImage(userEmail);
- 	allChatList();
-	recentChat();
-	stratRecentChat();
-	roomAlarmFunction(userEmail);
-	stratAddRoomAlarmNum(userEmail);
+	getChatRoom();
 }
 
 // 채팅방에서 뒤로가기 버튼을 눌렀을때 실행되는 함수
 function roomBackModal(userEmail) {
   stopInfiniteChat();
   openModal();
-  chatRoomListFunction(userEmail);
-  chatRoomListImage(userEmail);
-  allChatList();
-  recentChat();
-  stratRecentChat();
-  roomAlarmFunction(userEmail);
-  stratAddRoomAlarmNum(userEmail);
+  getChatRoom();
  // lastID = 0;
 }
 
@@ -546,8 +556,15 @@ function handleChatClick(event) {
   const id = event.currentTarget.id;
   chat(email);
   startChat(id);
-  stopRecentChat();
-  stopAddRoomAlarmNum();
+  stopGetChatRoomAlarm();
+  stopGetRecentChat();
+}
+
+function handleCreatChatRoom(event){
+	const name = event.currentTarget.classList[0];
+	const email = event.currentTarget.id;
+	console.log(name + "-" + email);
+	creatChatRoom(userEmail, email, name);
 }
 
 function inviteChat(roomId, email){
@@ -564,7 +581,7 @@ function openModal() {
       <div class="msmodal-content">
       <div class="msheader">
         <h2>채팅</h2>
-         <button type="button" class="messageInvite" id ="messageInvite" onclick="chatInvite();stopRecentChat();stopAddRoomAlarmNum();chatInviteList(userEmail)"><img id="messageBackBtn" src="images/messageInvite.svg"></button>
+         <button type="button" class="messageInvite" id ="messageInvite" onclick="handleChatInvite()"><img id="messageBackBtn" src="images/messageInvite.svg"></button>
         </div>
         <div class="search">
        		 <img id = "searchimg" src="images/search.svg">
@@ -584,7 +601,7 @@ function chatInvite() {
       <div class="msmodal-content">
       <div class="msheader">
         <h2>대화상대 초대</h2>
-         <button type="button" class="messageBack" id ="messageBack" onclick="inviteBack(userEmail)"><img id="messageBackBtn" src="images/messageBackBtn.svg"></button>
+         <button type="button" class="messageBack" id ="messageBack" onclick="inviteBack()"><img id="messageBackBtn" src="images/messageBackBtn.svg"></button>
         </div>
         <div class="search">
        		 <img id = "searchimg" src="images/search.svg">

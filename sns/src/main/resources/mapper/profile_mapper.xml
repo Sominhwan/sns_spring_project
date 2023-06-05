@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.FileUploadRepository">
+    <sql id="fullColumn">
+        userName, 
+        userGender,
+        userNickName,
+        userEmail,
+        userPwd,
+        userPN,
+        userSchool,
+        userAddress,
+        userSocial,
+        userImage
+    </sql>
+    <!-- 유저 프로필 변경 -->
+    <update id="updateUserImage">
+        UPDATE userinfo 
+        SET userImage = #{userImage} 
+        WHERE userEmail = #{userEmail}
+    </update>
+
+    <!--  배경사진 insert -->
+    <insert id = "insertBackImage" >
+        INSERT INTO guestbook (userEmail, gbBackGroundImage)
+        VALUES (#{userEmail},#{userImage})
+    </insert>
+
+    <!-- 유저 배경화면 정보확인 -->
+    <select id = "selectBackImage" resultType="int">
+        SELECT COUNT(*)
+        FROM guestbook 
+        where userEmail = #{userEmail}
+    </select>
+    <!-- 배경사진 변경 -->
+    <update id="updateBackImage">
+        UPDATE guestbook 
+        SET gbBackGroundImage = #{backImage} 
+        WHERE userEmail = #{userEmail}
+    </update>
+
+    <!-- 유저 아이디(이메일)를 통해 모든 회원정보 가져오기 -->
+    <select id="findByUserId" resultType="com.project.my.module.userRole.entity.GuestBookEntity"> 
+        SELECT gbBackGroundImage, gbComment
+        FROM guestbook
+        WHERE userEmail = #{userEmail}
+    </select>
+
+    <select id="getProfileImage" resultType="String">
+        SELECT userImage
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>
+
+    <!-- 방명록 변경 -->
+    <update id = "updateGuestBook">
+        UPDATE guestbook
+        SET gbComment = #{gbComment}
+        WHERE userEmail = #{userEmail}
+    </update>
+
+    <!--  방명록 insert -->
+    <insert id = "insertGuestBook" >
+        INSERT INTO guestbook (userEmail, gbComment)
+        VALUES (#{userEmail},#{gbComment})
+    </insert>
+    
+    <!-- 친구목록 불러오기 -->
+    <select id = "getFriendList" resultType = "com.project.my.module.userRole.entity.FriendmanagerEntity">
+        SELECT friendEmail
+        FROM friendmanager
+        WHERE userEmail = #{userEmail}
+        AND friendSign = 1
+    </select>
+
+    <!-- 친구이름 -->
+    <select id="findByUserName" resultType = "String"> 
+        SELECT userName
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>
+
+    <!-- 유저 아이디(이메일)를 통해 모든 회원정보 가져오기 -->
+    <select id="getFriendInfo" resultType="com.project.my.module.userRole.entity.UserInfoEntity"> 
+        SELECT *
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>
+</mapper>

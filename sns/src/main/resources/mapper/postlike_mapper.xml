@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.PostlikeRepository">
+    <sql id="fullColumn">
+        postId,
+        userEmail,
+        likeNum
+    </sql>
+    <select id="postLike" resultType="com.project.my.module.userRole.entity.PostlikeEntity" parameterType="map">
+        SELECT * 
+        FROM postlike 
+        WHERE userEmail=#{userEmail} AND postId=#{postId}
+    </select>
+    <insert id="heartup">
+        insert postlike(postId,userEmail, likeNum)values(#{postId},#{userEmail},1)
+    </insert>
+    <delete id="heartdel">
+    delete 
+    from postlike 
+    where postId=#{postId} and userEmail=#{userEmail}
+    </delete>
+</mapper>

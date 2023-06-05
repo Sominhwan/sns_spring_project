@@ -87,7 +87,6 @@
   top: 20px;
   height: 5px;
   width: 5px;
-
  }
 
  #downButton2{
@@ -240,8 +239,7 @@
     width: 70px;
     font-family: MalgunGothic;
     font-size: 14px; 
-    font-weight: bold;
-    obj[0].email;    
+    font-weight: bold;   
   }
 
   #receiverWrap {
@@ -372,10 +370,12 @@
   }
 
   #download {
+    position: relative;
     width: 22px;
     height: 22px;
     vertical-align: middle; 
     float: right; 
+    right: 10px;
     cursor: pointer;
   }
 

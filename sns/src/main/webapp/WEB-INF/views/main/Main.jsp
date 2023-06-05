@@ -1,22 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@page import="java.util.Vector,sns.*"%>
-<% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id="umgr" class="sns.UserinfoMgr"/>
-<jsp:useBean id="cmgr" class="sns.CommentMgr"/>
-<jsp:useBean id="fmgr" class="sns.FriemdmanagerMgr"/>
-<jsp:useBean id="pmgr" class="sns.PostlikeMgr"/>
-<jsp:useBean id="pomgr" class="sns.PostMgr"/>
-<%
-		String email = (String)session.getAttribute("userEmail");
-		//String email="jseok@aaa.com";
-		if(email==null) {
-			response.sendRedirect("login.jsp");
-		}
-		UserinfoBean mbean = umgr.getPMember(email);//유저정보 불러오기(유저이메일,이름,프로파일,별명저장)
-		Vector<UserinfoBean> uilist = umgr.listPMember(email);//본인을 제외한 5명리스트 불러오기(유저이메일 별명,유저이미지저장)
-		Vector<PostBean> uplist=pomgr.plist();//postId 내림차순으로 전체글 다가져오기
-		
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page import="com.project.my.module.userRole.entity.UserInfoEntity" %>
+<%@ page import="com.project.my.module.userRole.repository.UserRepository" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +14,9 @@
     <title>Photalk</title>
     <link rel="shortcut icon" type="image/x-icon" href="./images/mainLogo.png" />
     <!-- 네브바 추가할것 !!!! -->    
-    <link type="text/css" rel="stylesheet" href="css/navbar.css"></link>
-    <link type="text/css" rel="stylesheet" href="css/sidebar.css"></link>
-    <link type="text/css" rel="stylesheet" href="style.css"></link>
+    <link type="text/css" rel="stylesheet" href="css/main/navbar.css"></link>
+    <link type="text/css" rel="stylesheet" href="css/main/sidebar.css"></link>
+    <link type="text/css" rel="stylesheet" href="css/main/style.css"></link>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
@@ -38,11 +26,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css"
     />
-    <link rel="stylesheet" href="css/message.css?after"/>
  	<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
  	<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 	<script src="js/navbar.js"></script>
+ 	
 </head>
 <div class="modal-wrapper"></div>
 <body style="overflow-x: hidden">
@@ -54,7 +41,6 @@
     <div class = "navbar">
         <img src="images/mainLogo.png" alt="Image Button"/>
 	    <a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
-	    <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
 	    	    
 	    <form method="post" id="navSearch" >
         	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
@@ -62,13 +48,14 @@
         </form>
         <!-- 모달창 -->
         <div class="absol">
-        <img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('<%=email%>')" alt="Image Button" style="cursor: pointer"/>
+		<img class="mainMessageButton" id ="mainMessageFalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('#')" alt="Image Button" style="cursor: pointer"/>
         <div id="alarm" class="alarm">
         <span class="alarmBalloon"></span>
         </div>
-        </div>             
+        </div> 
         <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
+		
     </div>	   
 </nav>
     <!-- 검색 창 -->
@@ -161,217 +148,45 @@
     </div>
   </div>    
 </div>
-    <!-- <div style="overflow:scroll; height:1900px;"> -->
+
+
 <div data-role="page">
+
     <div class="aaa">
-    	<table style="height: 100px">
-		<tr>
-		<%
-				for(int i=0;i<uilist.size();i++){
-					UserinfoBean ubean = uilist.get(i);//정보에 뜰 사람들
-		%>
-			<td width="100">
-				<div class="box1">
-					<a href="javascript:goURL('searched.jsp?userEmail=<%=ubean.getUserEmail()%>','<%=ubean.getUserEmail()%>')"><!-- 여기에 jsp파일 -->
-						<img class="profileimage" src="<%=ubean.getUserImage()%>">
-					</a>
-				</div>
-				<div>
-					<span style="position:relative; font-size: 14px; color: #303030; top:10px; left: 3px;"><%=ubean.getUserNickName()%></span>
-				</div>
-			</td>
-		<%}%>	
-		</tr>
+		<table style="height: 100px">
+			<tr id="userListContainer">
+			</tr>
 		</table>
-    </div>
-    <div class="bbb">
-    	<h3 style="color: #868E96; font-size: 18px;">회원님을 위한 추천</h3>
+	</div>
+
+	<div class="bbb">
+    	<h3>회원님을 위한 추천</h3>
     	<hr>
     	<table>
-    	<%
-				for(int i=0;i<uilist.size();i++){
-					UserinfoBean ubean = uilist.get(i);
-		%>
-		<tr>	
-			<td width="50">
-				<div class="boxnored">		
-						<img class="profileimage" src="<%=ubean.getUserImage()%>">
-				</div>
-				
-			</td>
-			<td>
-			<div class="box2">
-					<h4 class="Nick-State"><%=ubean.getUserNickName()%></h4>
-					<p class="Text-State">회원님을 팔로우합니다 </p>
-			</div>
-			</td>
-			<td>
-				<%
-					if(fmgr.friendCheck(ubean.getUserEmail(), mbean.getUserEmail())){
-						%>
-						<a href="javascript:deletefriend('<%=ubean.getUserEmail() %>,<%=mbean.getUserEmail() %>')" class="followdelbtn" style="color:#1877F2;font-size: 14px;">팔로워</a><% 
-					}
-					else {
-						%><a href="javascript:dofriend('<%=ubean.getUserEmail() %>,<%=mbean.getUserEmail() %>')" class="follow-btn" style="color:#1877F2;font-size: 14px;">팔로우</a><% 
-					}
-				%>
-				
-			</td>
-		<%}%>	
-		</tr>
+			<tr id="bbbUserListContainer">			
+			</tr>
 		</table>
     </div>
     <div class="socialproject">
     	<h5>© 2023 Social Net Work Project</h5>
     </div>
-    <%
-				for(int i=0;i<uplist.size();i++){
-					PostBean pbean = uplist.get(i);
-					UserinfoBean uibean = umgr.getPMember(pbean.getUserEmail());
-					Vector<CommentBean> clist = cmgr.listPReply(pbean.getPostId());
-					int commentCount = clist.size();
-	%>	
-    <div class="ccc">
-    <table>
-		<tr style="width: 517px; display: inline-block;">
-			<td style="padding-left: 10px; width: 50px;">
-				<div class="box3" style="display: inline-block;">
-					<img class="profile" src="<%=uibean.getUserImage()%>">
-					
-				</div>
-						
-			</td>
-			<td style="width: 100px">
-			<div style="font-size: 15px; color: #303030; display: inline-block;"><b><%=uibean.getUserNickName()%></b></div>
-			</td>		
-			<td>
-				<a href="javascript:hamberger('<%=pbean.getUserEmail()%>')" class="ham" style="margin-left: 320px;">
-					<img src="./img/postCategory.svg">				
-				</a>
-			</td>
-			
-		</tr>
-		<tr>
-			<td colspan="3" style="border-bottom: solid 1px #eee;"	>
-			<!-- 이미지가 null이면 영상불러오기 -->
-				<%if (pbean.getImageName() == null || pbean.getImageName().equals("NULL")){ %>
-					<embed src="photo/<%=pbean.getVideoName()%>" width="535" height="480">
-				<%} else {%>
-					<img src="photo/<%=pbean.getImageName()%>" width="535" height="480">
-				<%} %>
-			</td>
-		</tr>
-		<tr style="float:left; height: 25px; padding-top: 15px;">
-			<td style="padding-left: 10px;">
-				<%if (pmgr.postLike(mbean.getUserEmail(), pbean.getPostId())){ %>
-					<a href="javascript:heartdel('<%=pbean.getPostId()%>,<%=mbean.getUserEmail() %>')" id="ddd">
-					<img src="./img/postLikeTrue.svg" align="top">
-					</a>
-				<%}else if(!pmgr.postLike(mbean.getUserEmail(), pbean.getPostId())){ %>
-					<a href="javascript:heart('<%=pbean.getPostId()%>,<%=mbean.getUserEmail() %>')" id="ddd">				
-					<img src="./img/postLikeFalse.svg" align="top">
-					</a>
-				<%} %> 
-			</td>
-			<td>
-			<a href="javascript:chat('<%=pbean.getPostId()%>')" id="ddd">
-				<img src="./img/postMessageFalse.svg" align="top">
-			</a>
-			</td>
-			<td>
-			<a href="javascript:share('<%=pbean.getPostId()%>')" id="ddd" class="sharebtn">
-				<img src="./img/postShare.svg" align="top">
-			</a>
-			</td>							
-		</tr>
-		<tr>
-			<td width="250" style="padding-left:10px;"><%=uibean.getUserNickName() %>님 외 <b><%=pbean.getLikeNum() %>명</b>이 좋아합니다.</td>
-		</tr>
-		<tr class="commenter" style="height:<%=commentCount*50%>px;">
-			<td colspan="3" width="500" style="padding-left:10px;"> 
-				<%
-				for(int j=0;j<clist.size();j++){
-					CommentBean cbean = clist.get(j);
-					if(cbean.getCommentParrent()!=null){
-						
-				%>
-				<div id="myDIV<%=cbean.getCommentParrent()%>" style="display:none; padding-top: 10px;">	
-				<c><%=cbean.getUserEmail()%></c>&nbsp;<c class="commentDetail"><%=cbean.getCommentDetail()%></c>
-				<br>
-				<c>&nbsp;&nbsp;&nbsp;&nbsp;<c style="font-size: 90%; color: #8e8e8e;"><%=cbean.getCommentDate()%></c>&nbsp;&nbsp; 
-				<%if(email.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
-				<a href="javascript:cup('<%=cbean.getCommentId()%>')" id="box<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">수정</a><%}%>&nbsp;
-				<%if(email.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
-				<a href="javascript:cdel('<%=cbean.getCommentId()%>,<%=pbean.getPostId()%>')" style="font-size: 90%; color: #8e8e8e;">삭제</a></c><%}%>&nbsp;
-				<br>
-				</div>
-				<%} else {%>
-					<b><%=cbean.getUserEmail()%></b>&nbsp;<c class="commentDetail" ><%=cbean.getCommentDetail()%></c>
-				<br>
-				<%if (cmgr.replycheck(cbean.getCommentId())) {%><a href="javascript:doDisplay('<%=cbean.getCommentId()%>');" style="font-size: 90%; color: #8e8e8e;" id="linkText<%=cbean.getCommentId()%>"><img src="img/postMessageReplyBtn.svg"/> 답글보기</a><%}%>&nbsp;<c style="font-size: 90%; color: #8e8e8e;"><%=cbean.getCommentDate()%></c>&nbsp;&nbsp; 
-				<a href="javascript:creply('<%=cbean.getCommentParrent()%>,<%=mbean.getUserEmail()%>,<%=pbean.getPostId()%>,<%=cbean.getCommentId()%>')" id="rep<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">답글</a> &nbsp;
-				<%if(email.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
-				
-				<a href="javascript:cup('<%=cbean.getCommentId()%>')" id="box<%=cbean.getCommentId()%>" style="font-size: 90%; color: #8e8e8e;">수정</a><%}%>&nbsp;
-				
-				<%if(email.equals(cbean.getUserEmail())){%><!-- 덧글이메일과 로그인 이메일같으면 -->
-				<a href="javascript:cdel('<%=cbean.getCommentId()%>,<%=pbean.getPostId()%>')" style="font-size: 90%; color: #8e8e8e;">삭제</a></b><%}%>&nbsp;
-				<br>
-				<%} %>
-			
-		<%}%>
-			</td>
-		</tr>
-		
-		<tr>
-		
-			<td colspan="3" width="500">
-				<br>
-				<div class="asdf" style="padding-left: 10px">
-				
-				<img src="./img/postLikeCount.svg">&nbsp;<%=pbean.getLikeNum() %>&nbsp;
-				
-				<img src="./img/postMessageCount.svg">&nbsp;댓글<%=pbean.getCommentNum() %>&nbsp;개
-				<%
-				for(int j=0;j<38;j++){
-					%>
-					&nbsp;
-					<% 
-				}
-				%>
-				공유하기 <%=pbean.getShareNum() %> 회
-				</div>
-				<hr style="background-color: #d8d8d8">
-			</td>
-			
-		</tr>
-		
-		<tr>	
-			<td colspan="3" width="500" style="padding-top: 15px;">
-				<img src="./img/postMessageProfile.svg" class="postMessageProfile">&nbsp;
-				<input class="postTextbox" id="postTextbox" placeholder="댓글을 입력하세요." data-postid="<%=pbean.getPostId()%>" data-userEmail="<%=mbean.getUserEmail() %>"/>
-			</td>
 
-		</tr>
-
-		
-	</table>
-	
+	<div id="cccContainer">
 	</div>
+
+
 	<!-- 햄버거모달 -->
 	<div class="modal">
     			<div>
-        			<a href="javascript:report('<%=pbean.getPostId()%>')"><span id="main-modal-text" style="color: #fd3c56; font-weight: bold;">신고하기</span></a><br>
+        			<a href="javascript:report('#')"><span id="main-modal-text" style="color: #fd3c56; font-weight: bold;">신고하기</span></a><br>
         			<hr style="background: #d8d8d8; height: 1px; border: 0;">
-        			<a href="javascript:share('<%=pbean.getPostId()%>')" class="sharebtn"><span id="main-modal-text">공유하기</span></a><br>
+        			<a href="javascript:share('#')" class="sharebtn"><span id="main-modal-text">공유하기</span></a><br>
         			<hr style="background: #d8d8d8; height: 1px; border: 0;">
-        			<a href="javascript:copyUrl('<%=pbean.getPostId()%>')"><span id="main-modal-text">링크복사</span></a><br>
+        			<a href="javascript:copyUrl('#"><span id="main-modal-text">링크복사</span></a><br>
         			<hr style="background: #d8d8d8; height: 1px; border: 0;">
         			<span id="main-modal-text" class="modal_close">취소</span>
     			</div>
 	</div>
-	<%}%>
-	
 </div>
 <!-- 화면꺼지게 -->
 <div class="overlay">
@@ -390,8 +205,8 @@
 		</div> 				
   	</div>
   	<!-- 편집하기모달 -->
-  	<form name="postFrm" method="post" action="PostInsertServlet" enctype="multipart/form-data" >
-  	<input type="hidden" name="userEmail" value="<%=mbean.getUserEmail()%>">
+  	<form name="postFrm" method="post" enctype="multipart/form-data" >
+  	
   	<div class="fixmodal">
 		<div class="maketexttitle">
 		&nbsp;&nbsp;<b>편집하기</b><img src="./img/makePostBackBtn.svg" class="makeBackBtn" style="cursor: pointer;">
@@ -425,7 +240,7 @@
   	</div>
   	</form>
   	<!-- 동영상모달 -->
-  	<form name="videoFrm" method="post" action="VideoPostInsertServlet" enctype="multipart/form-data" >
+  	<form name="videoFrm" method="post" enctype="multipart/form-data" >
   	<div class="videomodal">
 		<div class="maketexttitle">
 			<b style="position:relative;  margin-left: 10px;">동영상모달</b><img src="./img/makePostBackBtn.svg" class="makevideoBackBtn" style="cursor: pointer;">
@@ -434,7 +249,7 @@
 		<div class="makebody">
 			<h5 class="videotitle">동영상을 선택하세요</h5>
 			<div class="choicevideo">
-				<input type="file" accept="image/*" id="videoElement" name="videoElement">
+				<input type="file" accept="video/*" id="videoElement" name="videoElement">
 			</div>
 			<img src="./img/makePostInsertBtn.svg" class="videopostInsert">
 		</div>				
@@ -481,16 +296,10 @@
 		<input type="hidden" name="userEmail">
 		<input type="hidden" name="friendEmail">
 		<input type="hidden" name="comment">
-		<input type="hidden" name="email" name="" value="<%=email%>">
+		
 </form>
     <!-- js 추가 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>    
-  	<script src="js/main.js"></script>
-  	<script src="js/message.js"></script>
-  	<script>
-    window.onload = function() {
-    	ready('<%=email%>','<%=mbean.getUserName()%>');
-    };
-	</script>
+	<script src="/js/main/main.js"></script>
 </body>
 </html>

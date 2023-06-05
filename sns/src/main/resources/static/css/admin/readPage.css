@@ -18,7 +18,7 @@
     transform: translate(-50%,0%);
     display: none;
   }
-  
+
   .left-side {
     position: fixed;
     left: 0%;
@@ -234,8 +234,7 @@
     top: 15px;
     font-family: MalgunGothic;
     font-size: 14px; 
-    font-weight: bold;
-    obj[0].email;    
+    font-weight: bold;   
   }
 
   #receiverWrap {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.FriendRepository">
+    <sql id="fullColumn">
+        idx,
+        userEmail,
+        friendEmail,
+        friendSign
+    </sql>
+    <select id="friendCheck" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity" parameterType="map">
+        SELECT friendSign 
+        FROM friendmanager 
+        WHERE userEmail=#{userEmail} and friendEmail=#{friendEmail} and friendSign = 1
+    </select>
+    <select id="followfirend" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
+        insert into friendmanager(userEmail,friendEmail,friendSign) values(#{userEmail},#{friendEmail},1)
+    </select>
+    <select id="followfirend2" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
+        insert into friendmanager(userEmail,friendEmail,friendSign) values(#{friendEmail},#{userEmail},0)
+    </select>
+    <select id="delFriend" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity"> 
+    delete from friendmanager where userEmail=#{userEmail} and friendEmail=#{friendEmail}
+    </select>
+    <select id="delFriend2" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
+    delete from friendmanager where userEmail=#{friendEmail} and friendEmail=#{userEmail}
+    </select>
+</mapper>
+
+

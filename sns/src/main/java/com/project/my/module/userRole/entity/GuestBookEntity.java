@@ -13,6 +13,7 @@ public class GuestBookEntity {
 	private String userEmail;
 	private String gbComment;
 	private String gbBackGroundImage;
+	private String userImage;
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
@@ -26,4 +27,7 @@ public class GuestBookEntity {
 		this.gbBackGroundImage = gbBackGroundImage;
 	}
 
+	public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
 }

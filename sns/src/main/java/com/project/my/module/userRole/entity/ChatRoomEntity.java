@@ -14,6 +14,8 @@ public class ChatRoomEntity {
 	private String userEmail;
 	private String createTime;
 	private int lastCheck;
+	private String userImage;
+	private String userNickName;
 
 	public void setLastCheck(int lastCheck) {
 		this.lastCheck = lastCheck;
@@ -30,5 +32,13 @@ public class ChatRoomEntity {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+
+	public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
+	public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
 
 }

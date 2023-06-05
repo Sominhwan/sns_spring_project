@@ -1,6 +1,7 @@
 package com.project.my.module.sns.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainPageController {
     // 메인 페이지 이동
-    @PostMapping("/main")
+    @GetMapping("/main")
     public String main() {
         return "/main/main";
     }   

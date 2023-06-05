@@ -36,7 +36,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           if ($('#downButton').css('display') == 'block') {
             $('#downButton').css('display', 'none');
             $('#upButton').css('display', 'block');
-            $('#layer_context').css('display', 'block');     
+            $('#layer_context').css('display', 'block');
+            
+            $('#upButton2').css('display', 'none');          	    
+            $('#downButton2').css('display', 'block');  
+            $('#layer_context2').css('display', 'none');  
           } else {
             $('#upButton').css('display', 'none');          	    
             $('#downButton').css('display', 'block');  
@@ -47,7 +51,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           if ($('#downButton2').css('display') == 'block') {
             $('#downButton2').css('display', 'none');
             $('#upButton2').css('display', 'block');
-            $('#layer_context2').css('display', 'block');     
+            $('#layer_context2').css('display', 'block'); 
+            
+            $('#upButton').css('display', 'none');          	    
+            $('#downButton').css('display', 'block');  
+            $('#layer_context').css('display', 'none');   
           } else {
             $('#upButton2').css('display', 'none');          	    
             $('#downButton2').css('display', 'block');  

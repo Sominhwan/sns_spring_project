@@ -14,6 +14,8 @@ public class FriendmanagerEntity {
 	private String userEmail;
 	private String friendEmail;
 	private int friendSign;
+	private String userImage;
+	private String friendName;
 
 	public void setFriendIndex(int friendIndex) {
 		this.friendIndex = friendIndex;
@@ -31,4 +33,11 @@ public class FriendmanagerEntity {
 		this.friendSign = friendSign;
 	}
 
+	public void setUserImage(String userImage){
+		this.userImage = userImage;
+	}
+
+	public void setFriendName(String friendName){
+		this.friendName = friendName;
+	}
 }

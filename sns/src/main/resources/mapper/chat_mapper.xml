@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.my.module.userRole.repository.ChatRepository">
+
+    <select id="getChatRoomList" resultType="com.project.my.module.userRole.entity.ChatRoomEntity">
+        SELECT *
+        FROM chatroom
+        WHERE roomId IN (
+            SELECT roomId
+            FROM chatroom
+            WHERE userEmail = #{userEmail}
+        )
+        AND userEmail != #{userEmail}
+    </select>
+
+        <select id="getChatAlarm" resultType="com.project.my.module.userRole.entity.ChatRoomEntity">
+        SELECT *
+        FROM chatroom
+        WHERE userEmail = #{userEmail}
+    </select>
+
+    <select id="firstgetChatList" resultType="com.project.my.module.userRole.entity.ChatMessagerEntity">
+        SELECT *
+        FROM chat
+        WHERE roomId = #{roomId}
+    </select>
+    
+    <select id="getChatList" resultType="com.project.my.module.userRole.entity.ChatMessagerEntity">
+        SELECT *
+        FROM chat
+        WHERE roomId = #{roomId} AND chatID > #{lastCheck}
+    </select>
+
+    <select id="getRecentChat" resultType="com.project.my.module.userRole.entity.ChatMessagerEntity">
+        SELECT *
+        FROM chat
+        WHERE roomId = #{roomId}
+        ORDER BY chatID DESC
+        LIMIT 1;
+    </select>
+
+    <select id="getUserImage" resultType="String">
+        SELECT userImage
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>   
+
+    <select id="getuserName" resultType="String">
+        SELECT userNickName
+        FROM userinfo
+        WHERE userEmail = #{userEmail}
+    </select>
+
+    <select id="getChatMaxNum" resultType="int">
+        SELECT MAX(chatID)
+        FROM chat
+        WHERE roomId = #{roomId}
+    </select>
+
+    <select id="getChatRoomMaxNum" resultType="int">
+        SELECT MAX(roomId)
+        FROM chatroom
+    </select>
+
+    <update id="updateLastCheck">
+        UPDATE chatroom
+        SET lastCheck = #{lastCheck}
+        WHERE roomId = #{roomId} AND userEmail = #{userEmail};
+    </update>
+
+    <insert id="chatSubmit">
+        INSERT INTO chat(roomId, chatID, chatName, chatContent, chatTime)
+        VALUES (#{roomId}, #{chatID}, #{chatName}, #{chatContent}, NOW())
+    </insert>
+
+    <insert id="creatChatRoom">
+        INSERT INTO chatroom(roomId, userEmail, createTime, lastCheck)
+        VALUES (#{roomId}, #{userEmail}, NOW(), 0)
+    </insert>
+
+    <select id = "getFriendList" resultType = "com.project.my.module.userRole.entity.FriendmanagerEntity">
+        SELECT friendEmail
+        FROM friendmanager
+        WHERE userEmail = #{userEmail}
+        AND friendSign = 1
+    </select>
+    
+    <select id="checkChatRoom" resultType="int">
+        SELECT roomId
+        FROM chatroom
+        WHERE userEmail IN (#{userEmail}, #{friendEmail})
+        GROUP BY roomId
+        HAVING COUNT(DISTINCT userEmail) = 2
+    </select>
+
+</mapper>
+

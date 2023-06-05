@@ -47,6 +47,21 @@ public class AuthControllerApiV1 {
         map.put("logOutMsg", "true"); 
         return map;
     }
+    @GetMapping("/loginMain.action")
+    @ResponseBody 
+    public HashMap<String, String> loginMainPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        HashMap<String, String> map = new HashMap<String,String>();
+        map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
+        map.put("userName", principalDetails.getName()); // 아이디 반환
+        map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
+        map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
+        map.put("userGender", principalDetails.getUserGender()); // 성별 반환
+        map.put("userSchool", principalDetails.getUserSchool()); // 학교 반환
+        map.put("userPN", principalDetails.getUserPN()); // 전화번호 반환
+        map.put("userAddress", principalDetails.getUserAddress()); // 주소 반환
+        map.put("userSocial", principalDetails.getUserSocial()); // 소셜 반환
+        return map;
+    }
     // 회원가입 성공 여부
     @PostMapping("/signUpInfoCheck")
     @ResponseBody 
