@@ -37,6 +37,22 @@ public class AuthControllerApiV1 {
         map.put("userRole", principalDetails.getRole()); // 유저 권한 리턴
         return map;
     }
+    // 로그인시 해당 유저 프로필 정보반환
+    @GetMapping("/loginProfile.action")
+    @ResponseBody 
+    public HashMap<String, String> loginProfilePage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        HashMap<String, String> map = new HashMap<String,String>();
+        map.put("userEmail", principalDetails.getUsername()); // 아이디 반환
+        map.put("userName", principalDetails.getName()); // 아이디 반환
+        map.put("userNickName", principalDetails.getUserNickName()); // 닉네임 반환
+        map.put("userImage", principalDetails.getUserImage()); // 프로필 이미지 반환
+        map.put("userGender", principalDetails.getUserGender()); // 성별 반환
+        map.put("userSchool", principalDetails.getUserSchool()); // 학교 반환
+        map.put("userPN", principalDetails.getUserPN()); // 전화번호 반환
+        map.put("userAddress", principalDetails.getUserAddress()); // 주소 반환
+        map.put("userSocial", principalDetails.getUserSocial()); // 소셜 반환
+        return map;
+    }
     // 로그아웃 
     @PostMapping("/logOut.action")
     @ResponseBody 

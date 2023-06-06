@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class QuestController {
     
-    @GetMapping("/")
+    @GetMapping("/quest")
     public String index(Model model) {
         // 필요한 데이터를 모델에 담아 뷰 템플릿으로 전달
         model.addAttribute("imageUrls", new String[] {
@@ -31,6 +31,6 @@ public class QuestController {
                 
         });
 
-        return "index";
+        return "quest/quest";
     }
 }

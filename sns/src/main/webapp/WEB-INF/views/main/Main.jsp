@@ -68,7 +68,7 @@
 <!-------------------- 사이드바 --------------------->
     <ul class = "sideUl">
         <li class = "sideLi">
-            <a class = "home" href="Main.jsp">
+            <a class = "home" href="/main">
                 <img class = "homeTrue" src="./images/mainHomeTrue.png"  alt="Image Button" width="25" >
                 <span class = "sidebar" style="font-weight: bold">홈</span>
             </a>
@@ -92,7 +92,7 @@
             </a>
         </li>    
         <li class = "sideLi"> 
-            <a  class = "profile" href="profile.jsp">
+            <a  class = "profile" href="/profile?userEmail">
                 <img src="images/mainProfile2.png" alt="Image Button" width="25">
                 <span class = "sidebar">프로필</span>
             </a>

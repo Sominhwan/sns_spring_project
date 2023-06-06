@@ -130,7 +130,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav>
     <div class = "navbar">
          <img src="images/mainLogo.png" alt="Image Button"/>
-	     <a id = "PhoTalk" class = "navbar-brand" href="main.jsp">PhoTalk</a>
+	     <a id = "PhoTalk" class = "navbar-brand" href="/main">PhoTalk</a>
 	     <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
 	    <form method="post" id="navSearch" >
         	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
@@ -150,7 +150,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-------------------- 사이드바 --------------------->
     <ul class = "sideUl">
         <li class = "sideLi">
-            <a class = "home" href="#">
+            <a class = "home" href="/main">
                 <img src="images/mainHomeFalse.png"  alt="Image Button" width="25" >
                 <span class = "sidebar">홈</span>
             </a>
@@ -174,7 +174,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             </a>
         </li>
         <li class = "sideLi"> 
-            <a  class = "profile" href="#">
+            <a  class = "profile" href="/profile?userEmail">
                 <img src="images/mainProfile2.png" alt="Image Button" width="25" >
                 <span class = "sidebar" style = "font-weight: bold;">프로필</span>
             </a>

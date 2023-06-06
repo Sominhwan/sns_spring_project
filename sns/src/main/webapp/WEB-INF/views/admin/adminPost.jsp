@@ -152,11 +152,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     /* 보낸 메일함 버튼 열기 */
     function sentMailbox(){
       if ($('#sentMailbox').css('display') == 'block') {
+        $('#mailSendCategory2').css('display', 'none'); 
+        $('#mailSendCategory').css('display', 'block'); 
         $('#sentMailbox').css('display', 'none');
       } else {
+        $('#mailSendCategory').css('display', 'none'); 
+        $('#mailSendCategory2').css('display', 'block'); 
         $('#sentMailbox').css('display', 'block');          	    
       }
-    }      
+    } 
     </script>
   </head>
   <body>
@@ -196,7 +200,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               class="icon"
             /><span class="sideText">메일 보내기</span></a
           >
-          <img src="/adminImages/mailSendCategory.svg" style="position: fixed; top: 395px; left: 300px; z-index: 100; cursor: pointer;" onclick="sentMailbox()"/>
+          <img id="mailSendCategory" src="/adminImages/mailSendCategory.svg" style="position: fixed; top: 395px; left: 300px; z-index: 100; cursor: pointer;" onclick="sentMailbox()"/>
+          <img id="mailSendCategory2" src="/adminImages/mailSendCategory2.svg" style="position: fixed; top: 395px; left: 300px; z-index: 100; cursor: pointer; display: none;" onclick="sentMailbox()"/>
           <a href="/admin/adminSentMailbox" id="sentMailbox" style="display: none;">
             <img
               src="/adminImages/sendMailLogo.svg"
