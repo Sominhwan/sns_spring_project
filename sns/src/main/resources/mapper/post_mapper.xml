@@ -20,18 +20,18 @@
     <select id="plist2" resultType="com.project.my.module.userRole.entity.PostEntity" parameterType="map">
     select <include refid="fullColumn"/> 
     from post 
-    where postId=${postId};
+    where postId=#{postId};
     </select>
     
     <update id="upcomment">
     UPDATE post 
     SET commentNum=commentNum+1 
-    WHERE postId=${postId};
+    WHERE postId=#{postId};
     </update>
     <update id="minuscomment">
     UPDATE post 
     SET commentNum=commentNum-1 
-    WHERE postId=${postId};
+    WHERE postId=#{postId};
     </update>
 
 
@@ -39,12 +39,12 @@
     <update id="upheart">
     UPDATE post 
     SET likeNum=likeNum+1 
-    WHERE postId=${postId};
+    WHERE postId=#{postId};
     </update>
     <update id="downheart">
     UPDATE post 
     SET likeNum=likeNum-1 
-    WHERE postId=${postId};
+    WHERE postId=#{postId};
     </update>
     
     <select id="insertPost" resultType="com.project.my.module.userRole.entity.PostEntity">
