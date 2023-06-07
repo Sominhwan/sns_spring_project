@@ -2,12 +2,8 @@ package com.project.my.module.sns.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,23 +27,31 @@ public class FileUploadController {
     //private final GuestBookEntity guestBookEntity;
     private final FileUploadService fileUploadService;
   
-    private String uploadPath = "C:/spring/sns_spring_project/sns/src/main/resources/static/profileImages";
-    private String bgUploadPath = "C:/spring/sns_spring_project/sns/src/main/resources/static/backgroundImages";
+    private String uploadPath = "C:\\programming\\sns\\sns\\src\\main\\resources\\static\\profileImages";
+    private String bgUploadPath = "C:\\programming\\sns\\sns\\src\\main\\resources\\static\\backgroundImages";
     
     // 프로필사진 업로드
     @PostMapping("/profile-upload")
     @ResponseBody 
     public String uploadFile(@RequestParam("file") MultipartFile file,
                              @RequestParam("userEmail") String userEmail) {
+        System.out.println(file);
+        System.out.println(userEmail);
         if (!file.isEmpty()) {
             try {
                 System.out.print(userEmail + "컨트롤러진입");
                 String fileName = file.getOriginalFilename();   
                 String filePath = uploadPath + File.separator + fileName;
+                System.out.println("이름:" + fileName);
+                System.out.println("경로:" + filePath);
                 File destFile = new File(filePath);
+                System.out.println("경로1:" + filePath);
                 file.transferTo(destFile);
+                System.out.println("경2:" + filePath);
                 // 파일 URL 반환
                 String fileUrl = "/profileImages/" + fileName;
+
+
                 fileUploadRepository.updateUserImage(fileUrl, userEmail);
                 return fileUrl;
             } catch (Exception e) {

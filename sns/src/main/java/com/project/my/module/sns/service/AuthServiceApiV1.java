@@ -1,6 +1,8 @@
 package com.project.my.module.sns.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -102,5 +104,19 @@ public class AuthServiceApiV1 {
             result.put("success", "성공"); 
             return result;       
         } 
-    }           
+    }  
+    // 네브바 유저 프로필 가져오기
+    @Transactional
+    public List<UserInfoEntity> getUserProfile(String userNickName){
+        List<UserInfoEntity> userProfileList = new ArrayList<>();
+        userProfileList = userRepository.getUserProfileList(userNickName);
+        return userProfileList;
+    } 
+    // 네브바 유저 이메일 가져오기
+    @Transactional
+    public String getUserProfileInputSearch(String userNickName){
+        String userEmail = userRepository.getUserProfileInputSearch(userNickName);
+        return userEmail;
+    }          
+    
 }

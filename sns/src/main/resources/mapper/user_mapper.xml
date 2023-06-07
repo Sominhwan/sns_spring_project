@@ -136,6 +136,18 @@
         FROM userinfo 
         WHERE userEmail = #{userEmail}
     </select>   
+    <!-- 유저 프로필 정보 가져오기(네브바) -->
+    <select id="getUserProfileList" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
+        SELECT userNickName, userEmail, userImage 
+        FROM userinfo 
+        WHERE userNickName LIKE concat ('%', #{userNickName}, '%')
+    </select>   
+    <!-- 유저 이메일 정보 가져오기(네브바) -->
+    <select id="getUserProfileInputSearch" resultType="String">
+        SELECT userEmail 
+        FROM userinfo 
+        WHERE userNickName = #{userNickName}
+    </select>       
     <!--******************************** 관리자 기능 ******************************-->
     <!-- 유저 정보 찾기(관리자) -->
     <select id="search" parameterType="map" resultType="com.project.my.module.userRole.entity.UserInfoEntity">

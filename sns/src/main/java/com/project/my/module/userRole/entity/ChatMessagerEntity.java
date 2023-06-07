@@ -11,29 +11,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatMessagerEntity {
 	private int roomId;
-	private int chatMessagerId;
-	private String userEmail;
-	private String message;
-	private String creationDate;
+	private int chatID;
+	private String chatName;
+	private String chatContent;
+	private String chatTime;
 
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}
 
-	public void setChatMessagerId(int chatMessagerId) {
-		this.chatMessagerId = chatMessagerId;
+	public void setchatID(int chatID) {
+		this.chatID = chatID;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setchatName(String chatName) {
+		this.chatName = chatName;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setchatContent(String chatContent) {
+		this.chatContent = chatContent;
 	}
 
-	public void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
+	public void setchatTime(String chatTime) {
+		this.chatTime = chatTime;
 	}
 
 }

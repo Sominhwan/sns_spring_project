@@ -10,7 +10,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/profile/profile.css" />
-    <link rel="stylesheet" href="/css/profile/navbar.css" />
+    <link rel="stylesheet" href="/css/main/navbar.css" />
     <link rel="stylesheet" href="/css/profile/sidebar.css" />
     <link rel="stylesheet" href="/css/chat/message.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/mainLogo.png" />
@@ -130,8 +130,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav>
     <div class = "navbar">
          <img src="images/mainLogo.png" alt="Image Button"/>
-	     <a id = "PhoTalk" class = "navbar-brand" href="main.jsp">PhoTalk</a>
-	     <img src="images/mainSearch.svg" alt="mainSearch" style="position:relative; left:180px;"/>
+	     <a id = "PhoTalk" class = "navbar-brand" href="/main">PhoTalk</a>
+	    
 	    <form method="post" id="navSearch" >
         	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
         	<input type="text" style="display:none;"/>
@@ -398,6 +398,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 </div>
 <script src="js/profile/profile.js"></script>
 <script src="/js/chat/message.js"></script>
+<script src="js/navbar.js"></script>
 <script>
     var FriendEmail = "${userEmail}";
     // console.log(userEmail);

@@ -5,13 +5,14 @@ function searchUser(){
         return false; //formname에 사용자가 지정한 form의 name입력
     }			
 	$.ajax({
-		url : "UserProfileSearch?userNickName="+$('.InputBase').val(),
+		url : "userProfileSearch?userNickName="+$('.InputBase').val(),
         type : "post",
         dataType : "json",
         global: false,
         success : function(obj){
-			var result = obj.result; 
-            searchProcess(result);
+			console.log(obj);
+			//var result = obj.result; 
+            searchProcess(obj);
             return false;
         },
         error : function(xhr, status, error){
@@ -43,7 +44,7 @@ function getUserNickName(){
 	$(".userTable > tbody > tr").click(function(){
 		//var userNickName = $(this).children().eq(1).children().eq(0).text();
 		var userEmail = $(this).children().eq(1).children().eq(1).text();
-		var searchProfile = "profile.jsp?id=" + userEmail;
+		var searchProfile = "/profile?userEmail=" + userEmail;
 		$("#navSearch").attr("action",searchProfile).submit();
 	});
 }
@@ -51,13 +52,12 @@ function getUserNickName(){
 /* 네브바 검색창 submit */
 function searhUserNickName(userNickName){
 	$.ajax({
-		url : "UserProfileInputSearch?userInputNickName="+userNickName,
+		url : "userProfileInputSearch?userInputNickName="+encodeURI(userNickName),
         type : "post",
         dataType : "json",
         global: false,
         success : function(obj){
-			var result = obj.userEmail; 
-			searchProcess2(result);
+			searchProcess2(obj.userEmail);
         },
         error : function(xhr, status, error){
     		alert("통신 실패");
@@ -69,10 +69,9 @@ function searchProcess2(result){
 	if(result==null){
 		alert("존재하지 않은 닉네임입니다.");
 	} else{
-		var searchProfile = "profile.jsp?id=" + result;
+		var searchProfile = "/profile?userEmail=" + result;
 		$("#navSearch").attr("action",searchProfile).submit();		
 	}
-
 }
 
 /* 프로필 모달창 이벤트 */
@@ -107,17 +106,14 @@ function showLogout(){
 
 function logout(){
 	$.ajax({
-		url : "UserLogout",
-        type : "post",
-        dataType : "json",
-        global: false,
-        success : function(obj){
-			var url = obj.result;
-			location.replace(url);
-        },
-        error : function(xhr, status, error){
- 
-        }
-   });		
+		url : "/logout",
+		type : "get",
+		data: {},
+		success : function(obj){             
+			location.replace("/index");
+		},
+		error : function(obj){
+		}
+	  })		
 }
 

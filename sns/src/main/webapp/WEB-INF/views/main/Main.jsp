@@ -29,6 +29,7 @@
  	<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
  	<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="js/navbar.js"></script>
  	
 </head>
 <div class="modal-wrapper"></div>
@@ -41,7 +42,7 @@
     <div class = "navbar">
         <img src="images/mainLogo.png" alt="Image Button"/>
 	    <a id = "PhoTalk" class = "navbar-brand" href="Main.jsp">PhoTalk</a>
-	    	    
+	    <!-- 네브바 검색창 -->
 	    <form method="post" id="navSearch" >
         	<span><input type="text" class = "InputBase"  placeholder="검색" name="searchWord" onkeyup="searchUser()" autocomplete="off"></span>
         	<input type="text" style="display:none;"/>

@@ -1,8 +1,10 @@
 package com.project.my.module.sns.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.project.my.config.security.PrincipalDetails;
 import com.project.my.module.sns.dto.AuthDTO;
 import com.project.my.module.sns.service.AuthServiceApiV1;
+import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.UserRepository;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -124,5 +127,19 @@ public class AuthControllerApiV1 {
         result = authServiceApiV1.changeUserPwd(reqDTO);
         return result;
     }  
-    
+    // 회원 프로필 관련 정보 가져오기(네브바 검색)
+    @PostMapping("/userProfileSearch")
+    @ResponseBody 
+    public List<UserInfoEntity> userProfileSearch(@Param("userNickName") String userNickName) { 
+        return authServiceApiV1.getUserProfile(userNickName);
+    } 
+    // 회원 프로필 검색(네브바 검색)
+    @PostMapping("/userProfileInputSearch")
+    @ResponseBody 
+    public Map userProfileInputSearch(@Param("userInputNickName") String userInputNickName) { 
+        Map result = new HashMap<String, Object>();
+        String userEmail = authServiceApiV1.getUserProfileInputSearch(userInputNickName);
+        result.put("userEmail", userEmail);
+        return result;
+    }               
 }

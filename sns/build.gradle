@@ -70,8 +70,9 @@ dependencies {
 	// BASE64 
 	//implementation 'commons-codec:commons-codec:1.15'
 	implementation 'net.iharder:base64:2.3.8'
-
-
+	// 파일 업로드
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+    implementation 'commons-io:commons-io:2.11.0'
 
 }
 
