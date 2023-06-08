@@ -84,7 +84,21 @@
         WHERE userEmail = #{userEmail}
         AND friendSign = 1
     </select>
+
+    <select id = "getAcceptList" resultType = "com.project.my.module.userRole.entity.FriendmanagerEntity">
+        SELECT friendEmail
+        FROM friendmanager
+        WHERE userEmail = #{userEmail}
+        AND friendSign = 0
+    </select>
     
+    <update id="friendAccept">
+        UPDATE friendmanager
+        SET friendSign = 1
+        WHERE userEmail = #{userEmail} AND friendEmail = #{friendEmail};
+    </update>
+
+
     <select id="checkChatRoom" resultType="int">
         SELECT roomId
         FROM chatroom

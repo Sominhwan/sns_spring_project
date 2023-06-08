@@ -22,6 +22,11 @@
     from post 
     where postId=#{postId};
     </select>
+    <select id="plist3" resultType="com.project.my.module.userRole.entity.PostEntity" parameterType="map">
+        select * 
+        from post 
+        where userEmail=#{userEmail};
+    </select>
     
     <update id="upcomment">
     UPDATE post 

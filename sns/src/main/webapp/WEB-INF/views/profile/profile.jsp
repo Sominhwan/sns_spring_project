@@ -10,12 +10,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/profile/profile.css" />
-    <link rel="stylesheet" href="/css/main/navbar.css" />
+    <link rel="stylesheet" href="/css/profile/navbar.css" />
     <link rel="stylesheet" href="/css/profile/sidebar.css" />
     <link rel="stylesheet" href="/css/chat/message.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/mainLogo.png" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/navbar.js"></script>
     <title>프로필 - PhoTalk</title>
     <script type="text/javascript">
     	function save(){
@@ -60,10 +59,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             success: function(obj) {
                 frm = obj.userEmail;
                 var frm2 = document.getElementById('img__preview').files[0];
-                console.log(frm2);
                 var formData = new FormData();
                 formData.append('file', frm2);
                 formData.append('userEmail', frm);
+                console.log(frm2);
                 console.log(frm);
                 $.ajax({
                     url: "/profile-upload",
@@ -148,13 +147,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
     </div>
 </nav>
-    <!-- 검색 창 -->
-    <!-- 네브바 추가할것 !!!! -->
-	<table class="userTable" id="userTable">
-		<tbody id="ajaxTable">
-	          	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
-	    </tbody>
-	</table>
 <!-------------------- 사이드바 --------------------->
     <ul class = "sideUl">
         <li class = "sideLi">
@@ -188,37 +180,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             </a>
         </li>
     </ul>
-	<!-- 프로필 모달 -->
-	<table class="profile-modal" id="profile-modal" style="display: none">
-		<tbody id="innerProfile">
-			<tr onclick="location.href='profile.jsp'">
-				<td class="profile-td"><img class= "Profile"src="./images/mainProfileModalProfile.svg"></td>
-				<td class="profile-td2">프로필 보기</td>		
-    		</tr>   	   				
-			<tr onclick="location.href='update.jsp'">
-				<td class="profile-td"><img class= "N-Info"src="./images/mainProfileModalInfo.svg"></td>
-				<td class="profile-td2">개인 정보</td>		
-    		</tr> 		
-			<tr onclick="location.href='help.jsp'">
-				<td class="profile-td"><img class= "Help"src="./images/mainProfileModalHelp.svg"><span class="Help-T"></td>
-				<td class="profile-td2">도움말</td>		
-    		</tr> 	
-			<tr onclick="showLogout()">			    
-				<td class="profile-td"><img class= "Logout" src="./images/mainProfileModalLogout.svg" id="show"></td>				   	
-				<td class="profile-td2">로그아웃</td>		
-    		</tr> 	    					  	         	         		          		          		          		          		          		          		          		          		          		          		          		          		          		          		          	
-	    </tbody>
-	</table>
-    <!-- 로그아웃 모달 -->	   
-<div class="logout-modal" style="display: none" >
-    <div class="bg" >
-      <div class="logoutBox">
-          <div class="logoutBtn" style="cursor: pointer" onclick="logout()"><span id="logoutText">로그아웃</span></div>
-          <div class="logoutCancel" style="cursor: pointer" onclick="showLogout()"><span id="logoutCancelText">취소</span></div>
-      </div>
-    </div>    
-  </div>
-  
+<!-------------------- 메인페이지 --------------------->
+
 <!------------- 상단부분 ----------------->
 
 <div class = mainProfile>
@@ -429,6 +392,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <div class = "area3" style="font-size: 22px;">
                     <span class="Text-State">게시물</span>
                 </div>
+            </div>
+            <div class = "area_right_2">
+
             </div>
         </div>
     </div>

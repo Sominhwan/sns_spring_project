@@ -1,6 +1,5 @@
 package com.project.my.module.userRole.repository;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,4 +17,5 @@ public interface FriendRepository {
     FriendmanagerEntity followfirend2(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
     FriendmanagerEntity delFriend(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
     FriendmanagerEntity delFriend2(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
+    List<FriendmanagerEntity> followconsent(@Param("userEmail") String userEmail);
 }

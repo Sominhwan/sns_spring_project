@@ -45,4 +45,14 @@ public interface FileUploadRepository {
     String findByUserName(@Param("userEmail") String userEmail);
 
     ArrayList<UserInfoEntity> getFriendInfo(String userEmail);
+
+    int friendFollowCheck(@Param("userEmail") String userEmail,@Param("friendEmail") String friendEmail);
+
+    void profileFollow(@Param("userEmail") String userEmail,@Param("friendEmail") String friendEmail);
+
+    void profileUnFollow(@Param("userEmail") String userEmail,@Param("friendEmail") String friendEmail);
+
+    FriendmanagerEntity insertfirend(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
+
+    int friendinsertCheck(@Param("userEmail") String userEmail,@Param("friendEmail") String friendEmail);
 }

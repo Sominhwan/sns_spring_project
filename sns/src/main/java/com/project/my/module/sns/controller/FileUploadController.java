@@ -2,6 +2,7 @@ package com.project.my.module.sns.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.my.module.sns.service.FileUploadService;
 import com.project.my.module.userRole.entity.FriendmanagerEntity;
 import com.project.my.module.userRole.entity.GuestBookEntity;
+import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.FileUploadRepository;
 
@@ -35,23 +37,15 @@ public class FileUploadController {
     @ResponseBody 
     public String uploadFile(@RequestParam("file") MultipartFile file,
                              @RequestParam("userEmail") String userEmail) {
-        System.out.println(file);
-        System.out.println(userEmail);
         if (!file.isEmpty()) {
             try {
                 System.out.print(userEmail + "컨트롤러진입");
                 String fileName = file.getOriginalFilename();   
                 String filePath = uploadPath + File.separator + fileName;
-                System.out.println("이름:" + fileName);
-                System.out.println("경로:" + filePath);
                 File destFile = new File(filePath);
-                System.out.println("경로1:" + filePath);
                 file.transferTo(destFile);
-                System.out.println("경2:" + filePath);
                 // 파일 URL 반환
                 String fileUrl = "/profileImages/" + fileName;
-
-
                 fileUploadRepository.updateUserImage(fileUrl, userEmail);
                 return fileUrl;
             } catch (Exception e) {
@@ -127,5 +121,33 @@ public class FileUploadController {
     public ArrayList<UserInfoEntity> getFriendInfo(@Param("userEmail") String userEmail){
         ArrayList<UserInfoEntity> getFriendInfo = fileUploadService.getFriendInfo(userEmail);
         return getFriendInfo;
+    }
+
+    @PostMapping("/profile-pList3")
+    @ResponseBody
+    public List<PostEntity> pList3(@Param("userEmail") String userEmail){
+        System.out.println(userEmail);
+        List<PostEntity> pList3 = fileUploadService.pList3(userEmail);
+        return pList3;
+    }
+
+    @PostMapping("/profile-followCheck")
+    @ResponseBody
+    public int followCheck(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail){
+        int followCheck = fileUploadService.friendFollowCheck(userEmail, friendEmail);
+        // System.out.println(followCheck);
+        return followCheck;
+    }
+
+    @PostMapping("/profile-folloing")
+    @ResponseBody
+    public void following(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail){
+        fileUploadService.profileFollow(userEmail, friendEmail);
+    }
+
+    @PostMapping("/profile-unfolloing")
+    @ResponseBody
+    public void Unfollowing(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail){
+        fileUploadService.profileUnFollow(userEmail, friendEmail);
     }
 }

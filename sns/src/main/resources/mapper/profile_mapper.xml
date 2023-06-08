@@ -86,4 +86,34 @@
         FROM userinfo
         WHERE userEmail = #{userEmail}
     </select>
+
+    <!--친구 돼있는지 체크-->
+    <select id = "friendFollowCheck" resultType = "int">
+        SELECT friendSign
+        FROM friendmanager
+        WHERE userEmail=#{userEmail} and friendEmail = #{friendEmail}
+    </select>
+
+    <select id="insertfirend" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
+        insert into friendmanager(userEmail,friendEmail,friendSign) values(#{userEmail},#{friendEmail},0)
+    </select>
+
+    <select id = "friendinsertCheck" resultType = "int">
+        SELECT COUNT(*)
+        FROM friendmanager
+        WHERE userEmail=#{userEmail} and friendEmail = #{friendEmail}
+    </select>
+    <!--팔로우-->
+    <update id = "profileFollow">
+        UPDATE friendmanager
+        SET friendSign = 1
+        WHERE userEmail=#{userEmail} and friendEmail = #{friendEmail}
+    </update>
+
+    <!--언팔로우-->
+    <update id = "profileUnFollow">
+        UPDATE friendmanager
+        SET friendSign = 0
+        WHERE userEmail=#{userEmail} and friendEmail = #{friendEmail}
+    </update>
 </mapper>

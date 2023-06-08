@@ -17,6 +17,7 @@
     <link type="text/css" rel="stylesheet" href="css/main/navbar.css"></link>
     <link type="text/css" rel="stylesheet" href="css/main/sidebar.css"></link>
     <link type="text/css" rel="stylesheet" href="css/main/style.css"></link>
+	<link rel="stylesheet" href="/css/chat/message.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
@@ -49,13 +50,13 @@
         </form>
         <!-- 모달창 -->
         <div class="absol">
-		<img class="mainMessageButton" id ="mainMessageFalse" src="images/mainMessageFalse.png" onclick="clickChatBtn('#')" alt="Image Button" style="cursor: pointer"/>
-        <div id="alarm" class="alarm">
-        <span class="alarmBalloon"></span>
-        </div>
-        </div> 
-        <img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
-    	<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
+			<img class="mainMessageButton" id ="mainMessageButtonfalse" src="images/mainMessageFalse.png" onclick="clickChatBtn()" alt="Image Button" style="cursor: pointer"/>
+			<div id="alarm" class="alarm">
+			<span class="alarmBalloon"></span>
+			</div>
+			</div>             
+			<img class="mainMessageButton" id = "mainAlarmFalse" src="images/mainAlarmFalse.png" onclick="clickFollowBtn()" alt="Image Button" style="cursor: pointer"/>
+			<img id = "mainProfile2" src="./images/mainProfile2.png" alt="Image Button" onclick="profileModal()" style="cursor: pointer"/>
 		
     </div>	   
 </nav>
@@ -75,7 +76,7 @@
             </a>
         </li>
         <li class = "sideLi">
-            <a class = "follow" href="follow.jsp">
+            <a class = "follow" href="/follow">
                 <img src="images/mainFollowFalse.png" alt="Image Button" width="25">
                 <span class = "sidebar">팔로우</span>
             </a>
@@ -302,5 +303,13 @@
     <!-- js 추가 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>    
 	<script src="/js/main/main.js"></script>
+	<script src="/js/chat/message.js"></script>
+<script>
+    // console.log(userEmail);
+    // setFriendInfo(FriendEmail);
+    window.onload = function() {
+    	ready();
+    };
+</script>
 </body>
 </html>

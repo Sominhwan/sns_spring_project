@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.my.module.userRole.entity.FriendmanagerEntity;
 import com.project.my.module.userRole.entity.GuestBookEntity;
+import com.project.my.module.userRole.entity.PostEntity;
 import com.project.my.module.userRole.entity.UserInfoEntity;
 import com.project.my.module.userRole.repository.FileUploadRepository;
+import com.project.my.module.userRole.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class FileUploadService {
 
     private final FileUploadRepository fileUploadRepository; 
+    private final PostRepository postRepository;
     
      // 프로필사진 변경
     public ArrayList<GuestBookEntity> findBgImage(String userEmail){
@@ -60,4 +63,23 @@ public class FileUploadService {
         return getFriendInfo;
     }
     
+    public List<PostEntity> pList3(String userEmail){
+        System.out.println(userEmail);
+        return postRepository.plist3(userEmail);
+    }
+
+    public int friendFollowCheck(String userEmail, String friendEmail){
+        if(fileUploadRepository.friendinsertCheck(userEmail, friendEmail) == 0){
+            fileUploadRepository.insertfirend(userEmail, friendEmail);
+        }
+        return fileUploadRepository.friendFollowCheck(userEmail, friendEmail);
+    }
+
+    public void profileFollow(String userEmail, String friendEmail){
+        fileUploadRepository.profileFollow(userEmail, friendEmail);
+    }
+
+    public void profileUnFollow(String userEmail, String friendEmail){
+        fileUploadRepository.profileUnFollow(userEmail, friendEmail);
+    }
 }

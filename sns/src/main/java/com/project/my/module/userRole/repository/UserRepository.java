@@ -47,6 +47,8 @@ public interface UserRepository {
     List<UserInfoEntity> getUserProfileList(@Param("userNickName") String userNickName);
     // 유저 이메일 가져오기(네브바 검색)
     String getUserProfileInputSearch(@Param("userNickName") String userNickName);
+    List<UserInfoEntity> followuser(@Param("userEmail") String userEmail);
+    List<UserInfoEntity> getListPMember2(@Param("userEmail") String userEmail);
     /************************************* 관리자 기능 ***********************************************************/
     // 회원이름을 통해 회원정보 검색
     List<UserInfoEntity> search(String userName);

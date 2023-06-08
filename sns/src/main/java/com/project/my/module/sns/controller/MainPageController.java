@@ -16,7 +16,7 @@ public class MainPageController {
         return "/main/main";
     }   
     // 팔로우 페이지 이동
-    @PostMapping("/follow")
+    @GetMapping("/follow")
     public String follow() {
         return "/follow/follow";
     } 

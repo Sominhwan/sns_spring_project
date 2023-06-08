@@ -29,6 +29,17 @@
   border-radius: 0px 0px 30px 30px;
 }
 
+.box3 {
+	width: 38px;
+	height: 38px;
+	border-radius: 70%;
+	overflow: hidden;
+	border: 2.5px solid transparent;
+    background-image: linear-gradient(#fff, #fff), 
+    linear-gradient(to right, red 0%,  orange 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box; 	
+}
 
 .area_up1{
   width: 100%;
@@ -52,6 +63,18 @@
   float: left;
   margin-left: 23px;
   /* border: 1px solid rgb(161, 28, 28) */
+}
+
+#postTextbox {
+  position: relative;
+  width: 410px;
+  height: 50px;
+  top: -18.5px;
+  border-radius: 25px;
+  padding-left: 15px;
+  border: solid 1px #e7e7e7;
+  outline: none;
+  background-color:  #f8f8f8;
 }
 
 .area_up4{
@@ -516,17 +539,26 @@
   margin-left: 20px;
   float:left;
   /* border: 1px solid #39fd63; */
-  width: 520px;
+  width: 540px;
   height: 900px; 
 } 
 
 .area_right_1 {
-  width: 520px;
+  width: 540px;
   height: 72px; 
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   background-color: #ffffff;
 } 
+
+.area_right_2 {
+  width: 540px;
+  height: 100%;
+  margin-top: 20px;
+  /* border: 1px solid #e0e550; */
+  border-radius: 5px;
+  /* background-color: #ffffff; */
+}
 
 .profile_content{
   width: 480px;
@@ -536,6 +568,16 @@
   background-color: #ffffff;
 }
 
+.ccc {
+	width: 541px;
+	height:auto;
+  	margin-top:20px;
+  	padding: 9px 0 19px;
+  	border-radius: 7px;
+  	border: solid 1px #E0E0E0;
+	background-color: #fff;
+  	position:relative;
+}
 /* 팔로우 */
 .profile_follow{
   width: 480px;

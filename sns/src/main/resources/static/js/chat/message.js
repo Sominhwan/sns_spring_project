@@ -644,17 +644,17 @@ function chat(Email) {
 
 function chatFollowAcceptListList(userEmail){
 	$.ajax({
-		type: "POST",
-		url: "./FollowAcceptListServlet",
+		type: "get",
+		url: "/getAcceptList",
 		data: {
 			userEmail:userEmail,
 		},
-		success: function(data){
-			if(data=="") return;
-			console.log("미수락:"+data);
-			var parsed = JSON.parse(data);
-			for(var i = 0; i<parsed.length; i++){
-				addFollowerList(parsed[i].userName, parsed[i].userImage, parsed[i].userEmail);
+		success: function(obj){
+			if(obj=="") return;
+			chatroomList = JSON.stringify(obj)
+			console.log("미수락:"+chatroomList);
+			for(var i = 0; i<obj.length; i++){
+				addFollowerList(obj[i].friendName, obj[i].userImage, obj[i].friendEmail);
 			}
 			
 		}
@@ -663,11 +663,11 @@ function chatFollowAcceptListList(userEmail){
 
 function updateFollowerFunction(userEmail, Email){
 	$.ajax({
-		type: "POST",
-		url: "./FollowAcceptServlet",
+		type: "get",
+		url: "/friendAccept",
 		data: {
-			myEmail:userEmail,
-			Email:Email,
+			userEmail:userEmail,
+			freindEmail:Email,
 		},
 		success: function(data){
 			console.log("친구수락:"+ data);

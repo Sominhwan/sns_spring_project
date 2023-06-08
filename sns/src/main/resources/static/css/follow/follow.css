@@ -1,0 +1,122 @@
+body{
+	background-color:#fbfbfb;
+}
+.leftintroduce {
+  width: 30px;
+  height: 20px;
+  margin: 0 10px 0 0.3px;
+  font-family: HelveticaNeue;
+  font-size: 8px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+  position:relative;
+  text-align: left;
+  color: #a4a4a4;
+}
+.followrequest {
+	position:relative;	
+	top:160px;
+	left:300px;
+  border-radius: 5px 5px;
+}
+.recommend {
+	position:relative;	
+	top:250px;
+	left:300px;
+  border-radius: 5px 5px;
+}
+.followtext {
+  width: 96px;
+  height: 24px;
+  margin-left:383px;
+  margin-top:36px;
+  font-family: MalgunGothic;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-align: left;
+  color: #303030;
+}
+
+.followpage {
+	position:relative;	
+	top:160px;
+	left:300px;
+  width: 220px;
+  height: 350px;
+  margin-left:150px;
+  border-radius: 5px 5px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+}
+.followimage {
+  width: 220px;
+  height: 200px;
+  background-size: cover;
+  object-fit: cover;  
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+}
+.followidtext {
+  position: relative;
+  top:0px;
+  width: 220px;
+  height: 150px;
+  background-color: #fff;
+  font-weight:bold;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+}
+img.followBtn {
+  position: relative;
+  width: 180px;
+  height: 24px;
+  margin-left:20px;
+  top: 50px;
+  object-fit: contain;
+}
+img.followCancelBtn {
+  position: relative;	
+  width: 180px;
+  height: 24px;
+  top: 55px;
+  margin-left:20px;
+  object-fit: contain;
+}
+
+.followmodal {
+  width: 310px;
+  height: 160px;
+  margin-left:600px;
+  margin-top:-30px;
+  border-radius: 7px;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  text-align:center;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+c {
+	color:blue;
+}
+
+.make {
+  width: 800px;
+  height: 800px;
+  margin: 60px 560px 140px 81px;
+  padding: 14.6px 0 315.7px;
+  border-radius: 7px;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  display:none;
+}
+
+
+

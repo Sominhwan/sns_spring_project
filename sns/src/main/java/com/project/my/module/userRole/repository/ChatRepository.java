@@ -26,6 +26,8 @@ public interface ChatRepository {
     
     ArrayList<FriendmanagerEntity> getFriendList(String userEmail);
 
+    ArrayList<FriendmanagerEntity> getAcceptList(String userEmail);
+
     String getUserImage(String userEmail);
 
     String getuserName(String userEmail);
@@ -39,6 +41,8 @@ public interface ChatRepository {
     void chatSubmit(@Param("roomId") int roomId, @Param("chatID") int chatID, @Param("chatName") String chatName, @Param("chatContent") String chatContent);
 
     void creatChatRoom(@Param("roomId") int roomId, @Param("userEmail") String userEmail);
+
+    void friendAccept(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
 
     int checkChatRoom(@Param("userEmail") String userEmail, @Param("friendEmail") String friendEmail);
 }

@@ -105,6 +105,18 @@ public class ChatServiceApi {
         return friendList;
     }
 
+    public ArrayList<FriendmanagerEntity> getAcceptList(String userEmail){
+        ArrayList<FriendmanagerEntity> acceptList = chatRepository.getAcceptList(userEmail);
+        for(FriendmanagerEntity friendmanagerEntity : acceptList){
+            String friendEmail = friendmanagerEntity.getFriendEmail();
+            String friendImage = chatRepository.getUserImage(friendEmail);
+            String friendName = chatRepository.getuserName(friendEmail);
+            friendmanagerEntity.setUserImage(friendImage);
+            friendmanagerEntity.setFriendName(friendName);
+        }
+        return acceptList;
+    }
+
     public int creatChatRoom(String userEmail, String friendEmail){
         try {
             int check = chatRepository.checkChatRoom(userEmail, friendEmail);

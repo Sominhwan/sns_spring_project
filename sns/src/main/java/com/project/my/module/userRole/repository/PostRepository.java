@@ -15,8 +15,11 @@ public interface PostRepository {
 
     List<PostEntity> plist();
     List<PostEntity> plist2(@Param("postId") int postId);
+    List<PostEntity> plist3(@Param("userEmail") String userEmail); 
+    
     void upcomment(@Param("postId") int postId);
     void minuscomment(@Param("postId") int postId);
+    
 
     void upheart(@Param("postId") int postId);
     void downheart(@Param("postId") int postId);

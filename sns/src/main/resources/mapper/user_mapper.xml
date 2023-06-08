@@ -147,7 +147,13 @@
         SELECT userEmail 
         FROM userinfo 
         WHERE userNickName = #{userNickName}
-    </select>       
+    </select>      
+    <select id="getListPMember2" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
+        SELECT userEmail,userNickName,userImage 
+        FROM userinfo 
+        WHERE userEmail !=#{userEmail}
+        order by rand() limit 5
+    </select>
     <!--******************************** 관리자 기능 ******************************-->
     <!-- 유저 정보 찾기(관리자) -->
     <select id="search" parameterType="map" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
@@ -236,6 +242,12 @@
         SELECT COUNT(*) AS count 
         FROM post
     </select>        
+    <!--팔로우유저정보-->
+    <select id="followuser" resultType="com.project.my.module.userRole.entity.UserInfoEntity">
+        SELECT userEmail, userNickName, userImage 
+        FROM userinfo 
+        WHERE userEmail = #{userEmail}
+    </select>  
 </mapper>
 
 

@@ -24,6 +24,11 @@
     <select id="delFriend2" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
     delete from friendmanager where userEmail=#{friendEmail} and friendEmail=#{userEmail}
     </select>
+    <select id="followconsent" resultType="com.project.my.module.userRole.entity.FriendmanagerEntity">
+        select friendEmail
+        from friendmanager
+        where userEmail=#{userEmail} and friendSign=0
+    </select>
 </mapper>
 
 

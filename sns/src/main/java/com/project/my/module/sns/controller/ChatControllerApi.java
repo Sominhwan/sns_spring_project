@@ -1,15 +1,20 @@
 package com.project.my.module.sns.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.my.module.sns.service.ChatServiceApi;
 import com.project.my.module.userRole.entity.ChatMessagerEntity;
 import com.project.my.module.userRole.entity.ChatRoomEntity;
 import com.project.my.module.userRole.entity.FriendmanagerEntity;
+import com.project.my.module.userRole.repository.ChatRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ChatControllerApi {
     private final ChatServiceApi chatServiceApi;
+    private final ChatRepository chatRepository;
 
     @GetMapping("/getChatRoom")
     public ArrayList<ChatRoomEntity> getChatRoom(@RequestParam("userEmail") String userEmail) {
@@ -63,10 +69,22 @@ public class ChatControllerApi {
         return getFriendList;
     }
 
+    @GetMapping("/getAcceptList")
+    public ArrayList<FriendmanagerEntity> getAcceptList(@RequestParam("userEmail") String userEmail){
+        ArrayList<FriendmanagerEntity> getAcceptList = chatServiceApi.getAcceptList(userEmail);
+        return getAcceptList;
+    }
+
     @GetMapping("/creatChatRoom")
     public int creatChatRoom(@RequestParam("userEmail") String userEmail,@RequestParam("freindEmail") String freindEmail){
         int roomid = chatServiceApi.creatChatRoom(userEmail, freindEmail);
         return roomid;
+    }
+
+    @GetMapping("/friendAccept")
+    public int friendAccept(@RequestParam("userEmail") String userEmail,@RequestParam("freindEmail") String freindEmail){
+        chatRepository.friendAccept(userEmail, freindEmail);
+        return 1;
     }
 
 }
